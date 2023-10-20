@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from '../molecules/Navbar';
-import Notices from '../organisms/Notices';
-import Home from '../organisms/Home';
-import Signup from '../organisms/Signup';
+import Notices from '../organisms/notices/Notices';
+import Home from '../pages/Home';
+import Signup from '../organisms/signup/Signup';
 
 function App() {
   return (
