@@ -1,12 +1,12 @@
 import React, { /* useState, */ useEffect } from 'react';
 import { connect } from 'react-redux';
 import _get from 'lodash/get';
+import Card from '../../../molecules/components/Card';
+
 import {
   // createNotice,
   // getNoticeById,
   getAllNotices,
-  // editNotice,
-  // deleteNotice,
 } from './Notices.service';
 import { setNotices } from '../data/notice.actions';
 
@@ -51,32 +51,14 @@ function Notices({
 
   return (
     <div>
-      <h1>Notices</h1>
-      <ul>
-        {notices.map(notice => (
-          <div key={notice.id}>
-            <p>{notice.title}</p>
-            <p>{notice.Description}</p>
-            <p>By {notice.Author_name}</p>
-            <p>On {notice.date_and_time}</p>
-            {/* <button
-              type="button"
-              onClick={() => handleEditNotice(notice.id)}
-            >Edit
-            </button> */}
-            {/* <button
-              type="button"
-              onClick={() => handleDeleteNotice(notice.id)}
-            >Delete
-            </button> */}
-          </div>
+      <h1 className="nav-notice">Notices</h1>
+      <div className="card">
+        {(notices || []).map(notice => (
+          <Card
+            notice={notice}
+          />
         ))}
-      </ul>
-      {/* <button
-        type="button"
-        onClick={handleCreateNotice}
-      >Add New Notice
-      </button> */}
+      </div>
     </div>
   );
 }

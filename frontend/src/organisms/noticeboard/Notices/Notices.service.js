@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { urls } from '../../services/urls';
+import { urls } from '../../../services/urls';
 
 const { noticeApis } = urls;
 
