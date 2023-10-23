@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,700&display=swap');
+
+
+
+
+body{
+  background-color: #EAEFF1;
+  font-family:  'Playfair Display', serif;
+
+}
+
+.container-card{
+  flex: 0 0 calc(33.33% - 20px);
+  max-width: 28%;
+  width:100%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding:20px; 
+  margin: 20px;
+  transition:.3s;
+  border:2px solid transparent;
+  min-height: 150px; 
+  
+}
+
+.container-card:hover{
+  border-color: #b3e1f5;
+}
+.card{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  
+}
+
+.button-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1px;
+}
+.read-btn {
+  border:none;
+  outline:none;
+  background-color: #E0EFFF;
+  border-radius: 20px;
+  max-width: 120px;
+  height:30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  font-weight: 600;
+  color:#0077ff;
+  
+  &:hover{
+  background-color: #5273eb;
+  color:#fff;
+}
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.card-description{
+  margin-top: 10px;
+  color:#46474a;display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+}
+.nav-notice{
+  display:flex;
+  justify-content: center;
+}
