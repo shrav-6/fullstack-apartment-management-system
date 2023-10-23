@@ -7,8 +7,7 @@ ui-job:
     script: 
         - echo "🏃‍♀️ running ui-job"
         - cd frontend/
-        - npm i yarn
         - yarn install
-        - yarn run build
+        - yarn build
         - echo "✅ build completed succesfully!"
     
