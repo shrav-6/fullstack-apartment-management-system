@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         buildings.hasMany(models.notices, {
           onDelete: "cascade",
         });
+        buildings.hasMany(models.listings, {
+          onDelete: "cascade",
+        })
     };
   
     return buildings;
