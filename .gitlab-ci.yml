@@ -8,6 +8,7 @@ ui-job:
         - echo "🏃‍♀️ running ui-job"
         - cd frontend/
         - yarn install
+        - yarn add vite
         - yarn build
         - echo "✅ build completed succesfully!"
     
