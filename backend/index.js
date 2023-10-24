@@ -11,6 +11,9 @@ const db = require("./models");
 const NoticeRouter = require("./routes/Notices");
 app.use("/Notices", NoticeRouter);
 
+const ListingsRouter = require("./routes/Listings");
+app.use("/Listings", ListingsRouter);
+
 const usersRouter = require("./routes/users");
 app.use("/auth", usersRouter);
 
