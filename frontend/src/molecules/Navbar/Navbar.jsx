@@ -18,7 +18,7 @@ export default function Navbar() {
         </li>
 
         <li className={pathname === '/signup' ? 'active' : ''}>
-          <Link to="/signup">Login/Signup</Link>
+          <Link to="/signup">Logout</Link>
         </li>
       </ul>
     </nav>

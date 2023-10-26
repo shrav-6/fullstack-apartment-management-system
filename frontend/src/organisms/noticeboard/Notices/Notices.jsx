@@ -1,10 +1,10 @@
 import React, { /* useState, */ useEffect } from 'react';
 import { connect } from 'react-redux';
 import _get from 'lodash/get';
-import Card from '../../../molecules/components/Card';
+import Card from '../../../molecules/Card/Card';
 
 import {
-  // createNotice,
+  // createNotice
   // getNoticeById,
   getAllNotices,
 } from './Notices.service';

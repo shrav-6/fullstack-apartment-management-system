@@ -5,7 +5,7 @@
 
 body{
   background-color: #EAEFF1;
-  font-family:  'Playfair Display', serif;
+  font-family:  'Gill Sans', sans-serif;
 
 }
 
@@ -69,7 +69,7 @@ body{
 
 .card-description{
   margin-top: 10px;
-  color:#46474a;display: -webkit-box;
+  color:#494a4b;display: -webkit-box;
   -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -80,3 +80,17 @@ body{
   display:flex;
   justify-content: center;
 }
+.card-author{
+  color:#a2a6a9;
+  font-style: italic;
+  font-size:small;
+  margin-top: 8px;
+}
+.card-createdAt{
+  margin-top: 10px;
+}
+// .by-text{
+//   //font-style: normal;
+//   color: #494a4b;
+//   font-size:small;
+// }
