@@ -1,0 +1,3 @@
+export const ACTION_TYPES = {
+  SET_NOTICE: 'NOTICE_SET_NOTICE',
+};
