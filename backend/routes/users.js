@@ -29,8 +29,8 @@ router.post("/signup", async (req, res) => {
       "message": "user profile created successfully"});
     }
     else{
-      res.status(500).json({"success": false,
-      "message": "Not successfull,invalid buildingname"});
+      res.json({"success": false,
+      "error": "Not successfull,invalid buildingname"});
     }
   }
     else if (role=="Manager"){
@@ -48,13 +48,13 @@ router.post("/signup", async (req, res) => {
         "message": "user profile created successfully"});
       }
   else{
-    res.status(500).json({"success": false,
-        "message": "Not successful,no specific roles"});
+    res.json({"success": false,
+        "error": "Not successful,no specific roles"});
   }
 }
 else{
-  res.status(500).json({"success": false,
-        "message": "Email is already registered"});
+  res.json({"success": false,
+        "error": "Email is already registered"});
 }
 });
 
@@ -65,13 +65,13 @@ router.post('/login', async (req, res) => {
     const user = await users.findOne({ where: { email: email } });
 
     if (!user) {
-      return res.status(500).json({ success: false, message: 'User is not registered' });
+      return res.json({ success: false, error: 'User is not registered' });
     }
 
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      return res.json({ error: 'Wrong Username And Password Combination' });
+      return  res.json({ error: 'Wrong Username And Password Combination' });
     }
 
     const accessToken = sign(
@@ -82,7 +82,7 @@ router.post('/login', async (req, res) => {
     res.json({ token: accessToken, email: user.email, id: user.id, username: user.username });
   } catch (error) {
     console.error('Error during login:', error);
-    res.status(500).json({ error: 'An error occurred while processing your request.' });
+    res.json({ error: 'An error occurred while processing your request.' });
   }
 });
 
