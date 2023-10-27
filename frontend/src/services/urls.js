@@ -1,8 +1,6 @@
-const baseUrl = 'https://notice-api.onrender.com/';
+const baseUrl = 'https://shelter-project.onrender.com/';
 
-export const urls = {
-  noticeApis: {
-    getAllNotices: `${baseUrl}notices`,
-    getAllNoticeById: `${baseUrl}notices/id`,
-  },
+export const noticesService = {
+  getAllNotices: `${baseUrl}notices`,
+  getAllNoticeById: `${baseUrl}notices/id`,
 };

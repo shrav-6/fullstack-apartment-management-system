@@ -48,4 +48,9 @@ body{
 .nav li:hover{
     background-color:#8ebbfa
 }
+.nav-title{
+    font-family: Georgia, serif;
+    font-weight: 800;
+    font-size: larger;
+}
 

@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <nav className="nav">
       <Link to="/" className="title">
-        SHELTER
+        <span className="nav-title">SHELTER</span>
       </Link>
       <ul>
         <li className={pathname === '/' ? 'active' : ''}>
