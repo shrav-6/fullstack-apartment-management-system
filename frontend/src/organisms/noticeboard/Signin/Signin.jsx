@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import {useNavigate }from "react-router-dom";
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -24,48 +24,44 @@ function Copyright(props) {
         Shelter
       </h1>
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
 
-
-
 const defaultTheme = createTheme();
 
 export default function Signin() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [inputs, setInputs] = useState({
-        password: '',
-        email: '',
-      });
+  const [inputs, setInputs] = useState({
+    password: '',
+    email: '',
+  });
 
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-          setInputs({
-            ...inputs,
-            [name]: value,
-            showFields: true,
-          });
-       
-      };
-    
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+      showFields: true,
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { password,email} = inputs
-      const data = { email:email, password: password};
-        console.log(data);
-        axios.post("https://shelter-project2.onrender.com/auth/login", data).then((response) => {
+    const { password, email } = inputs;
+    const data = { email, password };
+    //console.log(data);
+    axios.post('https://shelter-project2.onrender.com/auth/login', data).then((response) => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        sessionStorage.setItem("accessToken", response.data.token);
-        navigate("/home");
+        localStorage.setItem('token', response.data.token);
+        navigate('/home');
       }
-    
-  });
-};
+    });
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -128,7 +124,7 @@ export default function Signin() {
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>

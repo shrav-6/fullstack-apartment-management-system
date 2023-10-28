@@ -1,4 +1,4 @@
-const baseUrl = 'https://shelter-project.onrender.com/';
+const baseUrl = 'https://shelternotice.onrender.com/';
 
 export const noticesService = {
   getAllNotices: `${baseUrl}notices`,

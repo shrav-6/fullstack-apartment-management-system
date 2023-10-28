@@ -14,7 +14,7 @@ function Notices({
     getAllNotices()
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: response });
+          onSetNotices({ allNotices: response?.data });
         }
       })
       .catch((err) => {
