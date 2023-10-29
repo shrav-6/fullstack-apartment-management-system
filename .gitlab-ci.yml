@@ -1,0 +1,14 @@
+stages:
+    - build
+
+ui-job:
+    stage: build
+    image: node:16.20.1
+    script: 
+        - echo "🏃‍♀️ running ui-job"
+        - cd frontend/
+        - yarn install
+        - yarn add vite
+        - yarn build
+        - echo "✅ build completed succesfully!"
+    
