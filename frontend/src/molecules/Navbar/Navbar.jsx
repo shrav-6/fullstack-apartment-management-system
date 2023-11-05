@@ -27,8 +27,8 @@ export default function Navbar() {
           <Link to="/notices">Notices</Link>
         </li>
 
-        <li className={pathname === '/signup' ? 'active' : ''}>
-          <Link to="/signup">Logout</Link>
+        <li className={pathname === '/signin' ? 'active' : ''}>
+          <Link to="/signin">Logout</Link>
         </li>
       </ul>
     </nav>
