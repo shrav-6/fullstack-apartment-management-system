@@ -20,11 +20,9 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <h1>
-        Shelter
-      </h1>
+      <h1>Shelter</h1>
       {new Date().getFullYear()}
-      .
+      {'.'}
     </Typography>
   );
 }
@@ -32,11 +30,16 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Signin() {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
     password: '',
     email: '',
+  });
+
+  const [errors, setErrors] = useState({
+    passwordError: '',
+    emailError: '',
   });
 
   const handleInputChange = (e) => {
@@ -44,23 +47,40 @@ export default function Signin() {
     setInputs({
       ...inputs,
       [name]: value,
-      showFields: true,
     });
+  };
+
+  const validateFields = () => {
+    const { email, password } = inputs;
+    let isValid = true;
+
+    const emailError = email.trim() === '' ? 'Email is required' : '';
+    const passwordError = password.trim() === '' ? 'Password is required' : '';
+
+    if (emailError || passwordError) {
+      isValid = false;
+    }
+
+    setErrors({ emailError, passwordError });
+    return isValid;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { password, email } = inputs;
-    const data = { email, password };
-    //console.log(data);
-    axios.post('https://shelter-project2.onrender.com/auth/login', data).then((response) => {
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        localStorage.setItem('token', response.data.token);
-        navigate('/home');
-      }
-    });
+
+    if (validateFields()) {
+      const { password, email } = inputs;
+      const data = { email: email, password: password };
+      console.log(data);
+      axios.post('http://localhost:3001/auth/login', data).then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          sessionStorage.setItem('accessToken', response.data.token);
+          navigate('/home');
+        }
+      });
+    }
   };
 
   return (
@@ -92,6 +112,8 @@ export default function Signin() {
               autoComplete="email"
               autoFocus
               onChange={handleInputChange}
+              error={!!errors.emailError}
+              helperText={errors.emailError}
             />
             <TextField
               margin="normal"
@@ -103,6 +125,8 @@ export default function Signin() {
               id="password"
               autoComplete="current-password"
               onChange={handleInputChange}
+              error={!!errors.passwordError}
+              helperText={errors.passwordError}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -124,7 +148,7 @@ export default function Signin() {
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  Don't have an account? Sign Up
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
