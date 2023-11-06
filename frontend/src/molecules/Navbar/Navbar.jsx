@@ -100,8 +100,17 @@ export default function Navbar() {
           <Link to="/notices">Notices</Link>
         </li>
 
+<<<<<<< Updated upstream
         <li className={pathname === '/signin' ? 'active' : ''}>
           <Link to="/signin">Logout</Link>
+=======
+        <li className={pathname === '/services' ? 'active' : ''}>
+          <Link to="/services">Services</Link>
+        </li>
+
+        <li className={pathname === '/signup' ? 'active' : ''}>
+          <Link to="/signup">Logout</Link>
+>>>>>>> Stashed changes
         </li>
       </ul>
     </nav>
