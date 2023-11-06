@@ -24,7 +24,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.15",
+    "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.15",
     "@mui/styled-engine": "^5.14.15",
     "@reduxjs/toolkit": "^1.9.7",
@@ -33,6 +33,7 @@
     "antd": "^5.10.2",
     "axios": "^1.6.0",
     "bootstrap": "^5.3.2",
+    "modal": "^1.2.0",
     "moment": "^2.29.4",
     "react": "^18.0.0",
     "react-bootstrap": "^2.9.0",

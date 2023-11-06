@@ -5,7 +5,11 @@ import Notices from '../organisms/noticeboard/Notices/Notices';
 import Home from '../pages/Home';
 import Signup from '../organisms/noticeboard/Signup/Signup';
 import Signin from '../organisms/noticeboard/Signin/Signin';
-//import Logout from '../organisms/noticeboard/logout/logout';
+import Logout from '../organisms/noticeboard/logout/logout';
+import Buildings from '../organisms/noticeboard/Managers/DashBoard';
+import NoticesM from '../organisms/noticeboard/Managers/NoticesM';
+
+
 
 function App() {
   return (
@@ -16,9 +20,12 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Signin />} />
           <Route path="/home" exact element={<Home />} />
-          <Route path="/notices" exact element={<Notices />} />
+          <Route path="/notices" exact element={<Notices />} /> 
           <Route path="/signup" exact   element={<Signup />} />
           <Route path="/signin" exact element={<Signin />} />
+          <Route path="/logout" exact element={<Logout />} />
+          <Route path="/Dashboard" element={<Buildings />} />
+          <Route path="/noticesm" element={<NoticesM />} />
           {/* <Route path="/logout" exact element={<Logout />} /> */}
         </Routes>
       
