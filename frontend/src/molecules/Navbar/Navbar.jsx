@@ -92,6 +92,10 @@ export default function Navbar() {
           <Link to="/home">Home</Link>
         </li>
 
+        <li className={pathname === '/about-us' ? 'active' : ''}>
+          <Link to="/about-us">About Us</Link>
+        </li>
+
         <li className={pathname === '/notices' ? 'active' : ''}>
           <Link to="/notices">Notices</Link>
         </li>
