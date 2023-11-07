@@ -1,11 +1,33 @@
+a {
+    color: rgba(100, 0, 100, 1);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: rgba(50, 200, 50, 1);
+}
+
+li {
+    margin-top: 15px;
+}
+
+.services-image {
+    margin-top: 10%;
+}
+
 .container {
     width: 90%;
-    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 10x;
 }
 
-.section {
-    margin-top: 2%;
+.services-section {
+    margin-top: 5%;
 }
 
 .order_list {

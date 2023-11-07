@@ -35,9 +35,9 @@ export default function Navbar() {
   //   }
   // }
 
-  const openApartmentListing = () => {
-    console.log("Listing to be opened!");
-  } 
+  // const openApartmentListing = () => {
+  //   console.log("Listing to be opened!");
+  // } 
 
   if (pathname === '/' || pathname === '/signup' || pathname === '/signin') {
     return (
@@ -58,9 +58,9 @@ export default function Navbar() {
         list = {list}
         keys = {["description"]}
         width = {430}
-        // onSelect = {(newListing) => {
-        //   setSelectedItem(newSelectedItem)
-        // }}
+        onSelect = {(selectedListing) => {
+          setSelectedItem(selectedListing)
+        }}
 
         resultsTemplate={(state) => {
           return state.results.map((val, i) => {

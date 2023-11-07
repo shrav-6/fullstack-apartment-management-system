@@ -75,11 +75,17 @@ function Notices({
         onMouseLeave={handleMouseLeave}>
         <div>
           <FilterAltRoundedIcon />
-          {isDropdownVisible && <DropdownFilterMenu notices />}
+          {
+            isDropdownVisible
+            // && <DropdownFilterMenu notices />
+          }
         </div>
         <div>
           <SortRoundedIcon />
-          {isDropdownVisible && <DropdownSortMenu  notices />}
+          {
+            isDropdownVisible 
+            // && <DropdownSortMenu  notices />
+          }
         </div>
       </div>
       <div className="card">
