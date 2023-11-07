@@ -30,3 +30,27 @@ backend-test:
         - npm run build-test
         - npm run test
         - echo "all the backend tests ran successfully!"
+
+publish:
+  image: docker:latest
+  stage: publish
+  tags: 
+    - deployment
+  variables:
+    # these values may need to be different if using TLS, k8s, etc.
+    # You can alternatively set defaults in your runner config
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: "tcp://docker:2375"
+  services:
+    - docker:dind
+
+ 
+  script:
+    - pwd 
+    - echo $SERVER_IP
+    - docker --version
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PWD docker.io
+    - docker build -t docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA .
+    - docker push docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA
+  only:
+    - main
