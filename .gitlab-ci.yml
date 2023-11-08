@@ -1,3 +1,10 @@
+stages: 
+    - build
+    - test
+    - publish
+    - deploy
+
+
 frontend-build:
     stage: build
     image: node:16.20.1
