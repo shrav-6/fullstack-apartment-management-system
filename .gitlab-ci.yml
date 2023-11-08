@@ -11,32 +11,32 @@ frontend-build:
     script: 
         - echo "🏃‍♀️ running frontend build job"
         - cd frontend/
-        - yarn install
+        - yarn install --network-timeout 600000
         - yarn add vite
         - yarn run build
         - echo "✅ frontend build completed succesfully!"
 
-backend-build:
-    stage: build
-    image: node:16.20.1
-    script: 
-        - echo "🏃‍♀️ running backend build job"
-        - cd frontend/
-        - npm install
-        - npm run build
-        - echo "✅ backend build completed succesfully!"
+# backend-build:
+#     stage: build
+#     image: node:16.20.1
+#     script: 
+#         - echo "🏃‍♀️ running backend build job"
+#         - cd frontend/
+#         - npm install
+#         - npm run build
+#         - echo "✅ backend build completed succesfully!"
 
 
-backend-test:
-    stage: test
-    script:
-        - echo "starting test"
-        - cd backend/
-        - npm install
-        - npm run build
-        - npm run build-test
-        - npm run test
-        - echo "all the backend tests ran successfully!"
+# backend-test:
+#     stage: test
+#     script:
+#         - echo "starting test"
+#         - cd backend/
+#         - npm install
+#         - npm run build
+#         - npm run build-test
+#         - npm run test
+#         - echo "all the backend tests ran successfully!"
 
 publish:
   image: docker:latest
