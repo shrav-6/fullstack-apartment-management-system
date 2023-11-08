@@ -20,6 +20,9 @@ app.use("/auth", usersRouter);
 const buildingsRouter = require("./routes/Buildings");
 app.use("/Buildings", buildingsRouter);
 
+const applicationRouter = require("./routes/Applications");
+app.use('/Applications', applicationRouter);
+
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
     console.log("Server running on port 3001");

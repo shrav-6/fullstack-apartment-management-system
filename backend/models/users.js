@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     users.associate = (models) => {
       users.hasOne(models.managers);
       users.hasOne(models.tenants);
-      
+      users.hasMany(models.guests);
     };
   
     return users;
