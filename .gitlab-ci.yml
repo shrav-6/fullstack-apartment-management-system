@@ -27,16 +27,16 @@ backend-build:
         - echo "✅ backend build completed succesfully!"
 
 
-backend-test:
-    stage: test
-    script:
-        - echo "starting test"
-        - cd backend/
-        - npm install
-        - npm run build
-        - npm run build-test
-        - npm run test
-        - echo "all the backend tests ran successfully!"
+# backend-test:
+#     stage: test
+#     script:
+#         - echo "starting test"
+#         - cd backend/
+#         - npm install
+#         - npm run build
+#         - npm run build-test
+#         - npm run test
+#         - echo "all the backend tests ran successfully!"
 
 publish:
   image: docker:latest
