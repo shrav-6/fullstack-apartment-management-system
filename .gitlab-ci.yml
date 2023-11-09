@@ -65,6 +65,7 @@ publish:
     - docker push docker.io/csci5308vm18/shelter:backend_$CI_COMMIT_SHORT_SHA
   only:
     - development
+    
 
 deploy:
   image: alpine:latest
