@@ -65,7 +65,7 @@ publish:
     - docker build -t docker.io/csci5308vm18/shelter:backend_$CI_COMMIT_SHORT_SHA .
     - docker push docker.io/csci5308vm18/shelter:backend_$CI_COMMIT_SHORT_SHA
   only:
-    - main
+    - development
 
 deploy:
   image: alpine:latest
@@ -89,6 +89,6 @@ deploy:
     name: production
     url: http://172.17.0.237:8073
   only:
-    - main
+    - development
 
 
