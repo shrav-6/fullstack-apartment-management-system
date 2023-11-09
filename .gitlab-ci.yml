@@ -16,27 +16,27 @@ frontend-build:
         - yarn run build
         - echo "✅ frontend build completed succesfully!"
 
-# backend-build:
-#     stage: build
-#     image: node:16.20.1
-#     script: 
-#         - echo "🏃‍♀️ running backend build job"
-#         - cd frontend/
-#         - npm install
-#         - npm run build
-#         - echo "✅ backend build completed succesfully!"
+backend-build:
+    stage: build
+    image: node:16.20.1
+    script: 
+        - echo "🏃‍♀️ running backend build job"
+        - cd backend/
+        - npm install
+        - npm run build
+        - echo "✅ backend build completed succesfully!"
 
 
-# backend-test:
-#     stage: test
-#     script:
-#         - echo "starting test"
-#         - cd backend/
-#         - npm install
-#         - npm run build
-#         - npm run build-test
-#         - npm run test
-#         - echo "all the backend tests ran successfully!"
+backend-test:
+    stage: test
+    script:
+        - echo "starting test"
+        - cd backend/
+        - npm install
+        - npm run build
+        - npm run build-test
+        - npm run test
+        - echo "all the backend tests ran successfully!"
 
 publish:
   image: docker:latest
@@ -55,8 +55,14 @@ publish:
     - echo $SERVER_IP
     - docker --version
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PWD docker.io
-    - docker build -t docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA .
-    - docker push docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA
+
+    - cd frontend/
+    - docker build -t docker.io/csci5308vm18/shelter:frontend_$CI_COMMIT_SHORT_SHA .
+    - docker push docker.io/csci5308vm18/shelter:frontend_$CI_COMMIT_SHORT_SHA
+
+    - cd backend/
+    - docker build -t docker.io/csci5308vm18/shelter:backend_$CI_COMMIT_SHORT_SHA .
+    - docker push docker.io/csci5308vm18/shelter:backend_$CI_COMMIT_SHORT_SHA
   only:
     - main
 
@@ -69,9 +75,15 @@ deploy:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PWD docker.io"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:3000 --name my-app docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA"
+
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/csci5308vm18/shelter:frontend_$CI_COMMIT_SHORT_SHA"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/csci5308vm18/shelter:backend_$CI_COMMIT_SHORT_SHA"
+
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app-frontend || true"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app-backend || true"
+    
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:3000 --name my-app-frontend docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:3001 --name my-app-backend docker.io/csci5308vm18/shelter:$CI_COMMIT_SHORT_SHA"
   environment:
     name: production
     url: http://172.17.0.237:8073
