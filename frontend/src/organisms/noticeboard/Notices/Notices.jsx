@@ -7,6 +7,8 @@ import { getAllNotices } from './Notices.service';
 import { setNotices } from '../data/notice.actions';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
+import { sortNotices } from '../helper';
+import { filterNotices } from '../helper';
 // import DropdownFilterMenu from '../../../molecules/components/DropdownFilterMenu';
 // import DropdownSortMenu from '../../../molecules/components/DropdownSortMenu';
 
@@ -72,19 +74,34 @@ function Notices({
       <div
         style={{float:"right"}}
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <div>
-          <FilterAltRoundedIcon />
+          <FilterAltRoundedIcon>
+          </FilterAltRoundedIcon>
           {
-            isDropdownVisible
-            // && <DropdownFilterMenu notices />
+            <select defaultValue={'none'} onChange={(change) => filterNotices(notices, change.target.value)}>
+              <option value="none">None</option>
+              {/* <option value="lowPriority">Low Priority</option>
+              <option value="normalPriority">Normal Priority</option>
+              <option value="highPriority">High Priority</option> */}
+              <option value="last1Day">Last 1 Day</option>
+              <option value="last1Week">Last 1 Week</option>
+              <option value="last1Month">Last 1 Month</option>
+              <option value="last1Year">Last 1 Year</option>
+            </select>
           }
         </div>
+        {console.log("notices", notices)}
         <div>
-          <SortRoundedIcon />
+          <SortRoundedIcon>
+          </SortRoundedIcon>
           {
-            isDropdownVisible 
-            // && <DropdownSortMenu  notices />
+            <select defaultValue={'none'} onChange={(change) => sortNotices(notices, change.target.value)}>
+              <option value="none">None</option>
+              <option value="date">Date</option>
+              <option value="importance">Importance</option>
+            </select>
           }
         </div>
       </div>

@@ -63,13 +63,13 @@ export function AboutUs({
                                     Akshat Ashish Shah
                                 </li>
                                 <li>
+                                    MD Samshad Rahman
+                                </li>
+                                <li>
                                     Priyanka Ravichandran
                                 </li>
                                 <li>
                                     Yuci Wang
-                                </li>
-                                <li>
-                                    MD Samshad Rahman
                                 </li>
                             </ol>
                         </div>
