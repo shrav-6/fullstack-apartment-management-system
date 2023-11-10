@@ -14,4 +14,4 @@ EXPOSE 3001
 
 # Set the entry point command for the container
 # ENTRYPOINT ["node", "app.js"]
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "serve"]
