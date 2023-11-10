@@ -4,7 +4,7 @@ FROM node:latest
 RUN apt-get update && apt-get install -y git
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy your application code into the container
 COPY . .
@@ -13,4 +13,5 @@ COPY . .
 EXPOSE 3001
 
 # Set the entry point command for the container
-ENTRYPOINT ["node", "app.js"]
+# ENTRYPOINT ["node", "app.js"]
+CMD ["npm", "run", "start"]
