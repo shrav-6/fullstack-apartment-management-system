@@ -13,5 +13,4 @@ COPY . .
 EXPOSE 3001
 
 # Set the entry point command for the container
-# ENTRYPOINT ["node", "app.js"]
-CMD ["npm", "run", "serve"]
+CMD npm run install && npm run serve
