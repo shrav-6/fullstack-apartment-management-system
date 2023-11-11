@@ -5,18 +5,23 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import apartments from "../../static/apartments.jpg";
 import UpdateIcon from '@mui/icons-material/Update';
 import { Link } from 'react-router-dom';
+import apartments from '../../static/apartments.jpg';
+import ViewListings from '../../organisms/noticeboard/Managers/ViewListings';
+import { useNavigate } from 'react-router-dom';
 
-export default function CardforBulding({building}) {
-
+export default function CardforBulding({ building }) {
   const {
     id,
     buildingName,
     address,
-    phoneNumber
+    phoneNumber,
   } = building;
+  const navigate = useNavigate();
+  const viewListingsHandler = () => {
+    navigate('/listings', { state: { buildingName } });
+  };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -27,17 +32,15 @@ export default function CardforBulding({building}) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-        <Button size="small">{buildingName}</Button>
+          <Button size="small">{buildingName}</Button>
         </Typography>
       </CardContent>
       <CardActions>
-      <Link to="/noticesm">
-        <Button size="small">Notice</Button>
-      </Link>
-      <Link to="/listings">
-        <Button size="small">Listings</Button>
-      </Link>
-    </CardActions>
+        <Link to="/noticesm">
+          <Button size="small">Notice</Button>
+        </Link>
+        <Button size="small" onClick={viewListingsHandler}>Listings</Button>
+      </CardActions>
     </Card>
   );
 }
