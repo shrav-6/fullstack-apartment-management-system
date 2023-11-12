@@ -1,4 +1,3 @@
-// import React, { useState, useEffect } from 'react';
 import Location from '../molecules/Location/Location.jsx'
 
 export default function Home() {
