@@ -80,7 +80,10 @@ function Notices({
           <FilterAltRoundedIcon>
           </FilterAltRoundedIcon>
           {
-            <select defaultValue={'none'} onChange={(change) => filterNotices(notices, change.target.value)}>
+            <select defaultValue={'none'} onChange={(change) => {
+              filterNotices(notices, change.target.value);
+              mapDispatchToProps(notices);
+            }}>
               <option value="none">None</option>
               {/* <option value="lowPriority">Low Priority</option>
               <option value="normalPriority">Normal Priority</option>
@@ -97,7 +100,10 @@ function Notices({
           <SortRoundedIcon>
           </SortRoundedIcon>
           {
-            <select defaultValue={'none'} onChange={(change) => sortNotices(notices, change.target.value)}>
+            <select defaultValue={'none'} onChange={(change) => {
+              sortNotices(notices, change.target.value);
+              mapStateToProps;
+            }}>
               <option value="none">None</option>
               <option value="date">Date</option>
               <option value="importance">Importance</option>
