@@ -9,7 +9,6 @@ import './CardModal.css';
 function Card({ notice }) {
   const {
     id,
-    Author_name,
     createdAt,
     Description,
     title,
@@ -32,10 +31,10 @@ function Card({ notice }) {
     >
       {/* <div className="card-id">{id}</div> */}
       <div className="card-title">{title}</div>
-      <div className="card-author">
+      {/* <div className="card-author">
         <span className="by-text">By </span>
         <span className="author">{Author_name}</span>
-      </div>
+      </div> */}
       <div className="card-description">{Description}</div>
       <div className="card-createdAt"><FaClock />
         {/* <span className="date-and-time">Created: </span> */}

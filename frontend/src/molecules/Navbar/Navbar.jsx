@@ -12,25 +12,29 @@ export default function Navbar() {
         </Link>
       </nav>
     );
+  } else {
+    return (
+      <nav className="nav">
+        <Link to="/home" className="title">
+          SHELTER
+        </Link>
+        <ul>
+          <li className={pathname === '/home' ? 'active' : ''}>
+            <Link to="/home">Home</Link>
+          </li>
+
+          <li className={pathname === '/notices' ? 'active' : ''}>
+            <Link to="/notices">Notices</Link>  
+          </li>
+
+          <li className={pathname === '/logout' ? 'active' : ''}>
+            <Link to="/logout">Logout</Link>
+          </li> 
+          <li className={pathname === '/Dashboard' ? 'active' : ''}>
+            <Link to="/Dashboard">DashBoard</Link>
+          </li> 
+        </ul>
+      </nav>
+    );
   }
-  return (
-    <nav className="nav">
-      <Link to="/home" className="title">
-        <span className="navbar-title">SHELTER</span>
-      </Link>
-      <ul>
-        <li className={pathname === '/home' ? 'active' : ''}>
-          <Link to="/home">Home</Link>
-        </li>
-
-        <li className={pathname === '/notices' ? 'active' : ''}>
-          <Link to="/notices">Notices</Link>
-        </li>
-
-        <li className={pathname === '/signin' ? 'active' : ''}>
-          <Link to="/signin">Logout</Link>
-        </li>
-      </ul>
-    </nav>
-  );
 }

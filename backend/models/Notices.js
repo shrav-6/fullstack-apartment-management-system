@@ -4,9 +4,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: {
+      Description: {
         type: DataTypes.STRING,
         allowNull: false,
+        type: DataTypes.STRING(1000),
       },
       dateAndTime: {
         type: DataTypes.DATE,
