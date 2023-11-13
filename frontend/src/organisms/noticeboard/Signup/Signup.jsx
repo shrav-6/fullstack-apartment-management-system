@@ -18,7 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // Define regular expressions for username and password validation
 const usernameRegex = /^[a-zA-Z]\w{7,}$/;
@@ -26,6 +26,14 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 function Signup() {
   let navigate = useNavigate();
+  const location = useLocation();
+
+  // Accessing the state object from the current route
+  const routeState = location?.state?.routeState;
+
+// Accessing the state object from the current route
+  // const isFromSignUp = location.state
+  console.log(location);
 
   const [inputs, setInputs] = useState({
     userName: '',
@@ -93,6 +101,7 @@ function Signup() {
           } else {
             sessionStorage.setItem('accessToken', response.data.token);
             navigate('/signin');
+            
           }
         });
       }

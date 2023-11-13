@@ -10,7 +10,7 @@ function Card({ notice }) {
   const {
     id,
     createdAt,
-    Description,
+    description,
     title,
   } = notice;
 
@@ -23,11 +23,9 @@ function Card({ notice }) {
   const handleCancel = () => {
     setModalVisible(false);
   };
-
   return (
     <div
       className="container-card"
-      key={id}
     >
       {/* <div className="card-id">{id}</div> */}
       <div className="card-title">{title}</div>
@@ -35,7 +33,7 @@ function Card({ notice }) {
         <span className="by-text">By </span>
         <span className="author">{Author_name}</span>
       </div> */}
-      <div className="card-description">{Description}</div>
+      <div className="card-description">{description}</div>
       <div className="card-createdAt"><FaClock />
         {/* <span className="date-and-time">Created: </span> */}
         {createdAt ? moment(createdAt).format(' DD MMM') : 'N/A'}
@@ -53,6 +51,7 @@ function Card({ notice }) {
         visible={isModalVisible}
         onOk={handleCancel}
         maskClosable
+        onCancel={handleCancel}
         footer={<div><Button type="primary" onClick={handleCancel}>OK</Button></div>}
 
       >
@@ -61,7 +60,7 @@ function Card({ notice }) {
             <h2>{title}</h2>
           </div>
           <div className="modal-description">
-            <p>{Description}</p>
+            <p>{description}</p>
           </div>
         </div>
       </Modal>

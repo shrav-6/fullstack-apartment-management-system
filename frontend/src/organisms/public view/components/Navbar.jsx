@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaAlignRight } from "react-icons/fa";
-import logo from "../../organisms/public view/images/logo.svg";
+import logo from "../images/logo.svg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

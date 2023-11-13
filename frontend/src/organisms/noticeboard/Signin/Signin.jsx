@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 function Copyright(props) {
@@ -31,6 +31,18 @@ const defaultTheme = createTheme();
 
 export default function Signin() {
   let navigate = useNavigate();
+  const location = useLocation();
+
+  // Accessing the state object from the current route
+  const fromSignUp = location?.state?.fromSignUp;
+  const unitAvailable = location?.state?.unitAvailable;
+  const buildingName = location?.state?.buildingName;
+  const listingId =  location?.state?.listingId;
+
+
+// Accessing the state object from the current route
+  // const isFromSignUp = location.state
+  console.log(fromSignUp);
 
   const [inputs, setInputs] = useState({
     password: '',
@@ -77,12 +89,18 @@ export default function Signin() {
           alert(response.data.error);
         } else {
           sessionStorage.setItem('accessToken', response.data.token);
-          navigate('/home');
+          if(fromSignUp){
+            navigate('/application', {
+              state: { unitAvailable: unitAvailable, buildingName: buildingName, listingId: listingId} // Your state object
+            })
+          }else{
+            navigate('/home');
+          }
         }
       });
     }
   };
-
+// console.log(isFromSignUp, "isfrom");
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -147,9 +165,11 @@ export default function Signin() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <button className="yourLinkStyles" onClick={() => navigate(`/signup`, {state: {
+                isFromSignUp: routeState
+              }})}>
+  {"Don't have an account? Sign Up"}
+</button>
               </Grid>
             </Grid>
           </Box>
