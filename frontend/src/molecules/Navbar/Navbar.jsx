@@ -1,40 +1,68 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FaAlignRight } from "react-icons/fa";
+import logo from "../../organisms/public view/images/logo.svg";
 
-export default function Navbar() {
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
+  const accessToken = sessionStorage.getItem("accessToken");
 
-  if (pathname === '/' || pathname === '/signup' || pathname === '/signin') {
-    return (
-      <nav className="nav">
-        <Link to="/" className="title">
-          SHELTER
-        </Link>
-      </nav>
-    );
-  } else {
-    return (
-      <nav className="nav">
-        <Link to="/home" className="title">
-          SHELTER
-        </Link>
-        <ul>
-          <li className={pathname === '/home' ? 'active' : ''}>
-            <Link to="/home">Home</Link>
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const imageStyles = {
+    width: "90px",
+    height: "auto",
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="nav-center">
+        <div className="nav-header">
+          <img src={logo} alt="Shelter App" style={imageStyles} />
+          <button type="button" className="nav-btn" onClick={handleToggle}>
+            <FaAlignRight className="nav-icon" />
+          </button>
+        </div>
+        <ul className={isOpen ? "nav-links show-nav" : "nav-links"}>
+          {accessToken ? (
+            <>
+              
+              <li>
+                <Link to="/home">Home</Link>
+              </li>
+              <li>
+                <Link to="/notices">Notices</Link>
+              </li>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/logout">Logout</Link>
+              </li>
+            </>
+          ) : (
+            <>
+             <li>
+            <Link to="/">About</Link>
           </li>
-
-          <li className={pathname === '/notices' ? 'active' : ''}>
-            <Link to="/notices">Notices</Link>  
+          <li>
+            <Link to="/rooms">New Listings</Link>
           </li>
-
-          <li className={pathname === '/logout' ? 'active' : ''}>
-            <Link to="/logout">Logout</Link>
-          </li> 
-          <li className={pathname === '/Dashboard' ? 'active' : ''}>
-            <Link to="/Dashboard">DashBoard</Link>
-          </li> 
+              <li>
+                <Link to="/signin">Sign In</Link>
+              </li>
+              <li>
+                <Link to="/signup">Sign Up</Link>
+              </li>
+            </>
+          )}
         </ul>
-      </nav>
-    );
-  }
-}
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
