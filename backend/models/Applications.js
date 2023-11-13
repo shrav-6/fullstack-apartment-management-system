@@ -9,7 +9,12 @@ module.exports = (sequelize, DataTypes) => {
         gender: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     });
     return applications;
 };
+
