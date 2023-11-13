@@ -10,33 +10,34 @@ router.post('/create',validateToken, async (req, res) => {
     const user_id=req.user.id;
     const role=req.user.role;
     const listingId =req.body.listingId;
-    const status="sent";
-    if(role=="Guest"){
-    const guest = await guests.findOne({ where: { userId: user_id } });
-    const listing=await listings.findOne({ where: { id:listingId} });
-    if(guest!=null && listing!=null){
+    const status="In progress";
+    const listing=await listings.findOne({ where: { id:application.listingId} });
+    if(listing!=null){
       await applications.create({
-        message: application.message,
-        gender: application.gender,
+        firstName: application.firstName,
+        lastName: application.lastName,
+        moveInDate: application.moveInDate,
+        needParking: application.needParking,
+        email: application.email,
+        phoneNumber: application.phoneNumber,
         status: status,
+        address: application.address,
+        additionalInfo: application.additionalInfo,
         listingId:listing.id,
-        guestId: guest.id
+        userId:user_id
       });
       res.json( {"success": true,
-      "message": "application created successfully"});
+      "message": "application created successfully,In pending with approval"});
     
   }
     else{
-      res.status(500).json({"success": false,error: "user doesn't have the permissions"});
+      res.json({"success": false,error: "You can't apply for this Apartment"});
     }
-  }
-  else{
-    res.status(500).json({"success": false,error: "user doesn't have the permissions"});
-  }
+
 });
 
 // manager can accept/reject applications
-router.put('/accept/reject/:applicationId',validateToken, async (req, res) => {
+router.put('/accept_reject/:applicationId',validateToken, async (req, res) => {
   const applicationId = req.params.applicationId;
   // const message = req.params.message;
   // const gender = req.params.gender;
@@ -49,7 +50,7 @@ router.put('/accept/reject/:applicationId',validateToken, async (req, res) => {
     console.log(user_id);
     if(role=="Manager"){
       const manager = await managers.findOne({ where: { userId: user_id } });
-      const application = await applications.findOne({ where: { id:applicationId} });
+      const application = await applications.findOne({ where: { id:applicationId ,userId: user_id }  });
       if(manager!=null && application!=null){
         await applications.update(
           { status:status},
@@ -65,14 +66,14 @@ router.put('/accept/reject/:applicationId',validateToken, async (req, res) => {
           // notify tenant that application is rejected
         }
       } else {
-        res.status(500).json({"success": false,error: "User is not a manager! Only managers can accept/reject applications!"});
+        res.json({"success": false,error: "User is not a manager! Only managers can accept/reject applications!"});
       }
     }
     else {
-      res.status(500).json({"success": false,error: "User is not a manager! Only managers can accept/reject applications!"});
+      res.json({"success": false,error: "User is not a manager! Only managers can accept/reject applications!"});
     }
   } else {
-    res.status(500).json({"success": false,error: "Manager can only accept or reject"});
+    res.json({"success": false,error: "Can perform two operation either accept or reject"});
   }
 });
 
@@ -83,7 +84,7 @@ router.get("/all/:listingId",validateToken, async (req, res) => {
     const user_id=req.user.id;
     if(role=="Manager"){
         const manager = await managers.findOne({ where: { userId: user_id } });
-        const allapplicationforlisting = await applications.findAll({ where: {listingId: listingId}});
+        const allapplicationforlisting = await applications.findAll({ where: {listingId: listingId,userId: user_id}});
         if(manager!=null && allapplicationforlisting!=null){ 
             res.json({"success": true, "message": "Retrieved successfully","data":allapplicationforlisting});
         }
@@ -105,7 +106,7 @@ router.get("/get/:applicationId",validateToken, async (req, res) => {
     const user_id=req.user.id;
     if(role=="Manager"){
         const manager = await managers.findOne({ where: { userId: user_id } });
-        const application = await applications.findOne({ where: { id: applicationId } });
+        const application = await applications.findOne({ where: { id: applicationId,userId: user_id } });
         if(manager!=null && application!=null){ 
             res.json({"success": true, "message": "Retrieved successfully","data":application});
         }
