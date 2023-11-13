@@ -33,7 +33,7 @@ function Card({ notice }) {
         <span className="by-text">By </span>
         <span className="author">{Author_name}</span>
       </div> */}
-      <div className="card-description">{Description}</div>
+      <div className="card-description">{description}</div>
       <div className="card-createdAt"><FaClock />
         {/* <span className="date-and-time">Created: </span> */}
         {createdAt ? moment(createdAt).format(' DD MMM') : 'N/A'}
