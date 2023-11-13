@@ -10,7 +10,7 @@ function Card({ notice }) {
   const {
     id,
     createdAt,
-    Description,
+    description,
     title,
   } = notice;
 
@@ -23,11 +23,9 @@ function Card({ notice }) {
   const handleCancel = () => {
     setModalVisible(false);
   };
-
   return (
     <div
       className="container-card"
-      key={id}
     >
       {/* <div className="card-id">{id}</div> */}
       <div className="card-title">{title}</div>
@@ -53,6 +51,7 @@ function Card({ notice }) {
         visible={isModalVisible}
         onOk={handleCancel}
         maskClosable
+        onCancel={handleCancel}
         footer={<div><Button type="primary" onClick={handleCancel}>OK</Button></div>}
 
       >
@@ -61,7 +60,7 @@ function Card({ notice }) {
             <h2>{title}</h2>
           </div>
           <div className="modal-description">
-            <p>{Description}</p>
+            <p>{description}</p>
           </div>
         </div>
       </Modal>
