@@ -4,7 +4,7 @@ import axios from 'axios';
 const token = localStorage.getItem('token');
 
 const axiosInstance = axios.create({
-  baseURL: 'https://shelternotice.onrender.com/',
+  baseURL: 'http://localhost:3001/',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,

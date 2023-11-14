@@ -1,26 +1,21 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { message } from 'antd';
-import _get from 'lodash/get';
-import Card from '../../../molecules/Card/Card';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
+import Card from '../../../molecules/Card/Card';
 
 import {
   // createNotice,
   // getNoticeById,
   getAllNotices,
 } from './Notices.service';
-//import { setNotices } from '../data/notice.actions';
+// import { setNotices } from '../data/notice.actions';
 
 function NoticesM() {
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
     getAllNotices()
-    .then(response => setData(response))
+      .then(response => setData(response));
   }, []);
 
   // const handleCreateNotice = () => {
@@ -62,21 +57,22 @@ function NoticesM() {
   const handleMouseLeave = () => {
     setDropdownVisible(false);
   };
-  
+
   return (
     <div>
       <h1 className="nav-notice">Notices</h1>
       <div
-        style={{float:"right"}}
+        style={{ float: 'right' }}
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <div>
           <FilterAltRoundedIcon />
-          {isDropdownVisible && <DropdownFilterMenu notices />}
+          {isDropdownVisible /* && <DropdownFilterMenu notices /> */}
         </div>
         <div>
           <SortRoundedIcon />
-          {isDropdownVisible && <DropdownSortMenu  notices />}
+          {isDropdownVisible /* && <DropdownSortMenu notices /> */}
         </div>
       </div>
       <div className="card">

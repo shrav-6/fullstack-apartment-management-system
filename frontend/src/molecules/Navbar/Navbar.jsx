@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaAlignRight } from "react-icons/fa";
-import logo from "../../organisms/public view/images/logo.svg";
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FaAlignRight } from 'react-icons/fa';
+import logo from '../../organisms/public view/images/logo.svg';
 
-const Navbar = () => {
+function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
-  const accessToken = sessionStorage.getItem("accessToken");
+  const accessToken = sessionStorage.getItem('accessToken');
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
   const imageStyles = {
-    width: "90px",
-    height: "auto",
+    width: '90px',
+    height: 'auto',
   };
 
   return (
@@ -26,10 +26,10 @@ const Navbar = () => {
             <FaAlignRight className="nav-icon" />
           </button>
         </div>
-        <ul className={isOpen ? "nav-links show-nav" : "nav-links"}>
+        <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
           {accessToken ? (
             <>
-              
+
               <li>
                 <Link to="/home">Home</Link>
               </li>
@@ -45,12 +45,12 @@ const Navbar = () => {
             </>
           ) : (
             <>
-             <li>
-            <Link to="/">About</Link>
-          </li>
-          <li>
-            <Link to="/rooms">New Listings</Link>
-          </li>
+              <li>
+                <Link to="/">About</Link>
+              </li>
+              <li>
+                <Link to="/rooms">New Listings</Link>
+              </li>
               <li>
                 <Link to="/signin">Sign In</Link>
               </li>
@@ -63,6 +63,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

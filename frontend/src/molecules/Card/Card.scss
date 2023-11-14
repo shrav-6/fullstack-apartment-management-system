@@ -62,6 +62,8 @@ body{
 .card-title {
   font-weight: 600;
   font-size: 24px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-description{
@@ -94,6 +96,7 @@ body{
   margin-top: 10px;
   font-size: small;
 }
+
 // .card-createdAt .date-and-time {
 //   font-weight:500;
 //   font-family: Georgia, serif;
