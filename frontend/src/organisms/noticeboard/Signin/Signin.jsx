@@ -22,7 +22,7 @@ function Copyright(props) {
       {'Copyright © '}
       <h1>Shelter</h1>
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -82,25 +82,26 @@ export default function Signin() {
 
     if (validateFields()) {
       const { password, email } = inputs;
-      const data = { email: email, password: password };
-      console.log(data);
+      const data = { email, password };
+      // console.log(data);
       axios.post('http://localhost:3001/auth/login', data).then((response) => {
         if (response.data.error) {
+          // eslint-disable-next-line no-alert
           alert(response.data.error);
         } else {
-          sessionStorage.setItem('accessToken', response.data.token);
-          if(fromSignUp){
+          sessionStorage.setItem('userCred', JSON.stringify(response?.data));
+          if (fromSignUp) {
             navigate('/application', {
-              state: { unitAvailable: unitAvailable, buildingName: buildingName, listingId: listingId} // Your state object
-            })
-          }else{
+              state: { unitAvailable, buildingName, listingId }, // Your state object
+            });
+          } else {
             navigate('/home');
           }
         }
       });
     }
   };
-// console.log(isFromSignUp, "isfrom");
+  // console.log(isFromSignUp, "isfrom");
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -165,11 +166,9 @@ export default function Signin() {
                 </Link>
               </Grid>
               <Grid item>
-              <button className="yourLinkStyles" onClick={() => navigate(`/signup`, {state: {
-                isFromSignUp: routeState
-              }})}>
-  {"Don't have an account? Sign Up"}
-</button>
+                <button className="yourLinkStyles" onClick={() => navigate('/signup')}>
+                  Don't have an account? Sign Up
+                </button>
               </Grid>
             </Grid>
           </Box>

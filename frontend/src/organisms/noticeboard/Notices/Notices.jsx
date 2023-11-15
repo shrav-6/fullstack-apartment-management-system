@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -24,6 +25,8 @@ import {
   resetPostData,
 } from '../data/notice.actions';
 import { STRING_CONSTANTS } from '../constants/notice.constant';
+// styles
+import styles from './Notice.module.scss';
 
 const { TextArea } = Input;
 
@@ -41,12 +44,13 @@ function Notices({
   onResetPostData = () => {},
 }) {
   const [editTrigger, setEditTrigger] = useState(0); // State to trigger useEffect on edits
+  const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
 
   const fetchNotices = () => {
     getAllNotices()
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: response?.data });
+          onSetNotices({ allNotices: response?.data?.data });
         }
       })
       .catch((err) => {
@@ -90,7 +94,7 @@ function Notices({
     postAllNotices(payload)
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: [...notices, response?.data] });
+          onSetNotices({ allNotices: [...notices, response?.data?.data] });
           setModalVisible(false);
           onSetTitle('');
           onSetDescription('');
@@ -163,15 +167,18 @@ function Notices({
       <h1 className="nav-notice">Notices</h1>
       <div style={{ float: 'right' }}>
         <div>
-          <div
-            tabIndex="0"
-            role="button"
-            className="card-post"
-            onClick={handlePlusIconClick}
-          >
-            <FaPlus />
-          </div>
+          {role === 'Manager' && (
+            <div
+              tabIndex="0"
+              role="button"
+              className="card-post"
+              onClick={handlePlusIconClick}
+            >
+              <FaPlus />
+            </div>
+          )}
         </div>
+
         <div>
           <FilterAltRoundedIcon />
         </div>
@@ -179,33 +186,51 @@ function Notices({
           <SortRoundedIcon />
         </div>
       </div>
-      <div className="card">
+      <div className={styles.cardComponentContainer}>
         {(notices || []).map(notice => (
-          <Card key={notice.id} notice={notice} onSaveEdit={handleEditNotice} onDelete={handleDeleteNotice} />
+          <Card
+            key={notice.id}
+            notice={notice}
+            onSaveEdit={handleEditNotice}
+            onDelete={handleDeleteNotice}
+          />
         ))}
       </div>
       <Modal
-        title="Title"
         description="Write message"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handlePlusIconCancel}
+        className={styles.modalContainer}
         footer={[<Button key="post" onClick={handleSave}>Post</Button>]}
       >
-        <div>
-          <label>Title:</label>
-          <Input value={title} onChange={e => onSetTitle(e.target.value)} />
-        </div>
-        <div>
-          <label>Description:</label>
-          <TextArea
-            value={description}
-            onChange={e => onSetDescription(e.target.value)}
-            autoSize={{ minRows: 3, maxRows: 5 }}
-          />
-        </div>
-        <div>
-          <label>Created_by:</label>
-          <Input value={authorName} onChange={e => onSetAuthorName(e.target.value)} />
+        <div className={styles.postCreationContainer}>
+          <section>
+            <label htmlFor="title">
+              Title:
+            </label>
+            <Input
+              id="title"
+              name="title"
+              value={title}
+              onChange={e => onSetTitle(e.target.value)}
+            />
+          </section>
+          <section>
+            <label htmlFor="description">
+              Description:
+            </label>
+            <TextArea
+              id="description"
+              name="description"
+              value={description}
+              onChange={e => onSetDescription(e.target.value)}
+              autoSize={{ minRows: 3, maxRows: 5 }}
+            />
+          </section>
+          <section>
+            <label>Created_by:</label>
+            <Input value={authorName} onChange={e => onSetAuthorName(e.target.value)} />
+          </section>
         </div>
       </Modal>
     </div>

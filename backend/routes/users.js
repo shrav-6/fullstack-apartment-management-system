@@ -3,7 +3,7 @@ const router = express.Router();
 const { users,tenants,managers,buildings,guests} = require("../models");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
-
+ 
 router.post("/signup", async (req, res) => {
   const { userName,email,name, password,role,phoneNumber,address} = req.body;
   const user1=await users.findOne({ where: { email: email } });
@@ -19,9 +19,9 @@ router.post("/signup", async (req, res) => {
         password: hash,
         email:email,
         role:role,
-      
+     
       });
-    
+   
      const user=await users.findOne({ where: { email: email } });
      const tenant={"name":name,"phoneNumber":phoneNumber,"address":address,managerId:manager.id,"buildingId":building.id,"apartmentNumber":req.body.apartmentNumber,"userId":user.id};
      await tenants.create(tenant);
@@ -61,7 +61,7 @@ router.post("/signup", async (req, res) => {
           res.json({"success": true,
           "message": "user profile created successfully"});
         }
-
+ 
   else{
     res.status(500).json({"success": false,
         "message": "Not successful,no specific roles"});
@@ -72,34 +72,34 @@ else{
         "message": "Email is already registered"});
 }
 });
-
+ 
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-
+ 
     const user = await users.findOne({ where: { email: email } });
-
+ 
     if (!user) {
       return res.status(500).json({ success: false, message: 'User is not registered' });
     }
-
+ 
     const match = await bcrypt.compare(password, user.password);
-
+ 
     if (!match) {
       return res.json({ error: 'Wrong Username And Password Combination' });
     }
-
+ 
     const accessToken = sign(
       { username: user.username, id: user.id, email: user.email, role: user.role },
       'importantsecret'
     );
-
-    res.json({ token: accessToken, email: user.email, id: user.id, username: user.username });
+ 
+    res.json({ token: accessToken, email: user.email, id: user.id, username: user.username,role:user.role});
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });
-
-
+ 
+ 
 module.exports = router;

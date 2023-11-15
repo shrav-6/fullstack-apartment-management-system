@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-body-style */
 import React, { useState } from 'react';
@@ -6,9 +7,11 @@ import { FaClock, FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import moment from 'moment';
 import _get from 'lodash/get';
-import './Card.scss';
 import { Modal, Button, Input } from 'antd';
+// styles
+import styles from './Card.module.scss';
 import './CardModal.css';
+// constants
 import { STRING_CONSTANTS } from './constants/Card.constants';
 
 function Card({
@@ -20,7 +23,7 @@ function Card({
   const {
     id,
     createdAt,
-    description,
+    Description,
     title,
     editedAt,
     Author_name,
@@ -29,6 +32,7 @@ function Card({
   const [isModalVisible, setModalVisible] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDescription, setEditedDescription] = useState(Description);
+  const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
 
   const handleReadMore = () => {
     setModalVisible(true);
@@ -48,72 +52,85 @@ function Card({
     setModalVisible(false);
   };
 
-  // const handleEdit = () => {
-  //   setEditedTitle(title);
-  //   setEditedDescription(Description);
-  //   handleReadMore();
-  // };
-
   const handleCancel = () => {
     setModalVisible(false);
     setEditedTitle(title);
     setEditedDescription(Description);
   };
+
   return (
-    <div
-      className="container-card"
-    >
-      {/* <div className="card-id">{id}</div> */}
-      <div className="card-title">{title}
-        <span
-          tabIndex="0"
-          role="button"
-          className="card-edit"
-          onClick={handleEdit}
-        >
-          <FaEdit />
-          {/* {editedAt ? `Edited: ${moment(editedAt).format(' DD MMM')}` : ''} */}
-        </span>
-        <span tabIndex="0" role="button" className="card-delete" onClick={() => onDelete(id)}>
-          <MdDelete />
-        </span>
-      </div>
-      <div className="card-author">
-        <span className="by-text">By </span>
-        <span className="author">{Author_name}</span>
-      </div> */}
-      <div className="card-description">{Description}</div>
-      <div className="card-createdAt"><FaClock />
-        {
-          editedAt
+    <>
+      <div
+        className={styles.containerCard}
+        key={id}
+      >
+        <div className={styles.cardTitle}>
+          <span
+            title={title}
+            className={styles.textTitle}
+          >
+            {title}
+          </span>
+          {role === 'Manager' && (
+            <span
+              tabIndex="0"
+              role="button"
+              className={styles.cardEdit}
+              onClick={handleEdit}
+            >
+              <FaEdit />
+            </span>
+          )}
+          {role === 'Manager' && (
+            <span
+              tabIndex="0"
+              role="button"
+              className={styles.cardDelete}
+              onClick={() => onDelete(id)}
+            >
+              <MdDelete />
+            </span>
+          )}
+        </div>
+        <div className={styles.cardAuthor}>
+          <span>By </span>
+          <span className={styles.author}>{Author_name}</span>
+        </div>
+        <div className={styles.cardDescription}>{Description}</div>
+        <div className={styles.createdAt}><FaClock />
+          {editedAt
             ? `Updated at:${moment(editedAt).format(' DD MMM')}`
-            : moment(createdAt).format(' DD MMM')
-        }
-      </div>
-      <div className="button-container">
-        <button
-          type="button"
-          className="read-btn"
-          onClick={handleReadMore}
-        >Read More
-        </button>
+            : moment(createdAt).format(' DD MMM')}
+        </div>
+        <div className={styles.buttonContainer}>
+          <button
+            type="button"
+            className={styles.readBtn}
+            onClick={handleReadMore}
+          >Read More
+          </button>
+        </div>
       </div>
       <Modal
         title={null}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleCancel}
         maskClosable
-        footer={<div><Button type="primary" onClick={handleCancel}>OK</Button></div>}
-
+        footer={[
+          <Button key="save" type="primary" onClick={handleAction}>
+            Save Edit
+          </Button>,
+          <Button key="cancel" onClick={handleCancel}>
+            Cancel
+          </Button>,
+        ]}
       >
         <div className="modal-content-container">
           <div className="modal-title">
             <h2>
-              {
-                postType === STRING_CONSTANTS.POST_TYPE_EDIT
-                  ? STRING_CONSTANTS.EDIT_NOTICE
-                  : STRING_CONSTANTS.READ_MORE
-              }
+              {postType === STRING_CONSTANTS.POST_TYPE_EDIT
+                ? STRING_CONSTANTS.EDIT_NOTICE
+                : STRING_CONSTANTS.READ_MORE}
             </h2>
           </div>
           <div>
@@ -123,12 +140,17 @@ function Card({
               onChange={e => setEditedTitle(e.target.value)}
             />
           </div>
-          <div className="modal-description">
-            <p>{Description}</p>
+          <div>
+            <label>Description:</label>
+            <Input.TextArea
+              value={editedDescription}
+              onChange={e => setEditedDescription(e.target.value)}
+              autoSize={{ minRows: 3, maxRows: 5 }}
+            />
           </div>
         </div>
       </Modal>
-    </div>
+    </>
   );
 }
 

@@ -1,10 +1,9 @@
 const baseUrl = 'http://localhost:3001/';
 
 export const noticesService = {
-  getAllNotices: `${baseUrl}notices`,
-  getAllTheNotices: `${baseUrl}Notices`,
-  getAllNoticeById: `${baseUrl}notices/id`,
+  getAllNotices: `${baseUrl}Notices`,
+  getAllNoticeById: `${baseUrl}Notices/id`,
   editAllNotices: `${baseUrl}notices/:id`,
-  deleteNotice: `${baseUrl}notices/:id`,
+  deleteNotice: `${baseUrl}Notices/:id`,
   postAllNotices: `${baseUrl}notices`,
 };
