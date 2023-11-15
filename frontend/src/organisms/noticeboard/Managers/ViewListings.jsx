@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable spaced-comment */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
@@ -5,9 +6,9 @@
 // src/pages/PropertyListPage.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import AddListing from '../Managers/addListings';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+import AddListing from './addListings';
 
 // get listings from a particular manager
 function ViewListings() {
@@ -59,6 +60,33 @@ function ViewListings() {
         console.error('Error fetching listings:', error);
       });
   }, [accessToken]);
+
+  const [listingImages, setListingImages] = useState({});
+
+  useEffect(() => {
+    // Fetch listing images when the component mounts
+    if (listings.data) {
+      const fetchImages = async () => {
+        const imagesPromises = listings.data.map(async (listing) => {
+          const response = await axios.get(`http://localhost:3001/Listings/getimages/${listing.id}`);
+          return {
+            listingId: listing.id,
+            images: response.data,
+          };
+        });
+
+        const imagesData = await Promise.all(imagesPromises);
+        const imagesMap = imagesData.reduce((map, item) => {
+          map[item.listingId] = item.images;
+          return map;
+        }, {});
+
+        setListingImages(imagesMap);
+      };
+
+      fetchImages();
+    }
+  }, [listings]);
 
   const handleUpdate = (listingId) => {
     // You can implement the logic to open a modal or navigate to an edit page
@@ -113,6 +141,22 @@ function ViewListings() {
                 <p className="card-text">Move-In Date: {listing.startsFrom}</p>
                 <p className="card-text">Address: {listing.address}</p>
                 <p className="card-text">Pets: {listing.pets}</p>
+                {/* Display Images */}
+                {listingImages[listing.id] && listingImages[listing.id].length > 0 && (
+                  <div>
+                    <p>Images:</p>
+                    <div>
+                      {listingImages[listing.id].map(image => (
+                        <img
+                          key={image.id}
+                          src={`http://localhost:3001/Listings/getimages/${image.filename}`}
+                          alt="Listing Image"
+                          style={{ width: '100px', height: '100px', marginRight: '5px' }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <button type="button" onClick={() => handleUpdate(listing.id)}>Edit Listing</button>
                 <br></br><br></br>
                 <button type="button" onClick={() => handleDelete(listing.id)}>Delete Listing</button>

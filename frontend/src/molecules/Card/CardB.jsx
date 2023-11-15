@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import apartments from "../../static/apartments.jpg";
 import UpdateIcon from '@mui/icons-material/Update';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import ViewListings from '../../organisms/noticeboard/Managers/ViewListings';
 
 export default function CardforBuilding({building}) {
 
@@ -17,6 +19,12 @@ export default function CardforBuilding({building}) {
     address,
     phoneNumber
   } = building;
+
+  const navigate = useNavigate();
+  const viewListingsHandler = () => {
+    console.log('inside function handler');
+    navigate('/listings', { state: { buildingName } });
+  };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -34,9 +42,7 @@ export default function CardforBuilding({building}) {
       <Link to="/noticesm">
         <Button size="small">Notice</Button>
       </Link>
-      <Link to="/listings">
-        <Button size="small">Listings</Button>
-      </Link>
+        <Button size="small" onClick={viewListingsHandler}>Listings</Button>
     </CardActions>
     </Card>
   );

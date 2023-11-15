@@ -3,7 +3,7 @@ import _get from 'lodash/get';
 import { useState } from 'react';
 import axios from 'axios';
 import CardforBuilding from '../../../molecules/Card/CardB';
-
+import { useNavigate } from 'react-router-dom';
 
 function Buildings() {
 
@@ -27,7 +27,11 @@ function Buildings() {
   
     fetchData();
   }, []);
-  
+
+  const navigate = useNavigate();
+  const addListingsHandler = () => {
+    navigate('/addListing');
+  };
   
 
   return (
@@ -40,6 +44,9 @@ function Buildings() {
             building={building}
           />
         ))}
+      </div>
+      <div className="addListings">
+        <button type="button" onClick={addListingsHandler}>Add Listing</button>
       </div>
     </div>
   );
