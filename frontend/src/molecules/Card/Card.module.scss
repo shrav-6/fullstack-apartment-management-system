@@ -105,4 +105,18 @@ body {
       }
     }
   }
+
+  .modelContainer{
+    .editContainer{
+      section>label {
+        color:#eeecec;
+      }
+    }
+  }
+}
+.modaleditContainer{
+    :global([class*='ant-modal-close']) {
+      color: white;
+   
+  }
 }

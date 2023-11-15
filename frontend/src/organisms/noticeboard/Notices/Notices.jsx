@@ -116,7 +116,7 @@ function Notices({
           ...notice,
           title: editedTitle,
           description: editedDescription,
-          editedAt: new Date().valueOf(),
+          updatedAt: new Date().valueOf(),
         };
       }
       return notice;
@@ -126,6 +126,7 @@ function Notices({
       title: editedTitle,
       Description: editedDescription,
       Author_name: authorName,
+      updatedAt: new Date().valueOf(),
     };
 
     editAllNotices(id, payload)
@@ -227,10 +228,6 @@ function Notices({
               autoSize={{ minRows: 3, maxRows: 5 }}
             />
           </section>
-          <section>
-            <label>Created_by:</label>
-            <Input value={authorName} onChange={e => onSetAuthorName(e.target.value)} />
-          </section>
         </div>
       </Modal>
     </div>
@@ -241,7 +238,7 @@ const mapStateToProps = ({ noticeReducer }) => ({
   allNotices: _get(noticeReducer, 'allNotices'),
   title: _get(noticeReducer, 'title'),
   description: _get(noticeReducer, 'description'),
-  authorName: _get(noticeReducer, 'authorName'),
+ //  authorName: _get(noticeReducer, 'authorName'),
   postType: _get(noticeReducer, 'postType'),
 });
 
@@ -249,7 +246,7 @@ const mapDispatchToProps = dispatch => ({
   onSetNotices: payload => dispatch(setNotices(payload)),
   onSetTitle: title => dispatch(setTitle(title)),
   onSetDescription: description => dispatch(setDescription(description)),
-  onSetAuthorName: authorName => dispatch(setAuthorName(authorName)),
+ // onSetAuthorName: authorName => dispatch(setAuthorName(authorName)),
   onSetPostType: postType => dispatch(setPostType(postType)),
   onResetPostData: () => dispatch(resetPostData()),
 });

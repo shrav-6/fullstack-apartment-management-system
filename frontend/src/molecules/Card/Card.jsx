@@ -25,24 +25,23 @@ function Card({
     createdAt,
     Description,
     title,
-    editedAt,
+    updatedAt,
     Author_name,
   } = notice;
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDescription, setEditedDescription] = useState(Description);
+  const [mode, setMode] = useState('readMore');
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
-
-  const handleReadMore = () => {
-    setModalVisible(true);
-  };
 
   const handleEdit = (e) => {
     e.stopPropagation();
+    setMode('edit');
     setEditedTitle(editedTitle);
     setEditedDescription(Description);
-    handleReadMore();
+    setModalVisible(true);
+    //handleReadMore();
   };
 
   const handleAction = () => {
@@ -56,6 +55,10 @@ function Card({
     setModalVisible(false);
     setEditedTitle(title);
     setEditedDescription(Description);
+  };
+  const handleReadMore = () => {
+    setMode('readMore');
+    setModalVisible(true);
   };
 
   return (
@@ -93,13 +96,12 @@ function Card({
           )}
         </div>
         <div className={styles.cardAuthor}>
-          <span>By </span>
           <span className={styles.author}>{Author_name}</span>
         </div>
         <div className={styles.cardDescription}>{Description}</div>
         <div className={styles.createdAt}><FaClock />
-          {editedAt
-            ? `Updated at:${moment(editedAt).format(' DD MMM')}`
+          {updatedAt
+            ? moment(updatedAt).format(' DD MMM')
             : moment(createdAt).format(' DD MMM')}
         </div>
         <div className={styles.buttonContainer}>
@@ -116,6 +118,7 @@ function Card({
         open={isModalVisible}
         onOk={handleCancel}
         maskClosable
+        className={styles.modaleditContainer}
         footer={[
           <Button key="save" type="primary" onClick={handleAction}>
             Save Edit
@@ -125,30 +128,39 @@ function Card({
           </Button>,
         ]}
       >
-        <div className="modal-content-container">
-          <div className="modal-title">
-            <h2>
-              {postType === STRING_CONSTANTS.POST_TYPE_EDIT
-                ? STRING_CONSTANTS.EDIT_NOTICE
-                : STRING_CONSTANTS.READ_MORE}
-            </h2>
+        {mode === 'readMore' && (
+          <div className="modal-content-container">
+            <div className="modal-title">
+              <h2>{title}</h2>
+            </div>
+            <div className="modal-description">
+              <p>{Description}</p>
+            </div>
           </div>
-          <div>
-            <label>Title:</label>
-            <Input
-              value={editedTitle}
-              onChange={e => setEditedTitle(e.target.value)}
-            />
+        )}
+
+        {mode === 'edit' && (
+          <div className={styles.modelContainer}>
+            <div className={styles.editContainer}>
+              <section>
+                <label>Title:</label>
+                <Input
+                  value={editedTitle}
+                  onChange={e => setEditedTitle(e.target.value)}
+                />
+              </section>
+              <section>
+
+                <label>Description:</label>
+                <Input.TextArea
+                  value={editedDescription}
+                  onChange={e => setEditedDescription(e.target.value)}
+                  autoSize={{ minRows: 3, maxRows: 5 }}
+                />
+              </section>
+            </div>
           </div>
-          <div>
-            <label>Description:</label>
-            <Input.TextArea
-              value={editedDescription}
-              onChange={e => setEditedDescription(e.target.value)}
-              autoSize={{ minRows: 3, maxRows: 5 }}
-            />
-          </div>
-        </div>
+        )}
       </Modal>
     </>
   );
