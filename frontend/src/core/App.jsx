@@ -25,7 +25,6 @@ function App() {
           <Route path="/signin" exact element={<Signin />} />
           <Route path="/logout" exact element={<Logout />} />
           <Route path="/Dashboard" element={<Buildings />} />
-          <Route path="/noticesm" element={<NoticesM />} />
           <Route path="/listings" element={<ViewListings />} />
           <Route path="/addListing" element={<ListingsForm />} />
           <Route path="/updateListing" element={<UpdateListings />} />

@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 import React, { /* useState, */ useEffect, useState } from 'react';
 import axios from 'axios';
-import CardforBuilding from '../../../molecules/Card/CardB';
 import { useNavigate } from 'react-router-dom';
 import CardforBuilding from '../../../molecules/Card/CardB';
 
@@ -12,26 +12,22 @@ function Buildings() {
       try {
         const response = await axios.get('http://localhost:3001/Buildings', {
           headers: {
-            accessToken: sessionStorage.getItem("accessToken"),
+            accessToken: sessionStorage.getItem('accessToken'),
           },
         });
-        // console.log(response.data.data, 'response data array');
         setData(response.data.data);
       } catch (error) {
-        // console.log(error);
-        // Handle the error here
+        console.log(error);
       }
     };
 
     fetchData();
   }, []);
 
-
   const navigate = useNavigate();
   const addListingsHandler = () => {
     navigate('/addListing');
   };
-  
 
   return (
     <div>

@@ -38,7 +38,6 @@ function Card({
     setEditedTitle(editedTitle);
     setEditedDescription(description);
     setModalVisible(true);
-    // handleReadMore();
   };
 
   const handleAction = () => {

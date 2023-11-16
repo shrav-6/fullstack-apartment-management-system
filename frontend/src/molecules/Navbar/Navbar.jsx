@@ -4,7 +4,6 @@ import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../organisms/PublicView/images/logo.svg';
 
 function Navbar() {
-function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   // const { pathname } = useLocation();
   const accessToken = sessionStorage.getItem('accessToken');
