@@ -9,7 +9,7 @@ import _get from 'lodash/get';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
 import { FaPlus } from 'react-icons/fa';
-import Card from '../../../molecules/Card/Card';
+import Card from '../../../molecules/Card/CardCompound/Card';
 import {
   getAllNotices,
   postAllNotices,
