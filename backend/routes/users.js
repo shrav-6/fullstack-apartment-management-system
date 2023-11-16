@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { users,tenants,managers,buildings,guests} = require("../models");
+const { users,tenants,managers,buildings,guests} = require("../models");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
  
@@ -35,6 +36,12 @@ router.post("/signup", async (req, res) => {
   }
     else if (role=="Manager"){
       const hash = await bcrypt.hash(password, 10);
+        await users.create({
+          userName: userName,
+          password: hash,
+          email:email,
+          role:role,
+        });
         await users.create({
           userName: userName,
           password: hash,

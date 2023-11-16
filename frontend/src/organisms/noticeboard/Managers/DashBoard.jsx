@@ -2,6 +2,7 @@ import React, { /* useState, */ useEffect, useState } from 'react';
 import axios from 'axios';
 import CardforBuilding from '../../../molecules/Card/CardB';
 import { useNavigate } from 'react-router-dom';
+import CardforBuilding from '../../../molecules/Card/CardB';
 
 function Buildings() {
   const [data, setData] = useState([]);
@@ -25,8 +26,8 @@ function Buildings() {
     fetchData();
   }, []);
 
+
   const navigate = useNavigate();
-  
   const addListingsHandler = () => {
     navigate('/addListing');
   };
@@ -38,7 +39,7 @@ function Buildings() {
       <div className="card">
         {data.map(building => (
           <CardforBuilding
-           key={building.id}
+            key={building.id}
             building={building}
           />
         ))}
@@ -49,7 +50,5 @@ function Buildings() {
     </div>
   );
 }
-
-
 
 export default Buildings;

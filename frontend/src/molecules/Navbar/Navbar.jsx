@@ -26,10 +26,10 @@ function Navbar() {
             <FaAlignRight className="nav-icon" />
           </button>
         </div>
-        <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
+        <ul className={isOpen ? "nav-links show-nav" : "nav-links"}>
           {accessToken ? (
             <>
-
+              
               <li>
                 <Link to="/home">Home</Link>
               </li>
@@ -45,12 +45,12 @@ function Navbar() {
             </>
           ) : (
             <>
-              <li>
-                <Link to="/">About</Link>
-              </li>
-              <li>
-                <Link to="/rooms">New Listings</Link>
-              </li>
+             <li>
+            <Link to="/">About</Link>
+          </li>
+          <li>
+            <Link to="/rooms">New Listings</Link>
+          </li>
               <li>
                 <Link to="/signin">Sign In</Link>
               </li>

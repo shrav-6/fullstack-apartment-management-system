@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -166,8 +167,12 @@ export default function Signin() {
                 </Link>
               </Grid>
               <Grid item>
-                <button className="yourLinkStyles" onClick={() => navigate('/signup')}>
-                  Don't have an account? Sign Up
+                <button
+                  type="button"
+                  className="yourLinkStyles"
+                  onClick={() => navigate('/signup')}
+                >
+                  Do not have an account? Sign Up
                 </button>
               </Grid>
             </Grid>

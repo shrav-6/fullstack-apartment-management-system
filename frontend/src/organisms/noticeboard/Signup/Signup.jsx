@@ -3,8 +3,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -18,22 +18,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate /* , useLocation */ } from 'react-router-dom';
 
 // Define regular expressions for username and password validation
 const usernameRegex = /^[a-zA-Z]\w{7,}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 function Signup() {
-  let navigate = useNavigate();
-  const location = useLocation();
-
-  // Accessing the state object from the current route
-  const routeState = location?.state?.routeState;
-
-// Accessing the state object from the current route
-  // const isFromSignUp = location.state
-  console.log(location);
+  const navigate = useNavigate();
+  // const location = useLocation();
+  // const routeState = location?.state?.routeState;
 
   const [inputs, setInputs] = useState({
     userName: '',
@@ -79,7 +73,7 @@ function Signup() {
       : 'Passwords do not match';
     setErrors({ usernameError, passwordError, passwordConfirmationError });
 
-    if (usernameError == '' && passwordError == '' && passwordConfirmationError == '') {
+    if (usernameError === '' && passwordError === '' && passwordConfirmationError === '') {
       // Continue with form submission
       if (inputs.role === 'Manager') {
         const {
