@@ -1,17 +1,23 @@
-.cardComponentContainer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.postCreationContainer {
-  section > label {
-    color: #eeecec;
+.noticeContainer {
+  padding-top: 3rem;
+  .navNotice {
+    text-align: center;
+    padding: 1rem;
+  }
+  .cardComponentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 }
 
 .modalContainer {
+  .postCreationContainer {
+    section > label {
+      color: #eeecec;
+    }
+  }
   :global([class*='ant-modal-close']) {
     color: white;
   }

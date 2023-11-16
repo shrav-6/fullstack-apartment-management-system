@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -6,8 +7,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -16,14 +15,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+// styles
+import styles from './SignIn.module.scss';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <h1>Shelter</h1>
-      {new Date().getFullYear()}
-      .
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      Copyright © <strong>Shelter</strong> {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -160,22 +163,14 @@ export default function Signin() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <button
-                  type="button"
-                  className="yourLinkStyles"
-                  onClick={() => navigate('/signup')}
-                >
-                  Do not have an account? Sign Up
-                </button>
-              </Grid>
-            </Grid>
+            <button
+              type="button"
+              className={styles.linkToSignUp}
+              onClick={() => navigate('/signup')}
+            >
+              <span> Do not have an account? </span>
+              <span> Sign Up </span>
+            </button>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

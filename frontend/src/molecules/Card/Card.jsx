@@ -11,19 +11,16 @@ import { Modal, Button, Input } from 'antd';
 // styles
 import styles from './Card.module.scss';
 import './CardModal.css';
-// constants
-import { STRING_CONSTANTS } from './constants/Card.constants';
 
 function Card({
   notice,
-  postType = '',
   onSaveEdit,
   onDelete,
 }) {
   const {
     id,
     createdAt,
-    Description,
+    description,
     title,
     updatedAt,
     Author_name,
@@ -31,7 +28,7 @@ function Card({
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
-  const [editedDescription, setEditedDescription] = useState(Description);
+  const [editedDescription, setEditedDescription] = useState(description);
   const [mode, setMode] = useState('readMore');
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
 
@@ -39,9 +36,9 @@ function Card({
     e.stopPropagation();
     setMode('edit');
     setEditedTitle(editedTitle);
-    setEditedDescription(Description);
+    setEditedDescription(description);
     setModalVisible(true);
-    //handleReadMore();
+    // handleReadMore();
   };
 
   const handleAction = () => {
@@ -54,7 +51,7 @@ function Card({
   const handleCancel = () => {
     setModalVisible(false);
     setEditedTitle(title);
-    setEditedDescription(Description);
+    setEditedDescription(description);
   };
   const handleReadMore = () => {
     setMode('readMore');
@@ -98,7 +95,9 @@ function Card({
         <div className={styles.cardAuthor}>
           <span className={styles.author}>{Author_name}</span>
         </div>
-        <div className={styles.cardDescription}>{Description}</div>
+        <div className={styles.cardDescription}>
+          {description}
+        </div>
         <div className={styles.createdAt}><FaClock />
           {updatedAt
             ? moment(updatedAt).format(' DD MMM')
@@ -134,7 +133,7 @@ function Card({
               <h2>{title}</h2>
             </div>
             <div className="modal-description">
-              <p>{Description}</p>
+              <p>{description}</p>
             </div>
           </div>
         )}

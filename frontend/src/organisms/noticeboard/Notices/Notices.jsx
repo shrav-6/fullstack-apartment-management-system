@@ -20,7 +20,6 @@ import {
   setNotices,
   setTitle,
   setDescription,
-  setAuthorName,
   setPostType,
   resetPostData,
 } from '../data/notice.actions';
@@ -39,7 +38,6 @@ function Notices({
   onSetTitle,
   onSetNotices,
   onSetDescription,
-  onSetAuthorName,
   onSetPostType = () => {},
   onResetPostData = () => {},
 }) {
@@ -76,7 +74,6 @@ function Notices({
     setModalVisible(false);
     setEditedTitle('');
     setEditedDescription('');
-    // setEditedAuthorName('');
   };
 
   const handleSave = () => {
@@ -87,7 +84,6 @@ function Notices({
       Description: postType === STRING_CONSTANTS.POST_TYPE_EDIT
         ? editedDescription
         : description,
-      Author_name: authorName,
       createdAt: new Date().valueOf(),
     };
 
@@ -98,8 +94,7 @@ function Notices({
           setModalVisible(false);
           onSetTitle('');
           onSetDescription('');
-          // onSetAuthorName('');
-          setEditTrigger(prev => prev + 1); // Increment editTrigger to trigger useEffect
+          setEditTrigger(prev => prev + 1);
         } else {
           message.error(response.data.error);
         }
@@ -109,6 +104,7 @@ function Notices({
       });
   };
 
+  // eslint-disable-next-line no-shadow
   const handleEditNotice = (id, editedTitle, editedDescription) => {
     const updatedNotices = notices.map((notice) => {
       if (notice.id === id) {
@@ -133,7 +129,7 @@ function Notices({
       .then((response) => {
         if (!response?.data?.error) {
           onSetNotices({ allNotices: updatedNotices });
-          setEditTrigger(prev => prev + 1); // Increment editTrigger to trigger useEffect
+          setEditTrigger(prev => prev + 1);
         } else {
           message.error(response.data.error);
         }
@@ -144,7 +140,6 @@ function Notices({
     setModalVisible(false);
     setEditedTitle('');
     setEditedDescription('');
-    // setEditedAuthorName('');
   };
 
   const handleDeleteNotice = (id) => {
@@ -164,8 +159,8 @@ function Notices({
   };
 
   return (
-    <div>
-      <h1 className="nav-notice">Notices</h1>
+    <div className={styles.noticeContainer}>
+      <h1 className={styles.navNotice}>Notices</h1>
       <div style={{ float: 'right' }}>
         <div>
           {role === 'Manager' && (
@@ -238,7 +233,6 @@ const mapStateToProps = ({ noticeReducer }) => ({
   allNotices: _get(noticeReducer, 'allNotices'),
   title: _get(noticeReducer, 'title'),
   description: _get(noticeReducer, 'description'),
- //  authorName: _get(noticeReducer, 'authorName'),
   postType: _get(noticeReducer, 'postType'),
 });
 
@@ -246,7 +240,6 @@ const mapDispatchToProps = dispatch => ({
   onSetNotices: payload => dispatch(setNotices(payload)),
   onSetTitle: title => dispatch(setTitle(title)),
   onSetDescription: description => dispatch(setDescription(description)),
- // onSetAuthorName: authorName => dispatch(setAuthorName(authorName)),
   onSetPostType: postType => dispatch(setPostType(postType)),
   onResetPostData: () => dispatch(resetPostData()),
 });
