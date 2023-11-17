@@ -57,7 +57,7 @@ router.post("/signup", async (req, res) => {
           });
         const user=await users.findOne({ where: { email: email } });
         const guest={"name":name,"phoneNumber":phoneNumber,"userId":user.id};
-          await guest.create(guest);
+          await guests.create(guest);
           res.json({"success": true,
           "message": "user profile created successfully"});
         }

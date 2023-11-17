@@ -95,6 +95,7 @@ function Signup() {
       } else {
         const { role, userName, password, email, name1, phoneNumber, address, apartmentNumber, buildingName } = inputs;
         const data = { userName, email, password, name: name1, role, phoneNumber, address, apartmentNumber, buildingName };
+        console.log('role', role);
         axios.post('http://localhost:3001/auth/signup', data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);
@@ -225,7 +226,7 @@ function Signup() {
                 <InputLabel htmlFor="role">Select Role</InputLabel>
                 <MenuItem value={"Manager"}>Manager</MenuItem>
                 <MenuItem value={"Tenant"}>Tenant</MenuItem>
-                <MenuItem value={"Role"}>Guest</MenuItem>
+                <MenuItem value={"Guest"}>Guest</MenuItem>
               </Select>
               </FormControl>
              </Grid>

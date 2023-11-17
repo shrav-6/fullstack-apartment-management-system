@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     });
     tenants.associate = (models) => {
           tenants.belongsTo(models.users);
-        
       };
 
     return tenants;

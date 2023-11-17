@@ -1,12 +1,11 @@
-import React, { /* useState, */ useEffect } from 'react';
+import React, { /* useState, */ useEffect, useState } from 'react';
 import _get from 'lodash/get';
-import { useState } from 'react';
+
 import axios from 'axios';
-import CardforBuilding from '../../../molecules/Card/CardB';
 import { useNavigate } from 'react-router-dom';
+import CardforBuilding from '../../../molecules/Card/CardB';
 
 function Buildings() {
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -14,17 +13,17 @@ function Buildings() {
       try {
         const response = await axios.get('http://localhost:3001/Buildings', {
           headers: {
-            accessToken: sessionStorage.getItem("accessToken"),
+            accessToken: sessionStorage.getItem('accessToken'),
           },
         });
-        console.log(response.data.data, 'response data array');
+        console.log(response, 'response data array');
         setData(response.data.data);
       } catch (error) {
         console.log(error);
         // Handle the error here
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -32,7 +31,6 @@ function Buildings() {
   const addListingsHandler = () => {
     navigate('/addListing');
   };
-  
 
   return (
     <div>
@@ -40,7 +38,7 @@ function Buildings() {
       <div className="card">
         {data.map(building => (
           <CardforBuilding
-           key={building.id}
+            key={building.id}
             building={building}
           />
         ))}
@@ -51,7 +49,5 @@ function Buildings() {
     </div>
   );
 }
-
-
 
 export default Buildings;

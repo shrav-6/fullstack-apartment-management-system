@@ -1,19 +1,18 @@
 import React from 'react';
 import './Apps.css';
 
+import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Rooms from './pages/Rooms';
 import Navbar from './components/Navbar';
-import { Route, Routes } from 'react-router-dom';
 import { RoomProvider } from './context';
 import SingleRoom from './pages/SingleRoom';
-import ApplicationForm from '../public view/pages/ApplicationForm';
-//import ProtectedRoute from '../public view/components/ProtectedRoute';
+import ApplicationForm from './pages/ApplicationForm';
+// import ProtectedRoute from '../public view/components/ProtectedRoute';
 
 function App() {
   return (
-    <>
-  <RoomProvider>
+    <RoomProvider>
       <div>
         <Routes>
           <Route
@@ -26,8 +25,7 @@ function App() {
           <Route path="/application" element={<ApplicationForm />} />
         </Routes>
       </div>
-      </RoomProvider>
-    </>
+    </RoomProvider>
   );
 }
 

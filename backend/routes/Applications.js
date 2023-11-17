@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { applications,guests,listings,users, managers } = require("../models");
+const { applications,guests,listings,users, tenants, managers } = require("../models");
 const {validateToken}=require("../Middleware/middleware");
 
 // create new application from user type: guest
@@ -10,7 +10,7 @@ router.post('/create',validateToken, async (req, res) => {
     const user_id=req.user.id;
     const role=req.user.role;
     const listingId =req.body.listingId;
-    const status="In progress";
+    const status="waitlisted";
     const listing=await listings.findOne({ where: { id:application.listingId} });
     if(listing!=null){
       await applications.create({
@@ -36,21 +36,22 @@ router.post('/create',validateToken, async (req, res) => {
 
 });
 
-// manager can accept/reject applications
-router.put('/accept_reject/:applicationId',validateToken, async (req, res) => {
+// manager can accept/rejected applications
+router.put('/updateStatus/:applicationId',validateToken, async (req, res) => {
   const applicationId = req.params.applicationId;
   // const message = req.params.message;
   // const gender = req.params.gender;
   const status = req.body.status;
   // const listingId = req.params.listingId;
-  console.log(status);
-  if (status == 'accept' || status == 'reject') {
+  console.log('status in backend', status);
+  if (status == 'approved' || status == 'rejected' || status == 'waitlisted') {
     const user_id=req.user.id;
     const role=req.user.role;
-    console.log(user_id);
+    console.log(user_id, role);
     if(role=="Manager"){
       const manager = await managers.findOne({ where: { userId: user_id } });
-      const application = await applications.findOne({ where: { id:applicationId ,userId: user_id }  });
+      const application = await applications.findOne({ where: { id:applicationId}  });
+      console.log('inside manager role', manager);
       if(manager!=null && application!=null){
         await applications.update(
           { status:status},
@@ -58,22 +59,44 @@ router.put('/accept_reject/:applicationId',validateToken, async (req, res) => {
         );
         res.json( {"success": true,
         "message": "Updated successfully"});
-        if(status == 'accept') {
+        if(status == 'approved') {
           // notify guest that application is accepted
-
-          // change role from guest to tenant
-        } else {
+          // write logic here
+          
+          // change role from guest to tenant below:
+          // update role in users table
+          const user = await users.findOne({where: {id: user_id }});
+          console.log('guest user id', application.userId);
+          if(user!=null) {
+            await users.update(
+              { role: 'Tenant' },
+              { where : {id: application.userId}}
+            );
+          } else {
+            console.log('User does not exist in users table');
+          }
+          // create entry in tenant table
+          const building = await listings.findOne({where: {id: application.listingId}})
+          const tenant={"name":application.firstName+" "+application.lastName,"phoneNumber":application.phoneNumber,"apartmentNumber":application.listingId,"userId":application.userId,managerId:manager.id, buildingId: building.id};
+          await tenants.create(tenant);
+          console.log("entry in tenant table");
+          // delete from guests table
+          await guests.destroy(
+            { where: { userId: application.userId } }
+          );
+          console.log("after deleting from guests table");
+        } else if(status == 'rejected') {
           // notify tenant that application is rejected
         }
       } else {
-        res.json({"success": false,error: "User is not a manager! Only managers can accept/reject applications!"});
+        console.log('something is null');
       }
     }
     else {
-      res.json({"success": false,error: "User is not a manager! Only managers can accept/reject applications!"});
+      res.json({"success": false,error: "User is not a manager! Only managers can approved/rejected applications!"});
     }
   } else {
-    res.json({"success": false,error: "Can perform two operation either accept or reject"});
+    res.json({"success": false,error: "Can perform two operation either approved or rejected"});
   }
 });
 
@@ -84,12 +107,12 @@ router.get("/all/:listingId",validateToken, async (req, res) => {
     const user_id=req.user.id;
     if(role=="Manager"){
         const manager = await managers.findOne({ where: { userId: user_id } });
-        const allapplicationforlisting = await applications.findAll({ where: {listingId: listingId,userId: user_id}});
-        if(manager!=null && allapplicationforlisting!=null){ 
+        const allapplicationforlisting = await applications.findAll({ where: {listingId: listingId}});
+        if(manager!=null && allapplicationforlisting.length!=0){ 
             res.json({"success": true, "message": "Retrieved successfully","data":allapplicationforlisting});
         }
-        else if(manager!=null && allapplicationforlisting==null) {
-            res.json({"success": true, "message": "Retrieved successfully","data":"No applications for listing yet!"});
+        else if(manager!=null && allapplicationforlisting.length==0) {
+            res.json({"success": true, "message": "No applications for listing yet!"});
         }
         else {
             res.json({"success": false,error: "user doesn't have the permission"});
