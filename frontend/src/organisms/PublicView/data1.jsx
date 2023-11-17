@@ -6,58 +6,70 @@ import img1_1 from './images/room-1.jpeg';
 import img2_1 from './images/room-4.jpeg';
 import img3_1 from './images/room-7.jpeg';
 import img4_1 from './images/room-10.jpeg';
+// Import axios and fetchData function
 import fetchData from './fetchData';
 
-const fetchItems = async () => {
-  const axiosData = await fetchData();
+const items = [];
 
-  // eslint-disable-next-line no-unused-vars
-  const items = axiosData.data.map((item, index) => ({
-    fields: {
-      id: item.id.toString(),
-      buildingName: item.buildingName,
-      buildingNameSlug: item.buildingName,
-      unitAvailable: item.unitAvailable,
-      rent: item.rent,
-      address: item.address,
-      pets: item.pets,
-      startsFrom: item.startsFrom,
-      description: item.description,
-      extras: item.extras.split(',').map(extra => extra.trim()),
-      images: [
-        {
-          fields: {
-            file: {
-              url: img1_1,
-            },
-          },
-        },
-        {
-          fields: {
-            file: {
-              url: room2,
-            },
-          },
-        },
-        {
-          fields: {
-            file: {
-              url: room3,
-            },
-          },
-        },
-        {
-          fields: {
-            file: {
-              url: room4,
-            },
-          },
-        },
-      ],
-    },
-  }));
+const populateItems = async () => {
+  try {
+    const axiosData = await fetchData();
 
-  return items;
+    axiosData?.data.forEach((item) => {
+      const processedItem = {
+        fields: {
+          id: item.id.toString(),
+          buildingName: item.buildingName,
+          buildingNameSlug: item.buildingName,
+          unitAvailable: item.unitAvailable,
+          rent: item.rent,
+          address: item.address,
+          pets: item.pets,
+          startsFrom: item.startsFrom,
+          description: item.description,
+          extras: item.extras.split(',').map(extra => extra.trim()),
+          images: [
+            {
+              fields: {
+                file: {
+                  url: img1_1,
+                },
+              },
+            },
+            {
+              fields: {
+                file: {
+                  url: room2,
+                },
+              },
+            },
+            {
+              fields: {
+                file: {
+                  url: room3,
+                },
+              },
+            },
+            {
+              fields: {
+                file: {
+                  url: room4,
+                },
+              },
+            },
+          ],
+        },
+      };
+      items.push(processedItem);
+    });
+  } catch (error) {
+    console.error('Error populating items:', error);
+    throw error;
+  }
 };
 
-export default fetchItems();
+populateItems().catch((error) => {
+  console.error('Error while populating items:', error);
+});
+
+export default items;
