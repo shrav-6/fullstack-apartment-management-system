@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable spaced-comment */
 /* eslint-disable no-console */
@@ -138,6 +139,38 @@ function ViewListings() {
       });
   };
 
+  const handleViewApplications = (listingId) => {
+    // navigate('/applications', { state: { listingId } });
+    // You can implement the logic to call the backend API for deleting the listing.
+    // For simplicity, let's log the listing ID for now.
+    // console.log('View applications for listing with ID:', listingId);
+    axios
+      .get(`http://localhost:3001/Applications/all/${listingId}`, {
+        headers: {
+          accessToken: sessionStorage.getItem('accessToken'),
+        },
+      })
+      .then((response) => {
+        console.log('Applications received successfully:', response);
+        if (response.data.message === 'No applications for listing yet!') {
+          console.log(response.data.message);
+          alert(response.data.message);
+          //window.location.reload();
+          navigate('/listings', { state: { buildingName } });
+        } else {
+          navigate('/applications', { state: { listingId } });
+          // go to view applications
+          // const applications = response.data.data;
+          // const
+          // console.log(applications);
+          // console.log('listing id', listingId);
+        }
+      })
+      .catch((error) => {
+        console.error('Error viewing applications for this listing:', error);
+      });
+  };
+
   // eslint-disable-next-line no-console
   console.log('response', listings);
   return (
@@ -206,6 +239,7 @@ function ViewListings() {
                 <br></br><br></br>
                 <button type="button" onClick={() => handleDelete(listing.id)}>Delete Listing</button>
                 <br></br><br></br>
+                <button type="button" onClick={() => handleViewApplications(listing.id)}>View Applications for this Listing</button>
               </div>
             </div>
           </div>
