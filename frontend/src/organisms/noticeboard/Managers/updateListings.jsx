@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function UpdateListings() {
-    const location = useLocation();
-    const selectedListing = location.state?.selectedListing;
-    const buildingName = location.state?.buildingName;
-    console.log('inside update listings: array', selectedListing);
+  const location = useLocation();
+  const selectedListing = location.state?.selectedListing;
+  const buildingName = location.state?.buildingName;
+  console.log('inside update listings: array', selectedListing);
   const [formData, setFormData] = useState({
     unitAvailable: '',
     rent: '',

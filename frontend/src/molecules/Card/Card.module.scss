@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,700&display=swap');
+
+body {
+  background-color: #eaeff1 !important;
+  font-family: Georgia, serif;
+}
+
+.containerCard {
+  max-width: 28%;
+  width: 100%;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  transition: 0.3s;
+  border: 2px solid transparent;
+  height: 17rem;
+
+  &:hover {
+    border-color: #b3e1f5;
+    :global([class*='cardEdit']) {
+      opacity: 1;
+    }
+    :global([class*='cardDelete']) {
+      opacity: 1;
+    }
+  }
+
+  .modelContainer{
+    .editContainer{
+      section>label {
+        color:#eeecec;
+      }
+    }
+  }
+}
+
+.modaleditContainer{
+    :global([class*='ant-modal-close']) {
+      color: white;
+  }
+}
