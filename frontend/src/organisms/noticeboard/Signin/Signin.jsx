@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-console */
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -5,24 +7,26 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+// styles
+import styles from './SignIn.module.scss';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <h1>Shelter</h1>
-      {new Date().getFullYear()}
-      {'.'}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      Copyright © <strong>Shelter</strong> {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -31,6 +35,18 @@ const defaultTheme = createTheme();
 
 export default function Signin() {
   let navigate = useNavigate();
+  const location = useLocation();
+
+  // Accessing the state object from the current route
+  const fromSignUp = location?.state?.fromSignUp;
+  const unitAvailable = location?.state?.unitAvailable;
+  const buildingName = location?.state?.buildingName;
+  const listingId =  location?.state?.listingId;
+
+
+// Accessing the state object from the current route
+  // const isFromSignUp = location.state
+  console.log(fromSignUp);
 
   const [inputs, setInputs] = useState({
     password: '',
@@ -70,19 +86,26 @@ export default function Signin() {
 
     if (validateFields()) {
       const { password, email } = inputs;
-      const data = { email: email, password: password };
-      console.log(data);
+      const data = { email, password };
+      // console.log(data);
       axios.post('http://localhost:3001/auth/login', data).then((response) => {
         if (response.data.error) {
+          // eslint-disable-next-line no-alert
           alert(response.data.error);
         } else {
-          sessionStorage.setItem('accessToken', response.data.token);
-          navigate('/home');
+          sessionStorage.setItem('userCred', JSON.stringify(response?.data));
+          if (fromSignUp) {
+            navigate('/application', {
+              state: { unitAvailable, buildingName, listingId }, // Your state object
+            });
+          } else {
+            navigate('/home');
+          }
         }
       });
     }
   };
-
+  // console.log(isFromSignUp, "isfrom");
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -140,18 +163,14 @@ export default function Signin() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            <button
+              type="button"
+              className={styles.linkToSignUp}
+              onClick={() => navigate('/signup')}
+            >
+              <span> Do not have an account? </span>
+              <span> Sign Up </span>
+            </button>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

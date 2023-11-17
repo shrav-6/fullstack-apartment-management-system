@@ -1,6 +1,9 @@
-const baseUrl = 'https://shelternotice.onrender.com/';
+const baseUrl = 'http://localhost:3001/';
 
 export const noticesService = {
-  getAllNotices: `${baseUrl}notices`,
-  getAllNoticeById: `${baseUrl}notices/id`,
+  getAllNotices: `${baseUrl}Notices`,
+  getAllNoticeById: `${baseUrl}Notices/id`,
+  editAllNotices: `${baseUrl}notices/:id`,
+  deleteNotice: `${baseUrl}Notices/:id`,
+  postAllNotices: `${baseUrl}notices`,
 };

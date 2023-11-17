@@ -61,7 +61,7 @@ export function filterNoticesForHighPriority(notice) {
 }
 
 export function filterNoticesByImportance(notice, minValue, maxValue) {
-    return notice.importance > minValue ? (notice.importance < maxValue ? notice : undefined) : undefined;
+  return notice.importance > minValue ? (notice.importance < maxValue ? notice : undefined) : undefined;
 }
 
 export function filterNotices(allNotices, parameter) {

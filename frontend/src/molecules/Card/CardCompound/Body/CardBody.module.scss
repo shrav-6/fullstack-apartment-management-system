@@ -1,0 +1,11 @@
+.cardDescription {
+  margin-top: 10px;
+  color: #494a4b;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+}

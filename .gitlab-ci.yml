@@ -7,7 +7,7 @@ stages:
 
 frontend-build:
     stage: build
-    image: node:16.20.1
+    image: node:18.18.2
     script: 
         - echo "🏃‍♀️ running frontend build job"
         - cd frontend/
