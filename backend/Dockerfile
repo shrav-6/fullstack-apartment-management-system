@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 3001
 
 # Set the entry point command for the container
-ENTRYPOINT["npm", "run", "serve"]
+ENTRYPOINT ["npm", "run", "serve"]
