@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -y git
 # Set the working directory
 WORKDIR /app
 
+# RUN the app
+RUN npm install
+
 # Copy your application code into the container
 COPY . .
 
@@ -13,4 +16,4 @@ COPY . .
 EXPOSE 3001
 
 # Set the entry point command for the container
-CMD npm install && npm run serve
+ENTRYPOINT["npm", "run", "serve"]
