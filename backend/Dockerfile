@@ -1,19 +1,19 @@
-FROM node:latest
+FROM node:14-alpine
 
-# Update and install Git
-RUN apt-get update && apt-get install -y git
-
-# Set the working directory
+# Create app directory 
 WORKDIR /app
 
-# RUN the app
-RUN npm install
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Copy your application code into the container
+# Install dependencies
+RUN npm install 
+
+# Copy rest of app code
 COPY . .
 
-# Expose the port where application will run
+# Expose port
 EXPOSE 3001
 
-# Set the entry point command for the container
-ENTRYPOINT ["npm", "run", "serve"]
+# Default command to run app
+ENTRYPOINT [ "npm", "start" ]
