@@ -58,7 +58,7 @@ export default function ApplicationForm() {
       if (validateFields()) {
         const data = {...formData,listingId:listingId};
         console.log(data);
-        const response=await axios.post('http://localhost:3001/Applications/create', data,
+        const response=await axios.post('http://172.17.0.237:8074/Applications/create', data,
         {
           headers: {
             accessToken: sessionStorage.getItem("accessToken"),
