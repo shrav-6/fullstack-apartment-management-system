@@ -4,7 +4,7 @@ export async function getAllNotices() {
   // eslint-disable-next-line no-useless-catch
   try {
     const response = await axios.get(
-      'http://localhost:3001/Notices',
+      'http://172.17.0.237:8074/Notices',
       {
         headers: {
           accessToken: sessionStorage.getItem('accessToken'),
