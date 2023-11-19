@@ -48,7 +48,7 @@ function UpdateListings() {
     e.preventDefault();
     // Implement logic to update the listing on the backend
     axios
-      .put(`http://localhost:3001/Listings/${selectedListing.id}`, formData, {
+      .put(`http://172.17.0.237:8074/${selectedListing.id}`, formData, {
         headers: {
           accessToken: sessionStorage.getItem('accessToken'),
         },
