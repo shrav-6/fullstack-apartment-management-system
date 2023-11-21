@@ -48,7 +48,7 @@ export function RoomProvider({ children }) {
     const { target } = event;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const { name } = target;
-
+    console.log(state);
     setState(prevState => ({
       ...prevState,
       [name]: value,

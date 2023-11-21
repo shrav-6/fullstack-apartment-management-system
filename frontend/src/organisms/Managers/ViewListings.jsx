@@ -33,7 +33,7 @@ function ViewListings() {
   }, [buildingName]);
 
   const [listings, setListings] = useState([]);
-  const accessToken = sessionStorage.getItem('accessToken');
+  const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   console.log('accessToken', accessToken);
   const [selectedListing, setSelectedListing] = useState(null);
   const navigate = useNavigate();
@@ -48,9 +48,9 @@ function ViewListings() {
   useEffect(() => {
     // Fetch property listings from the API when the component mounts
     axios
-      .get(`http://172.17.0.237:8074/Listings/forOneBuilding/${buildingName}`, {
+      .get(`http://localhost:3001/Listings/Building/6`, {
         headers: {
-          accessToken: sessionStorage.getItem('accessToken'),
+          accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
       })
       .then((response) => {
@@ -68,7 +68,7 @@ function ViewListings() {
     if (listings.data) {
       const fetchImages = async () => {
         const imagesPromises = listings.data.map(async (listing) => {
-          const response = await axios.get(`http://172.17.0.237:8074/Listings/getimages/${listing.id}`);
+          const response = await axios.get(`http://localhost:3001/Listings/getimages/${listing.id}`);
           return {
             listingId: listing.id,
             images: response.data,
@@ -109,9 +109,9 @@ function ViewListings() {
     // For simplicity, let's log the listing ID for now.
     console.log('Deleting listing with ID:', listingId);
     axios
-      .delete(`http://172.17.0.237:8074/Listings/${listingId}`, {
+      .delete(`http://localhost:3001/Listings/${listingId}`, {
         headers: {
-          accessToken: sessionStorage.getItem('accessToken'),
+          accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
       })
       .then((response) => {
@@ -149,7 +149,7 @@ function ViewListings() {
                       {listingImages[listing.id].map(image => (
                         <img
                           key={image.id}
-                          src={`http://172.17.0.237:8074/Listings/getimages/${image.filename}`}
+                          src={`http://localhost:3001/Listings/getimages/${image.filename}`}
                           alt="Listing Image"
                           style={{ width: '100px', height: '100px', marginRight: '5px' }}
                         />

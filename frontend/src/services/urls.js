@@ -1,4 +1,4 @@
-const baseUrl = 'http://172.17.0.237:8074/';
+const baseUrl = 'http://localhost:3001/';
 
 export const noticesService = {
   getAllNotices: `${baseUrl}Notices`,
@@ -6,4 +6,5 @@ export const noticesService = {
   editAllNotices: `${baseUrl}notices/:id`,
   deleteNotice: `${baseUrl}Notices/:id`,
   postAllNotices: `${baseUrl}notices`,
+  getAllNoticesForManager: `${baseUrl}Notices/manager/:buildingId`,
 };

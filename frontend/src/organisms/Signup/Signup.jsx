@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,23 +10,19 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
-import { useNavigate /* , useLocation */ } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-// Define regular expressions for username and password validation
 const usernameRegex = /^[a-zA-Z]\w{7,}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 function Signup() {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const routeState = location?.state?.routeState;
-
   const [inputs, setInputs] = useState({
     userName: '',
     password: '',
@@ -48,6 +42,27 @@ function Signup() {
     passwordError: '',
     PasswordReentry: '',
   });
+
+  const [buildingNames, setBuildingNames] = useState([]);
+  const [selectedBuildingName, setSelectedBuildingName] = useState('');
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/Buildings/signup/byName')
+      .then((response) => {
+        if (response.data.success) {
+          setBuildingNames(response.data.result);
+        } else {
+          console.error('Error fetching building names:', response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching building names:', error);
+      });
+  }, []);
+
+  const filteredBuildingNames = buildingNames.filter((building) =>
+    building.buildingName === selectedBuildingName
+  );
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -74,7 +89,6 @@ function Signup() {
     setErrors({ usernameError, passwordError, passwordConfirmationError });
 
     if (usernameError === '' && passwordError === '' && passwordConfirmationError === '') {
-      // Continue with form submission
       if (inputs.role === 'Manager') {
         const {
           role, userName, password, email, name1, phoneNumber, address,
@@ -82,11 +96,10 @@ function Signup() {
         const data = {
           userName, email, password, name: name1, role, phoneNumber, address,
         };
-        axios.post('http://172.17.0.237:8074/auth/signup', data).then((response) => {
+        axios.post('http://localhost:3001/auth/signup', data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);
           } else {
-            sessionStorage.setItem('accessToken', response.data.token);
             navigate('/signin');
           }
         });
@@ -97,13 +110,11 @@ function Signup() {
         const data = {
           userName, email, password, name: name1, role, phoneNumber, address, apartmentNumber, buildingName,
         };
-        axios.post('http://172.17.0.237:8074/auth/signup', data).then((response) => {
+        axios.post('http://localhost:3001/auth/signup', data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);
           } else {
-            sessionStorage.setItem('accessToken', response.data.token);
             navigate('/signin');
-            
           }
         });
       }
@@ -227,7 +238,7 @@ function Signup() {
                     <InputLabel htmlFor="role">Select Role</InputLabel>
                     <MenuItem value="Manager">Manager</MenuItem>
                     <MenuItem value="Tenant">Tenant</MenuItem>
-                    <MenuItem value="Role">Guest</MenuItem>
+                    <MenuItem value="Guest">Guest</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -245,20 +256,27 @@ function Signup() {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="buildingName"
-                      label="Building Name"
-                      id="buildingName"
-                      onChange={handleInputChange}
-                      autoComplete="buildingName"
-                    />
+                    <FormControl fullWidth>
+                      <InputLabel htmlFor="buildingName">Select Building Name</InputLabel>
+                      <Select
+                        id="buildingName"
+                        name="buildingName"
+                        onChange={(e) => {
+                          handleInputChange(e);
+                          setSelectedBuildingName(e.target.value);
+                        }}
+                      >
+                        <InputLabel htmlFor="buildingName">Select Building Name</InputLabel>
+                        {buildingNames.map((building) => (
+                          <MenuItem key={building.buildingName} value={building.buildingName}>
+                            {building.buildingName}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </>
-
               )}
-
             </Grid>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up

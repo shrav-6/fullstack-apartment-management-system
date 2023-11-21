@@ -6,7 +6,7 @@ function Logout() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('userCred');
     navigate('/signin');
   };
 

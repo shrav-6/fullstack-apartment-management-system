@@ -8,7 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
 
-const Listing = memo(({ item, index, isWishList, fetchWishlist }) => {
+const RoomWishlist = memo(({ item, index, isWishList, fetchWishlist }) => {
   const { id, buildingName, buildingNameSlug, rent, availableUnit } = item;
   const [isWished, setWished] = useState(isWishList || false);
   const [showAlert, setShowAlert] = useState(false);
@@ -59,7 +59,7 @@ const Listing = memo(({ item, index, isWishList, fetchWishlist }) => {
           For wishlist, please <Alert.Link href="/signin">sign in</Alert.Link>.
         </Alert>
       )}
-      <article style={{margin: "15px"}}>
+      <div style={{margin: "10px"}}>
         <div className="img-container">
           <img src={defaultImg} alt="single room" />
           <div className="price-top">
@@ -73,18 +73,18 @@ const Listing = memo(({ item, index, isWishList, fetchWishlist }) => {
               style={{ color: isWished || isWishList ? "red" : "white" }}
             />
           </div>
-          <Link to={`/listing/${id}`} className="btn-primary room-link">
+          {/* <Link to={`/listing/${id}`} className="btn-primary room-link">
             features
-          </Link>
+          </Link> */}
         </div>
         <p className="room-info">{buildingName}</p>
-      </article>
+      </div>
     </>
   );
 });
 
-Listing.propTypes = {
+RoomWishlist.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default Listing;
+export default RoomWishlist;

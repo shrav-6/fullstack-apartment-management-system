@@ -6,3 +6,4 @@ export const getAllNotices = () => http.get(noticesService.getAllNotices);
 export const editAllNotices = (id, payload) => http.put(noticesService.editAllNotices.replace(':id', id), payload);
 export const deleteNotice = (id, payload) => http.delete(noticesService.editAllNotices.replace(':id', id), payload);
 export const postAllNotices = payload => http.post(noticesService.postAllNotices, payload);
+export const getAllNoticesForManager = (buildingId) => http.get(noticesService.getAllNoticesForManager.replace(':buildingId', buildingId)) 
