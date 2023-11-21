@@ -13,6 +13,9 @@ import ViewListings from '../organisms/noticeboard/Managers/ViewListings';
 import ListingsForm from '../organisms/noticeboard/Managers/addListings';
 import UpdateListings from '../organisms/noticeboard/Managers/updateListings';
 import ViewApplications from '../organisms/noticeboard/Managers/Applications';
+import ViewTenant from '../organisms/tenant view/Tenant';
+import RentalAgreementPDF from '../organisms/tenant view/RentalAgreementPDF';
+
 function App() {
   return (
     <>
@@ -31,6 +34,8 @@ function App() {
           <Route path="/addListing" element={<ListingsForm />} />
           <Route path="/updateListing" element={<UpdateListings />} />
           <Route path="/applications" element={<ViewApplications />} />
+          <Route path="/tenant" element={<ViewTenant />} />
+          <Route path="/viewagreement" element={<RentalAgreementPDF />} />
           {/* <Route path="/listings" element={<MyUploader />} /> */}
         </Routes>
       </div>
@@ -39,6 +44,5 @@ function App() {
 }
 
 // ...
-
 
 export default App;

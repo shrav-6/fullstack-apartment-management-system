@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
       });
     
      const user=await users.findOne({ where: { email: email } });
-     const tenant={"name":name,"phoneNumber":phoneNumber,"address":address,managerId:manager.id,"buildingId":building.id,"apartmentNumber":req.body.apartmentNumber,"userId":user.id};
+     const tenant={"name":name,"phoneNumber":phoneNumber,"address":address,managerId:manager.id,"buildingId":building.id,"apartmentNumber":req.body.apartmentNumber,"userId":user.id, "listingId": 0};
      await tenants.create(tenant);
      res.json({"success": true,
       "message": "user profile created successfully"});
@@ -94,7 +94,7 @@ router.post('/login', async (req, res) => {
       'importantsecret'
     );
 
-    res.json({ token: accessToken, email: user.email, id: user.id, username: user.username });
+    res.json({ token: accessToken, email: user.email, id: user.id, username: user.username, role: user.role });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ error: 'An error occurred while processing your request.' });

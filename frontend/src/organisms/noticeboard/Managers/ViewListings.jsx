@@ -168,6 +168,7 @@ function ViewListings() {
             <div className="card-group">
               <div className="card-body">
                 <p className="card-text">Bedrooms: {listing.unitAvailable}</p>
+                <p className="card-text">Apartment Number: {listing.apartmentNumber}</p>
                 <p className="card-text">Description: {listing.description}</p>
                 <p className="card-text">Rent Per Month: ${listing.rent}</p>
                 <p className="card-text">Move-In Date: {listing.startsFrom}</p>

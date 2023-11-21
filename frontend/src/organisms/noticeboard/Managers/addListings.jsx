@@ -19,6 +19,7 @@ function ListingsForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     unitAvailable: '',
+    apartmentNumber: '',
     rent: '',
     address: '',
     pets: '',
@@ -110,6 +111,11 @@ function ListingsForm() {
         <div>
           <label htmlFor="unitAvailable">Number of Bedrooms:  </label>
           <input class="form-control" type="number" id="unitAvailable" name="unitAvailable" value={formData.unitAvailable} onChange={handleChange} required />
+        </div>
+        <br></br>
+        <div>
+          <label htmlFor="apartmentNumber">Apartment Number:  </label>
+          <input class="form-control" type="number" id="apartmentNumber" name="apartmentNumber" value={formData.apartmentNumber} onChange={handleChange} required />
         </div>
         <br></br>
         <div>

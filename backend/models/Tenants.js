@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     });
     tenants.associate = (models) => {
           tenants.belongsTo(models.users);
+          tenants.hasMany(models.payments,
+            {
+              onDelete: "cascade",
+            }
+          );
       };
 
     return tenants;

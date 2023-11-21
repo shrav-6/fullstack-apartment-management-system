@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { applications,guests,listings,users, tenants, managers } = require("../models");
 const {validateToken}=require("../Middleware/middleware");
+const { build } = require('sequelize/lib/model');
 
 // create new application from user type: guest
 router.post('/create',validateToken, async (req, res) => {
@@ -27,13 +28,12 @@ router.post('/create',validateToken, async (req, res) => {
         userId:user_id
       });
       res.json( {"success": true,
-      "message": "application created successfully,In pending with approval"});
+      "message": "application created successfully, In pending with approval"});
     
   }
     else{
       res.json({"success": false,error: "You can't apply for this Apartment"});
     }
-
 });
 
 // manager can accept/rejected applications
@@ -76,15 +76,18 @@ router.put('/updateStatus/:applicationId',validateToken, async (req, res) => {
             console.log('User does not exist in users table');
           }
           // create entry in tenant table
-          const building = await listings.findOne({where: {id: application.listingId}})
-          const tenant={"name":application.firstName+" "+application.lastName,"phoneNumber":application.phoneNumber,"apartmentNumber":application.listingId,"userId":application.userId,managerId:manager.id, buildingId: building.id};
+          const listing = await listings.findOne({where: {id: application.listingId}})
+          console.log('inside approval, buildingId', listing.buildingId);
+          // const building = await Buildings.findOne({})
+          //const listing =
+          const tenant={"name":application.firstName+" "+application.lastName,"phoneNumber":application.phoneNumber,"apartmentNumber":listing.apartmentNumber,"userId":application.userId,managerId:manager.id, buildingId: listing.builingId, listingId: listing.listingId};
           await tenants.create(tenant);
-          console.log("entry in tenant table");
+          console.log("entered in tenant table");
           // delete from guests table
           await guests.destroy(
             { where: { userId: application.userId } }
           );
-          console.log("after deleting from guests table");
+          console.log("deleted from guests table");
         } else if(status == 'rejected') {
           // notify tenant that application is rejected
         }

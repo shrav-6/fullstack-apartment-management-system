@@ -15,6 +15,7 @@ router.post("/",validateToken, async (req, res) => {
     if(manager!=null && building!=null){
         const createdListing = await listings.create({
         unitAvailable: listing.unitAvailable,
+        apartmentNumber: listing.apartmentNumber,
         rent: listing.rent,
         address: listing.address,
         pets: listing.pets,
@@ -88,6 +89,7 @@ router.post("/",validateToken, async (req, res) => {
         const responseData = listing.map((listing) => ({
           id: listing.id,
           unitAvailable: listing.unitAvailable,
+          apartmentNumber: listing.apartmentNumber,
           rent: listing.rent,
           address: listing.address,
           pets: listing.pets,
@@ -139,6 +141,7 @@ if(role=="Manager"){
 router.put("/:ListingId",validateToken,async (req, res) => {
     const listingId = req.params.ListingId;
     const unitAvailable=req.body.unitAvailable;
+    const apartmentNumber=req.body.apartmentNumber;
     const description=req.body.description;
     const startsFrom=req.body.startsFrom;
     const pets=req.body.pets;
@@ -152,7 +155,7 @@ router.put("/:ListingId",validateToken,async (req, res) => {
     const listing = await listings.findOne({ where: { id:listingId,managerId:manager.id } });
    if(manager!=null && listing!=null){
      await listings.update(
-       { unitAvailable: unitAvailable,description:description,startsFrom:startsFrom, pets:pets, rent:rent, address:address,extras:extras},
+       { unitAvailable: unitAvailable, apartmentNumber: apartmentNumber, description:description,startsFrom:startsFrom, pets:pets, rent:rent, address:address,extras:extras},
        { where: { id: listingId } }
      );
      res.json( {"success": true,

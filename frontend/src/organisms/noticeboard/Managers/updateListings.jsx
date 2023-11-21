@@ -10,6 +10,7 @@ function UpdateListings() {
     console.log('inside update listings: array', selectedListing);
   const [formData, setFormData] = useState({
     unitAvailable: '',
+    apartmentNumber: '',
     rent: '',
     address: '',
     pets: '',
@@ -26,6 +27,7 @@ function UpdateListings() {
     if (selectedListing) {
       setFormData({
         unitAvailable: selectedListing.unitAvailable,
+        apartmentNumber: selectedListing.apartmentNumber,
         rent: selectedListing.rent,
         address: selectedListing.address,
         pets: selectedListing.pets,
@@ -75,6 +77,17 @@ function UpdateListings() {
             id="unitAvailable"
             name="unitAvailable"
             value={formData.unitAvailable}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="apartmentNumber">Apartment Number:</label>
+          <input
+            type="number"
+            id="apartmentNumber"
+            name="apartmentNumber"
+            value={formData.apartmentNumber}
             onChange={handleChange}
             required
           />

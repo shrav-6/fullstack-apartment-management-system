@@ -94,7 +94,15 @@ export default function Signin() {
               state: { unitAvailable: unitAvailable, buildingName: buildingName, listingId: listingId} // Your state object
             })
           }else{
+            console.log(response.data.role);
+            if (response.data.role === 'Tenant') {
+              const userId = response.data.id;
+              console.log('userid', userId);
+              navigate('/tenant', { state: { userId } });
+              //navigate('/tenant', state: { userId: response.data.id});
+            } else {
             navigate('/home');
+            }
           }
         }
       });

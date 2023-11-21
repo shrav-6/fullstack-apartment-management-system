@@ -16,11 +16,10 @@ module.exports = (sequelize, DataTypes) => {
 });
 
         buildings.associate = (models) => {
-        buildings.hasMany(models.tenants,
-          {
-            onDelete: "cascade",
-          }
-          );
+        buildings.hasMany(models.tenants, {
+          onDelete: "cascade",
+        });
+        
         buildings.hasMany(models.notices, {
           onDelete: "cascade",
         });
