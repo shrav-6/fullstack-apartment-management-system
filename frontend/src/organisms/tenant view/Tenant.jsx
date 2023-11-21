@@ -139,8 +139,8 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
   };
 
   return (
-
-    <div> <br></br>
+    <div>
+      <br></br>
       <br></br>
       <br></br><h1>Tenant View</h1>
       <br></br>
@@ -178,7 +178,6 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
           </div>
         ))}
       </div>
-
       <h2>Pay Rent</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -202,7 +201,6 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
         <button type="submit">Submit Payment</button>
       </form>
     </div>
-
   );
 }
 
