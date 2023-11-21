@@ -5,25 +5,28 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-const db = require("./models");
+const db = require("./Models");
 
 // Routers
-const NoticeRouter = require("./routes/Notices");
+const NoticeRouter = require("./Routes/Notices");
 app.use("/Notices", NoticeRouter);
 
-const ListingsRouter = require("./routes/Listings");
+const ListingsRouter = require("./Routes/Listings");
 app.use("/Listings", ListingsRouter);
 
-const usersRouter = require("./routes/users");
+const usersRouter = require("./Routes/Users");
 app.use("/auth", usersRouter);
 
-const buildingsRouter = require("./routes/Buildings");
+const buildingsRouter = require("./Routes/Buildings");
 app.use("/Buildings", buildingsRouter);
 
 //const imageGalleryRoutes = require("./routes/imageGallery");
 //app.use("/gallery", imageGalleryRoutes); // Use the router directly
 
-const applicationRouter = require("./routes/Applications");
+const wishlistRouter = require("./Routes/WishList");
+app.use("/wishlist", wishlistRouter);
+
+const applicationRouter = require("./Routes/Applications");
 app.use('/Applications', applicationRouter);
 
 

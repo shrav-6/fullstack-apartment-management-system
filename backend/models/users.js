@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     users.hasMany(models.applications, {
       onDelete: 'cascade',
     });
+    users.hasMany(models.wishlists, {
+      onDelete: 'cascade',
+    });
     
   };
 

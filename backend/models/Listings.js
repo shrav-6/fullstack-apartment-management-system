@@ -36,6 +36,9 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
     });
     listings.belongsTo(models.buildings);
+    listings.hasMany(models.wishlists, {
+      onDelete: 'cascade',
+    });
   };
  
   return listings;
