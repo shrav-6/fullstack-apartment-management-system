@@ -15,6 +15,7 @@ import ViewListings from '../organisms/Managers/ViewListings';
 import ListingsForm from '../organisms/Managers/addListings';
 import UpdateListings from '../organisms/Managers/updateListings';
 import NewsFeeds from '../organisms/NewsFeeds/Newsfeeedview/NewsFeeds';
+import ViewTenant from '../organisms/tenant view/Tenant';
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           <Route path="/listings" element={<ViewListings />} />
           <Route path="/addListing" element={<ListingsForm />} />
           <Route path="/updateListing" element={<UpdateListings />} />
+          <Route path="/applications" element={<ViewApplications />} />
+          <Route path="/tenant" element={<ViewTenant />} />
+          <Route path="/viewagreement" element={<RentalAgreementPDF />} />
+          {/* <Route path="/listings" element={<MyUploader />} /> */}
         </Routes>
       </div>
     </>

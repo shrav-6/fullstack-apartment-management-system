@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    apartmentNumber: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     rent: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -32,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
   });
  
   listings.associate = (models) => {
+    listings.hasMany(models.tenants,
+      {
+        onDelete: "cascade",
+      }
+    );
     listings.hasMany(models.applications, {
       onDelete: 'cascade',
     });

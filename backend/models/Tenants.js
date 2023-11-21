@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: 'cascade',
 });
         
+          tenants.hasMany(models.payments,
+            {
+              onDelete: "cascade",
+            }
+          );
       };
 
     return tenants;

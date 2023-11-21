@@ -34,17 +34,16 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Signin() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // Accessing the state object from the current route
   const fromSignUp = location?.state?.fromSignUp;
   const unitAvailable = location?.state?.unitAvailable;
   const buildingName = location?.state?.buildingName;
-  const listingId =  location?.state?.listingId;
+  const listingId = location?.state?.listingId;
 
-
-// Accessing the state object from the current route
+  // Accessing the state object from the current route
   // const isFromSignUp = location.state
   console.log(fromSignUp);
 
@@ -100,7 +99,15 @@ export default function Signin() {
               state: { unitAvailable, buildingName, listingId }, // Your state object
             });
           } else {
-            navigate('/home');
+            console.log(response.data.role);
+            if (response.data.role === 'Tenant') {
+              const userId = response.data.id;
+              console.log('userid', userId);
+              navigate('/tenant', { state: { userId } });
+              // navigate('/tenant', state: { userId: response.data.id});
+            } else {
+              navigate('/home');
+            }
           }
         }
       });
