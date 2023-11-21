@@ -326,6 +326,17 @@ h6 {
   text-align: center;
   transition: var(--mainTransition);
 }
+.wishlist-top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--mainWhite);
+  padding: 0.3rem 0.6rem 0.5rem;
+  border-bottom-right-radius: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  transition: var(--mainTransition);
+}
 .price-top h6 {
   margin-bottom: 0;
   font-size: 0.9rem;
@@ -532,6 +543,10 @@ h6 {
     flex: 1; /* Let it take the available space */
     background-color: #e0e0e0; /* Right section's background color */
     padding: 20px;
+  }
+  .list-container{
+    display: flex;
+    flex-direction: row;
   }
 }
 /* end of rooms fitler*/

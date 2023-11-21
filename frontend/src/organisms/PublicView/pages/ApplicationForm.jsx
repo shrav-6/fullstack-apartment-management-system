@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import {useLocation } from 'react-router-dom';
+import {useLocation, useNavigate } from 'react-router-dom';
 import { useRoomContext } from "../context";
 import axios from "axios";
 
@@ -21,6 +21,7 @@ export default function ApplicationForm() {
 
   const context = useRoomContext();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Accessing the state object from the current route
   const unitAvailable = location?.state?.unitAvailable;
@@ -58,17 +59,18 @@ export default function ApplicationForm() {
       if (validateFields()) {
         const data = {...formData,listingId:listingId};
         console.log(data);
-        const response=await axios.post('http://172.17.0.237:8074/Applications/create', data,
+        const response=await axios.post('http://localhost:3001/Applications/create', data,
         {
           headers: {
-            accessToken: sessionStorage.getItem("accessToken"),
+            accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
           },
         }
       );
       if (response.data.error) {
-            alert(response.data.error);
+           
+            alert(response.data.message);
        } else {
-        alert(response.data.message);
+        navigate('/home')
           }
       }
     };

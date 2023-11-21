@@ -12,7 +12,7 @@ const SingleRoom = () => {
   const listing = getRoom(id);
   
   
-  const accessToken = sessionStorage.getItem('accessToken');
+  const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   const targetRoute = accessToken ? '/application' : '/signin';
 
   const navigate = useNavigate();

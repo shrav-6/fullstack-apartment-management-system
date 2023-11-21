@@ -3,14 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 import Navbar from '../molecules/Navbar/Navbar';
 import Notices from '../organisms/noticeboard/Notices/Notices';
 import Home from '../pages/Home';
-import Signup from '../organisms/noticeboard/Signup/Signup';
-import Signin from '../organisms/noticeboard/Signin/Signin';
-import Logout from '../organisms/noticeboard/Logout/Logout';
-import Buildings from '../organisms/noticeboard/Managers/DashBoard';
+import Signup from '../organisms/Signup/Signup';
+import Signin from '../organisms/Signin/Signin';
+import Logout from '../organisms/Logout/Logout';
+import Buildings from '../organisms/Managers/Buildings';
 import Apps from '../organisms/PublicView/Apps';
-import ViewListings from '../organisms/noticeboard/Managers/ViewListings';
-import ListingsForm from '../organisms/noticeboard/Managers/addListings';
-import UpdateListings from '../organisms/noticeboard/Managers/updateListings';
+import ViewListings from '../organisms/Managers/ViewListings';
+import ListingsForm from '../organisms/Managers/addListings';
+import UpdateListings from '../organisms/Managers/updateListings';
 
 function App() {
   return (
