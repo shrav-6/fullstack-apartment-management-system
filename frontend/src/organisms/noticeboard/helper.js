@@ -3,15 +3,21 @@ export function sortNoticesByDate(notice1, notice2) {
     return notice1.createdAt <= notice2.createdAt ? -1 : 1;
 }
 
-export function sortNoticesByImportance(notice1, notice2) {
+export function sortNoticesByTitle(notice1, notice2) {
     return notice1.title <= notice2.title ? -1 : 1;
+}
+
+export function sortNoticesByPriority(notice1, notice2) {
+    return notice1.priority <= notice2.priority ? -1 : 1;
 }
 
 export function sortNotices(allNotices, parameter) {
     if (parameter === "date") {
         allNotices.sort(sortNoticesByDate);
-    } else if (parameter === "importance") {
-        allNotices.sort(sortNoticesByImportance);
+    } else if (parameter === "title") {
+        allNotices.sort(sortNoticesByTitle);
+    } else if (parameter === "priority") {
+        allNotices.sort(sortNoticesByPriority);
     }
     console.log("Notices");
     console.log(allNotices);
@@ -48,20 +54,22 @@ export function filterNoticesSince1Year(notice) {
     return notice.createdAt >= currentDate ? notice : undefined;
 }
 
-export function filterNoticesForLowPriority(notice) {
-    return notice.priority >= threshold ? notice : undefined;
+export function filterNoticesForLowPriority(notice, lowThreshold) {
+    if (notice.priority >= lowThreshold) {
+        return notice;
+    }
 }
 
-export function filterNoticesForNormalPriority(notice) {
-    return notice.priority >= threshold ? notice : undefined;
+export function filterNoticesForNormalPriority(notice, normalThreshold) {
+    if (notice.priority >= normalThreshold) {
+        return notice;
+    }
 }
 
-export function filterNoticesForHighPriority(notice) {
-    return notice.priority >= threshold ? notice : undefined;
-}
-
-export function filterNoticesByImportance(notice, minValue, maxValue) {
-  return notice.importance > minValue ? (notice.importance < maxValue ? notice : undefined) : undefined;
+export function filterNoticesForHighPriority(notice, highThreshold) {
+    if (notice.priority >= highThreshold) {
+        return notice;
+    }
 }
 
 export function filterNotices(allNotices, parameter) {
@@ -76,17 +84,17 @@ export function filterNotices(allNotices, parameter) {
             filteredNotices.push(filterNoticesSince1Month(allNotices[i]));
         } else if (parameter === "last1Year" && allNotices[i].createdAt !== undefined) {
             filteredNotices.push(filterNoticesSince1Year(allNotices[i]));
-        } else if (parameter === "lowPriority" && allNotices[i].importance !== undefined) {
-            filteredNotices.push(filterNoticesForLowPriority(allNotices[i]));
-        } else if (parameter === "normalPriority" && allNotices[i].importance !== undefined) {
-            filteredNotices.push(filterNoticesForNormalPriority(allNotices[i]));
-        } else if (parameter === "highPriority" && allNotices[i].importance !== undefined) {
-            filteredNotices.push(filterNoticesForHighPriority(allNotices[i]));
+        } else if (parameter === "lowPriority" && allNotices[i].priority !== undefined) {
+            filteredNotices.push(filterNoticesForLowPriority(allNotices[i], 1));
+        } else if (parameter === "normalPriority" && allNotices[i].priority !== undefined) {
+            filteredNotices.push(filterNoticesForNormalPriority(allNotices[i], 3));
+        } else if (parameter === "highPriority" && allNotices[i].priority !== undefined) {
+            filteredNotices.push(filterNoticesForHighPriority(allNotices[i], 5));
         } else if ((parameter === "last1Day" || parameter === "last1Week" || parameter === "last1Month" ||
             parameter === "last1Year") && allNotices[i].createdAt === undefined) {
             console.error("Notice Date Not Defined");
         } else if ((parameter === "lowPriority" || parameter === "normalPriority" || parameter === "highPriority")
-            && allNotices[i].importance !== undefined) {
+            && allNotices[i].priority !== undefined) {
             console.error("Notice Priority Not Defined");
         }
     }

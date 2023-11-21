@@ -3,7 +3,21 @@
   .navNotice {
     text-align: center;
     padding: 1rem;
+    margin-bottom: 30px;
   }
+  // .sortFilterAdd {
+  //   justify-content: space-between;
+    .icon {
+      font-size: 150%;
+      margin-right: 5px;
+    }
+    .select {
+      border-radius: 10px;
+      margin-left: 0px;
+      margin-right: 10%;
+      padding: 2px;
+    }
+  // }
   .cardComponentContainer {
     display: flex;
     flex-wrap: wrap;

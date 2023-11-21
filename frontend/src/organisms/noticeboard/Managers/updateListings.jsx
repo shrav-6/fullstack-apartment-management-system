@@ -65,7 +65,7 @@ function UpdateListings() {
 
   return (
     <div>
-      <h1>Edit Listing</h1>
+      <h1 className="heading">Edit Listing</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="unitAvailable">Number of Bedrooms:</label>

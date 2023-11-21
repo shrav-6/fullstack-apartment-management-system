@@ -7,7 +7,7 @@ export function AboutUs({
   return (
     <div className="container">
         <br></br>
-        <h1><center>About Us</center></h1>
+        <h1 className="heading"><center>About Us</center></h1>
         <br></br>
         <hr></hr>
         <br></br>

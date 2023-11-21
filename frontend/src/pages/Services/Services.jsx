@@ -9,7 +9,7 @@ export function Services({
   return (
     <div>
         <br></br>
-        <h1><center>Services</center></h1>
+        <h1 className="heading"><center>Services</center></h1>
         <br></br>
         <hr></hr>
         <br></br>

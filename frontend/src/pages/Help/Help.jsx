@@ -7,7 +7,7 @@ export function Help({
   return (
     <div>
         <br></br>
-        <h1><center>Help</center></h1>
+        <h1 className="heading"><center>Help</center></h1>
         <br></br>
         <hr></hr>
         <br></br>

@@ -12,8 +12,8 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jasmine",
     "build": "vite build",
-    "dev": "vite",
-    "build-and-start": "yarn run build && yarn run dev",
+    "start": "vite",
+    "dev": "yarn run build && yarn run start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },

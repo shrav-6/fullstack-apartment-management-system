@@ -2,9 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-  message, Modal, Input, Button,
-} from 'antd';
+import { message, Modal, Input, Button } from 'antd';
 import _get from 'lodash/get';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
@@ -36,6 +34,16 @@ function Notices({
 }) {
   const [editTrigger, setEditTrigger] = useState(0); // State to trigger useEffect on edits
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    setDropdownVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setDropdownVisible(false);
+  };
+
 
   const fetchNotices = () => {
     getAllNotices()
@@ -154,19 +162,63 @@ function Notices({
   return (
     <div className={styles.noticeContainer}>
       <h1 className={styles.navNotice}>Notices</h1>
-      <div style={{ float: 'right' }}>
-        <div>
-          {role === 'Manager' && (
-            <div
-              tabIndex="0"
-              role="button"
-              className="card-post"
-              onClick={handlePlusIconClick}
-            >
-              <FaPlus />
-            </div>
-          )}
-        </div>
+      <div>
+        <center onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          {/* <div> */}
+            <span>
+              <span>
+                <FilterAltRoundedIcon className={styles.icon} />
+              </span>
+              {
+                <select className={styles.select} defaultValue={'none'} onChange={(change) => {
+                  filterNotices(notices, change.target.value);
+                  mapDispatchToProps;
+                  handleMouseEnter();
+                }}>
+                  <option value="none">None</option>
+                  <option value="lowPriority">Low Priority</option>
+                  <option value="normalPriority">Normal Priority</option>
+                  <option value="highPriority">High Priority</option>
+                  <option value="last1Day">Last 1 Day</option>
+                  <option value="last1Week">Last 1 Week</option>
+                  <option value="last1Month">Last 1 Month</option>
+                  <option value="last1Year">Last 1 Year</option>
+                </select>
+              }
+            </span>
+            <span>
+              <span>
+                <SortRoundedIcon className={styles.icon} />
+              </span>
+              {
+                <select className={styles.select} defaultValue={'none'} onChange={(change) => {
+                  sortNotices(notices, change.target.value);
+                  mapStateToProps;
+                  handleMouseEnter();
+                }}>
+                  <option value="none">None</option>
+                  <option value="date">Date</option>
+                  <option value="title">Title</option>
+                  <option value="priority">Priority</option>
+                </select>
+              }
+            </span>
+            <span>
+              {role === 'Manager' && (
+                <span
+                  tabIndex="0"
+                  role="button"
+                  className="card-post"
+                  onClick={handlePlusIconClick}
+                >
+                  <FaPlus className={styles.icon} />
+                </span>
+              )}
+            </span>
+          {/* </div> */}
+        </center>
+      {/* </div>
+      <div> */}
         <div className={styles.cardComponentContainer}>
           {(notices || []).map(notice => (
             <Card
@@ -210,43 +262,6 @@ function Notices({
             </section>
           </div>
         </Modal>
-      </div>
-
-      <div style={{float:"right"}} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <div>
-          <FilterAltRoundedIcon>
-          </FilterAltRoundedIcon>
-          {
-            <select defaultValue={'none'} onChange={(change) => {
-              filterNotices(notices, change.target.value);
-              mapDispatchToProps(notices);
-            }}>
-              <option value="none">None</option>
-              {/* <option value="lowPriority">Low Priority</option>
-              <option value="normalPriority">Normal Priority</option>
-              <option value="highPriority">High Priority</option> */}
-              <option value="last1Day">Last 1 Day</option>
-              <option value="last1Week">Last 1 Week</option>
-              <option value="last1Month">Last 1 Month</option>
-              <option value="last1Year">Last 1 Year</option>
-            </select>
-          }
-        </div>
-        {console.log("notices", notices)}
-        <div>
-          <SortRoundedIcon>
-          </SortRoundedIcon>
-          {
-            <select defaultValue={'none'} onChange={(change) => {
-              sortNotices(notices, change.target.value);
-              mapStateToProps;
-            }}>
-              <option value="none">None</option>
-              <option value="date">Date</option>
-              <option value="importance">Importance</option>
-            </select>
-          }
-        </div>
       </div>
     </div>
   );
