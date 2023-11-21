@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
   message, Modal, Input, Button,
 } from 'antd';
@@ -15,6 +16,7 @@ import {
   postAllNotices,
   editAllNotices,
   deleteNotice,
+  getAllNoticesForManager
 } from './Notices.service';
 import {
   setNotices,
@@ -44,6 +46,11 @@ function Notices({
   const [editTrigger, setEditTrigger] = useState(0); // State to trigger useEffect on edits
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
 
+  const location = useLocation();
+
+  // Access the state passed through Link
+  const buildingId = location.state ? location.state.buildingId : null;
+
   const fetchNotices = () => {
     getAllNotices()
       .then((response) => {
@@ -56,8 +63,26 @@ function Notices({
       });
   };
 
+  const fetchNoticesForManager=() =>{
+    getAllNoticesForManager(buildingId)
+    .then((response) => {
+      if (!response?.data?.error) {
+        onSetNotices({ allNotices: response?.data?.data });
+      }
+    })
+    .catch((err) => {
+      message.error(err);
+    });
+
+  };
+
   useEffect(() => {
-    fetchNotices(); // Fetch notices when the component mounts
+    if(role === "Manager"){
+      fetchNoticesForManager(buildingId); // Fetch notices for a manager
+    }else{
+      fetchNotices(); // Fetch notices when the component mounts
+    }
+
   }, [editTrigger]); // Include editTrigger in the dependency array
 
   const [isModalVisible, setModalVisible] = useState(false);

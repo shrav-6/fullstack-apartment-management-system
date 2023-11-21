@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { Link /* , useLocation */ } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../organisms/PublicView/images/logo.svg';
+import { HiArchiveBox } from 'react-icons/hi2';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  // const { pathname } = useLocation();
-  const accessToken = sessionStorage.getItem('accessToken');
+  const { pathname } = useLocation();
+  const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
+  const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
+  const userName = JSON.parse(sessionStorage.getItem('userCred'))?.username;
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -14,7 +17,71 @@ function Navbar() {
 
   const imageStyles = {
     width: '90px',
-    height: 'auto',
+    height: '60px',
+  };
+
+  const getLinksBasedOnRole = () => {
+    switch (role) {
+      case 'Guest':
+        return (
+          <>
+           <li>
+                <Link to="/rooms">New Listings</Link>
+              </li>
+            <li>
+              <Link to="/wishlist">My Wishlist</Link>
+            </li>
+            <li>
+              <Link to="/applications">Applications</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      case 'Tenant':
+        return (
+          <>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+                <Link to="/rooms">New Listings</Link>
+              </li>
+              <li>
+              <Link to="/wishlist">My Wishlist</Link>
+            </li>
+            <li>
+              <Link to="/notices">Notices</Link>
+            </li>
+            <li>
+              <Link to="/newsfeed">NewsFeed</Link>
+            </li>
+            <li>
+              <Link to="/applications">Applications</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      case 'Manager':
+        return (
+          <>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/dashboard">Buildings</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -29,19 +96,8 @@ function Navbar() {
         <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
           {accessToken ? (
             <>
-
-              <li>
-                <Link to="/home">Home</Link>
-              </li>
-              <li>
-                <Link to="/notices">Notices</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/logout">Logout</Link>
-              </li>
+              {getLinksBasedOnRole()}
+              <h6 style={{ marginTop: '12px', marginLeft: '100px' }}>{userName}</h6>
             </>
           ) : (
             <>
