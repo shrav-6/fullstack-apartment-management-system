@@ -14,7 +14,38 @@ router.get("/get/:newsfeedId",validateToken, async (req, res) => {
  
 //to get all newsfeed for a building ((posted by a particular tenant))
 router.get("/tenant", validateToken, async (req, res) => {
-  
+  try {
+    const role = req.user.role;
+    const user_id = req.user.id;
+      if (role=="Tenant") {
+        const tenant = await tenants.findOne({ where: { userId:user_id } });
+        const newsfeed = await newsfeeds.findAll({ where: { tenantId:tenant.id } });
+ 
+        if (newsfeed.length > 0) {
+          return res.json({
+            success: true,
+            message: "Retrieved successfully",
+            data: newsfeed,
+          });
+        } else {
+          return res.json({
+            success: false,
+            error: "No news feeds to be shown",
+          });
+        }
+      } else {
+        return res.json({
+          success: false,
+          error: "Tenant not found",
+        });
+      }
+  } catch (error) {
+    console.error("Error:", error);
+    return res.json({
+      success: false,
+      error: "Internal server error",
+    });
+  }
 });
  
  
@@ -24,19 +55,125 @@ router.get("/tenant", validateToken, async (req, res) => {
  
 //to get all newsfeed for a building ((tenant))
 router.get("/", validateToken, async (req, res) => {
-   
+    try {
+      const role = req.user.role;
+      const user_id = req.user.id;
+        if (role=="Tenant") {
+          const tenant = await tenants.findOne({ where: { userId: user_id } });
+          const building_id = tenant.buildingId;
+          const newsfeed = await newsfeeds.findAll({ where: { buildingId: building_id } });
+ 
+          if (newsfeed.length > 0) {
+            return res.json({
+              success: true,
+              message: "Retrieved successfully",
+              data: newsfeed,
+            });
+          } else {
+            return res.json({
+              success: false,
+              error: "No news feeds to be shown",
+            });
+          }
+        } else {
+          return res.json({
+            success: false,
+            error: "Tenant not found",
+          });
+        }
+    } catch (error) {
+      console.error("Error:", error);
+      return res.json({
+        success: false,
+        error: "Internal server error",
+      });
+    }
   });
  
  
   //for getting newfeed under that manager for a particular apt
  
   router.get("/manager/:buildingId", validateToken, async (req, res) => {
+    try {
+      const buildingId = req.params.buildingId;
+      const role = req.user.role;
+      const user_id = req.user.id;
+        if (role=="Manager") {
+          const manager = await managers.findOne({ where: { userId: user_id } });
+          const building=await buildings.findOne({ where: { id: buildingId } });
+          console.log(building);
+          if(manager.id==building.managerId && manager!=null && building!=null){
+            const newsfeed = await newsfeeds.findAll({ where: { buildingId: building.id } });
+            if (newsfeed.length > 0) {
+              return res.json({
+                success: true,
+                message: "Retrieved successfully",
+                data: newsfeed,
+              });
+            } else {
+              return res.json({
+                success: false,
+                error: "No news feeds to be shown",
+              });
+            }
+          }
+          else{
+            return res.json({
+              success: false,
+              error: "Cannot Access the Newsfeed,don't have permission",
+            });
+          }
+         
    
+        }
+         
+        else {
+          return res.json({
+            success: false,
+            error: "Cannot Access the Newsfeed,don't have permission",
+          });
+        }
+ 
+    } catch (error) {
+      console.error("Error:", error);
+      return res.json({
+        success: false,
+        error: "Internal server error",
+      });
+    }
   });
  
  //for posting a newsfeed for tenant
 router.post("/",validateToken, async (req, res) => {
-  
+  const newsfeed = req.body;
+  const user_id=req.user.id;
+  const role=req.user.role;
+  if(role=="Tenant"){
+  const tenant = await tenants.findOne({ where: { userId: user_id } });
+  if(tenant!=null )
+  {
+   
+      await newsfeeds.create({
+      title: newsfeed.title,
+      description: newsfeed.description,
+      dateAndTime: newsfeed.dateAndTime,
+      type:newsfeed.type,
+      buildingId:tenant.buildingId,
+      tenantId:tenant.id
+    });
+    res.json( {"success": true,
+    "message": "created successfully"});
+ 
+ 
+ 
+}
+else{
+  res.status(500).json({"success": false,error: "user don't have the permissions"});
+}
+  }
+else{
+  res.status(500).json({"success": false,error: "user don't have the permissions"});
+}
  
  
  
@@ -45,12 +182,59 @@ router.post("/",validateToken, async (req, res) => {
  
 //for deleting a newsfeed
 router.delete("/:newsfeedId",validateToken,async (req, res) => {
-  
+  const newsfeedId = req.params.newsfeedId;
+  const user_id=req.user.id;
+  const role=req.user.role;
+  if(role=="Tenant"){
+  const tenant = await tenants.findOne({ where: { userId: user_id } });
+  const newsfeed = await newsfeeds.findOne({ where: { id:newsfeedId,tenantId:tenant.id } });
+  if(tenant!=null && newsfeed!=null){
+    await newsfeeds.destroy({
+      where: {
+        id: newsfeedId,
+      },
+    });
+    res.json( {"success": true,
+    "message": "Deleted successfully"});
+  }
+  else{
+    res.json({"success": false,error: "user don't have the permissions"});
+  }
+}
+else{
+  res.json({"success": false,error: "user don't have the permissions"});
+}
+ 
 });
  
  //for updating a newsfeed
 router.put("/:newsfeedId",validateToken,async (req, res) => {
- 
+   const newsfeedId = req.params.newsfeedId;
+   const title=req.body.title;
+   const description=req.body.description;
+   const dateAndTime=req.body.dateAndTime;
+   const user_id=req.user.id;
+   const role=req.user.role;
+   const type=req.body.type;
+   if(role=="Tenant"){
+   const tenant = await tenants.findOne({ where: { userId: user_id } });
+   const newsfeed = await newsfeeds.findOne({ where: { id:newsfeedId,tenantId:tenant.id } });
+  if(tenant!=null && newsfeed!=null){
+    await newsfeeds.update(
+      { title: title,description:description,dateAndTime:dateAndTime,type:type},
+      { where: { id: newsfeedId } }
+    );
+    res.json( {"success": true,
+    "message": "Updated successfully"});
+  }
+  else{
+    res.status(500).json({"success": false,error: "user don't have the permissions"});
+  }
+   }
+   else{
+    res.status(500).json({"success": false,error: "user don't have the permissions"});
+  }
+   
 });
  
  
