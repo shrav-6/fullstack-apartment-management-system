@@ -1,4 +1,4 @@
-# CoderGate - Code Quality Bot for GitHub
+# Shelter
 
 ## External Dependencies
 These are programming languages, frameworks, and other pieces of software required to run the application. A detailed list of dependencies, along with instructions on how to install and configure them are given in the document below:  
