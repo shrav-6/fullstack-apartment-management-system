@@ -5,7 +5,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-const db = require("./Models");
+const db = require("./models");
 
 // Routers
 const NoticeRouter = require("./Routes/Notices");
@@ -32,6 +32,8 @@ app.use("/NewsFeed",NewsFeedRouter )
 const applicationRouter = require("./Routes/Applications");
 app.use('/Applications', applicationRouter);
 
+const NewsFeedRouter = require("./routes/Newsfeeds");
+app.use("/NewsFeed",NewsFeedRouter );
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

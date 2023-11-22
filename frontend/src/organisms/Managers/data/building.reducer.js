@@ -1,50 +1,43 @@
 /* eslint-disable default-param-last */
 import { EMPTY_OBJECT } from '../../../utilities/shared/global.constants';
-import { ACTION_TYPES } from '../constants/notice.constant';
+import { ACTION_TYPES } from '../constants/building.constant';
 
 const initialState = {
-  allNotices: [],
-  title: '',
-  description: '',
-  authorName: '',
+  allBuildings: [],
+  buildingName: '',
+  address: '',
+  phoneNumber: '',
   postType: '',
-  priority: '',
 };
 
-const noticeReducer = (state = initialState, { type, payload }) => {
+const buildingReducer = (state = initialState, { type, payload }) => {
   const {
-    allNotices,
-    title,
-    description,
-    authorName,
+    allBuildings,
+    buildingName,
+    address,
+    phoneNumber,
     postType = '',
-    priority,
   } = payload || EMPTY_OBJECT;
   switch (type) {
-    case ACTION_TYPES.SET_NOTICE:
+    case ACTION_TYPES.SET_BUILDINGS:
       return {
         ...state,
-        allNotices,
+        allBuildings,
       };
-    case ACTION_TYPES.SET_TITLE:
+    case ACTION_TYPES.SET_BUILDINGNAME:
       return {
         ...state,
-        title,
+        buildingName,
       };
-    case ACTION_TYPES.SET_DESCRIPTION:
+    case ACTION_TYPES.SET_ADDRESS:
       return {
         ...state,
-        description,
+        address,
       };
-    case ACTION_TYPES.SET_PRIORTIY:
+    case ACTION_TYPES.SET_PHONENUMBER:
       return {
         ...state,
-        priority,
-      };
-    case ACTION_TYPES.SET_AUTHOR_NAME:
-      return {
-        ...state,
-        authorName,
+        phoneNumber,
       };
     case ACTION_TYPES.SET_POST_TYPE:
       return {
@@ -68,4 +61,4 @@ const noticeReducer = (state = initialState, { type, payload }) => {
       return state;
   }
 };
-export default noticeReducer;
+export default buildingReducer;

@@ -55,6 +55,7 @@ function EditBuildingModal({
       // Refresh the page after successful update
       window.location.reload();
     } catch (error) {
+      // eslint-disable-next-line no-unused-expressions
       (error);
     }
   };
@@ -107,7 +108,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
 
   const handleEditClick = () => {
     setShowEditModal(true);
-    onUpdate(); // You can pass the edit logic to the parent component
+    onUpdate();
   };
 
   const handleModalClose = () => {
@@ -127,7 +128,6 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
               type="delete"
               onClick={async () => {
                 try {
-                  const buildingId = building.id;
                   await axios.delete(`http://localhost:3001/${buildingId}`, {
                     headers: {
                       accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
@@ -135,6 +135,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
                   });
                   onDelete();
                 } catch (error) {
+                  // eslint-disable-next-line no-unused-expressions
                   (error);
                 }
               }}
@@ -175,8 +176,6 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
         show={showEditModal}
         onHide={handleModalClose}
         onUpdate={() => {
-          // Placeholder for update logic
-          //  ('Updating building...');
         }}
         building={building}
       />

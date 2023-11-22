@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
-  message, Modal, Input, Button,
+  message, Modal, Input, Button, Select,
 } from 'antd';
 import _get from 'lodash/get';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
@@ -23,13 +23,13 @@ import {
   setTitle,
   setDescription,
   setPostType,
+  setPriority,
   resetPostData,
   resetAllData,
 } from '../data/notice.actions';
 import { STRING_CONSTANTS } from '../constants/notice.constant';
 // styles
 import styles from './Notice.module.scss';
-
 const { TextArea } = Input;
 
 function Notices({
@@ -38,9 +38,11 @@ function Notices({
   description,
   authorName,
   postType = '',
+  priority,
   onSetTitle,
   onSetNotices,
   onSetDescription,
+  onSetPriority,
   onSetPostType = () => {},
   onResetPostData = () => {},
   onResetAllPostData = () => {},
@@ -103,6 +105,9 @@ function Notices({
     setEditedTitle('');
     setEditedDescription('');
   };
+  const handlePriorityChange = (value) => {
+    onSetPriority(value);
+  };
 
   const handleSave = () => {
     const payload = {
@@ -113,6 +118,7 @@ function Notices({
         ? editedDescription
         : description,
       dateAndTime: new Date().valueOf(),
+      priority,
     };
 
     postAllNotices(payload)
@@ -260,6 +266,22 @@ function Notices({
               autoSize={{ minRows: 3, maxRows: 5 }}
             />
           </section>
+          <section>
+            <label htmlFor="priority">
+              Priority:
+            </label>
+            <Select
+              id="priority"
+              name="priority"
+              value={priority}
+              style={{ width: 200 }}
+              onChange={handlePriorityChange}
+            >
+              <Select.Option value="HIGH">HIGH</Select.Option>
+              <Select.Option value="MEDIUM">MEDIUM</Select.Option>
+              <Select.Option value="LOW">LOW</Select.Option>
+            </Select>
+          </section>
         </div>
       </Modal>
     </div>
@@ -271,6 +293,7 @@ const mapStateToProps = ({ noticeReducer }) => ({
   title: _get(noticeReducer, 'title'),
   description: _get(noticeReducer, 'description'),
   postType: _get(noticeReducer, 'postType'),
+  priority: _get(noticeReducer, 'priority'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -280,6 +303,8 @@ const mapDispatchToProps = dispatch => ({
   onSetPostType: postType => dispatch(setPostType(postType)),
   onResetPostData: () => dispatch(resetPostData()),
   onResetAllPostData: () => dispatch(resetAllData()),
+  onSetPriority: priority => dispatch(setPriority(priority)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notices);

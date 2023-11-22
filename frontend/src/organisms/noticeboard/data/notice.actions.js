@@ -15,6 +15,11 @@ export const setDescription = description => ({
   payload: { description },
 });
 
+export const setPriority = priority => ({
+  type: ACTION_TYPES.SET_PRIORTIY,
+  payload: { priority },
+});
+
 export const setAuthorName = authorName => ({
   type: ACTION_TYPES.SET_AUTHOR_NAME,
   payload: { authorName },

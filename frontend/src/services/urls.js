@@ -17,3 +17,9 @@ export const newsfeedService = {
   postAllNewsfeed: `${baseUrl}NewsFeed`,
   getAllNewsfeedForManager: `${baseUrl}NewsFeed/manager/:buildingId`,
 };
+
+export const buildingService = {
+  getAllBuilding: `${baseUrl}Buildings`,
+  postAllBuilding: `${baseUrl}Buildings`,
+  // getAllNewsfeedForManager: `${baseUrl}NewsFeed/manager/:buildingId`,
+};

@@ -6,7 +6,7 @@ import Home from '../pages/Home';
 import Signup from '../organisms/Signup/Signup';
 import Signin from '../organisms/Signin/Signin';
 import Logout from '../organisms/Logout/Logout';
-import Buildings from '../organisms/Managers/Buildings';
+import Buildings from '../organisms/Managers/Manager/Buildings';
 import Apps from '../organisms/PublicView/Apps';
 import ViewListings from '../organisms/Managers/ViewListings';
 import ListingsForm from '../organisms/Managers/addListings';
