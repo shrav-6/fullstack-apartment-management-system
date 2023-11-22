@@ -5,14 +5,24 @@ const { managers, buildings, listings } = require("../../Models");
 // Mock the models
 jest.mock("../../Models");
 
+/**
+ * Test suite for listings data functionalities.
+ */
 describe('ListingsData Tests', () => {
+  /**
+   * Resets mock implementations before each test for isolation and consistent test environment.
+   */
   beforeEach(() => {
     // Resetting mocks before each test
     managers.findOne.mockReset();
     buildings.findOne.mockReset();
     listings.create.mockReset();
   });
-
+  
+   /**
+   * Test to verify successful listing creation by a manager.
+   * Ensures that a manager can create a new listing with valid data.
+   */
   it('should create a listing successfully for a manager', async () => {
     // Setting up the mock return values for the models
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
@@ -36,6 +46,11 @@ describe('ListingsData Tests', () => {
     // Asserting that the listing creation was successful
     expect(result).toBe(true);
   });
+
+  /**
+   * Test to verify retrieval of all listings associated with a specific building.
+   * Checks if the service returns the correct listings for a given building managed by a manager.
+   */
   it('should retrieve listings for a specified building', async () => {
     // Mocking the managers.findOne function to simulate a manager being found
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
@@ -77,7 +92,11 @@ describe('ListingsData Tests', () => {
     // Asserting that the result is an array containing objects
     expect(result).toEqual(expect.arrayContaining([expect.any(Object)]));
   });
-
+  
+  /**
+   * Test to check the behavior when no listings are found for a building.
+   * Ensures that the service returns an empty array in such scenarios.
+   */
   it('should return an empty array if no listings are found', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     listings.findAll.mockResolvedValue([]);
@@ -86,6 +105,10 @@ describe('ListingsData Tests', () => {
     expect(result).toEqual([]); // Expecting an empty array
   });
   
+  /**
+ * Test to verify retrieval of all listings for public viewing.
+ * Ensures that the service can provide a list of all available listings for non-managers or general public.
+ */
   it('should retrieve all listings for public view', async () => {
     // Creating a mock array of listing objects with sample details
     const mockListings = [
@@ -123,12 +146,21 @@ describe('ListingsData Tests', () => {
     expect(result).toEqual(expect.arrayContaining([expect.any(Object)]));
   });
   
+  /**
+ * Test to check the behavior when no listings are found for public viewing.
+ * Ensures that the service returns null in such scenarios, indicating no available listings.
+ */
   it('should return null if no listings are found for public view', async () => {
     listings.findAll.mockResolvedValue([]);
   
     const result = await listingsData.getAllListingsForPublicView();
     expect(result).toBeNull();
   });
+
+  /**
+ * Test to verify retrieval of a specific listing by its ID for a manager.
+ * Checks if a manager can fetch detailed information about a specific listing they manage.
+ */
   it('should retrieve a specific listing by ID for a manager', async () => {
     // Mocking the managers.findOne function to simulate finding a manager
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
@@ -157,6 +189,11 @@ describe('ListingsData Tests', () => {
     expect(result).toEqual(expect.any(Object));
     expect(result).toMatchObject(mockListing);
   });
+
+  /**
+ * Test to verify successful deletion of a listing by a manager.
+ * Ensures that a manager can delete a listing they manage, confirming the deletion process works correctly.
+ */
   it('should delete a listing successfully for a manager', async () => {
     // Mocking the managers.findOne function to simulate finding a manager
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
@@ -188,6 +225,11 @@ describe('ListingsData Tests', () => {
     expect(result).toBe(true);
   });
   
+  /**
+ * Test to verify successful update of a listing by a manager.
+ * Checks if a manager can update the details of a listing they manage, ensuring the update process functions as expected.
+ */
+
   it('should update a listing successfully for a manager', async () => {
     // Mocking the managers.findOne function to simulate finding a manager
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
@@ -230,6 +272,10 @@ describe('ListingsData Tests', () => {
     expect(result).toBe(true);
   });
   
+  /**
+ * Test to verify that a non-manager cannot create a listing.
+ * Ensures that the listing creation process is restricted to users with manager roles.
+ */
   it('should return false if a non-manager tries to create a listing', async () => {
     const listing = {
       unitAvailable: 'Unit 403',
@@ -245,6 +291,10 @@ describe('ListingsData Tests', () => {
     expect(result).toBe(false);
   });
   
+  /**
+ * Test to check that a non-manager cannot update a listing.
+ * Confirms that the listing update functionality is limited to users with manager roles.
+ */
   it('should return false if a non-manager tries to update a listing', async () => {
     const updatedData = {  unitAvailable: 'Unit 403',
     rent: 1800,
@@ -257,6 +307,10 @@ describe('ListingsData Tests', () => {
     expect(result).toBe(false);
   });
   
+  /**
+ * Test to handle errors during the listing creation process.
+ * Verifies that the system correctly throws an exception in case of a database or other internal errors during listing creation.
+ */
   it('should handle errors during listing creation', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     buildings.findOne.mockResolvedValue({ id: 2, buildingName: 'Building 1', managerId: 1 });
@@ -275,12 +329,20 @@ describe('ListingsData Tests', () => {
     await expect(listingsData.createListing(listing, 123, 'Manager', 'Building 1')).rejects.toThrow('Database error');
   });
   
+  /**
+ * Test to verify the behavior when no listings are found for public viewing.
+ * Ensures that the system returns null, indicating the absence of listings for the general public.
+ */
   it('should return null if no listings are found for public view', async () => {
     listings.findAll.mockResolvedValue([]);
     const result = await listingsData.getAllListingsForPublicView();
     expect(result).toBeNull();
   });
   
+  /**
+ * Test to ensure that a non-manager cannot update a listing.
+ * Validates that listing update operations are restricted and cannot be performed by users without the manager role.
+ */
   it('should return false if a non-manager tries to update a listing', async () => {
     // Creating mock updated listing details
     const updatedData = {
@@ -300,18 +362,32 @@ describe('ListingsData Tests', () => {
     expect(result).toBe(false);
   });
   
+  /**
+ * Test to verify error handling during retrieval of listings for a specific building.
+ * Ensures that the system throws an appropriate error in case of database or internal issues.
+ */
   it('should handle errors during retrieval of listings for a building', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     listings.findAll.mockRejectedValue(new Error('Database error'));
   
     await expect(listingsData.getAllListingsForBuilding(123, 2, 'Manager')).rejects.toThrow('Database error');
   });
+
+  /**
+ * Test to confirm error handling during the retrieval of a specific listing by ID.
+ * Checks if the system correctly throws an error for internal issues during the retrieval process.
+ */
   it('should handle errors during retrieval of a specific listing by ID', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     listings.findOne.mockRejectedValue(new Error('Database error'));
   
     await expect(listingsData.getListingById(1, 123, 'Manager')).rejects.toThrow('Database error');
   });
+
+  /**
+ * Test to ensure error handling during the deletion of a listing.
+ * Verifies that the system throws an error in case of database or internal issues during the deletion process.
+ */
   it('should handle errors during listing deletion', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     listings.findOne.mockResolvedValue({ id: 1, managerId: 1 });
@@ -319,16 +395,32 @@ describe('ListingsData Tests', () => {
   
     await expect(listingsData.deleteListing(1, 123, 'Manager')).rejects.toThrow('Database error');
   });
+
+  /**
+ * Test to check if a non-manager can retrieve listings for a building.
+ * Confirms that the service restricts this functionality and returns null for non-managers.
+ */
   it('should return null if a non-manager tries to retrieve listings for a building', async () => {
     const result = await listingsData.getAllListingsForBuilding(123, 2, 'Tenant');
     expect(result).toBeNull();
   });
+
+  
+/**
+ * Test to verify that a non-manager cannot delete a listing.
+ * Ensures that the deletion process is restricted and returns false for non-manager roles.
+ */
   it('should return false if a non-manager tries to delete a listing', async () => {
     listings.findOne.mockResolvedValue({ id: 1, managerId: 1 });
   
     const result = await listingsData.deleteListing(1, 123, 'Tenant');
     expect(result).toBe(false);
   });
+
+  /**
+ * Test to verify behavior when trying to retrieve listings for a non-existent building.
+ * Checks if the service returns an empty array in such scenarios, indicating no available listings.
+ */
   it('should return an empty array if trying to retrieve listings for a nonexistent building', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     listings.findAll.mockResolvedValue([]);
@@ -336,12 +428,21 @@ describe('ListingsData Tests', () => {
     const result = await listingsData.getAllListingsForBuilding(123, 99, 'Manager');
     expect(result).toEqual([]);
   });
+
+  /**
+ * Test to ensure error handling during the retrieval of listings for public view.
+ * Verifies that the system throws an appropriate error in case of database or internal issues.
+ */
   it('should handle errors during retrieval of listings for public view', async () => {
     listings.findAll.mockRejectedValue(new Error('Database error'));
   
     await expect(listingsData.getAllListingsForPublicView()).rejects.toThrow('Database error');
   });
  
+  /**
+ * Test to check if updating a listing with incomplete data is successful.
+ * Verifies that the service allows updates with partial data, returning true upon successful update.
+ */
   it('should return true if updating a listing with incomplete data', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     listings.findOne.mockResolvedValue({id: 1,
@@ -364,6 +465,10 @@ describe('ListingsData Tests', () => {
     expect(result).toBe(true);
   });
   
+  /**
+ * Test to confirm that a non-manager cannot retrieve a specific listing by ID.
+ * Ensures that the service restricts this functionality and returns null for non-manager roles.
+ */
   it('should return null if a non-manager tries to retrieve a specific listing by ID', async () => {
     const result = await listingsData.getListingById(1, 123, 'Tenant');
     expect(result).toBeNull();

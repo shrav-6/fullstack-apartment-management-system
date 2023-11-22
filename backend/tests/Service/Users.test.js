@@ -5,7 +5,16 @@ const { managers, buildings, tenants, guests } = require("../../Models");
 jest.mock("../../Data/Users");
 jest.mock("../../Models");
 
+/**
+ * Test suite for 'signUpUser' function in the user service.
+ * It tests the sign-up process for different user roles.
+ */
+
 describe('signUpUser', () => {
+    /**
+   * Test case for successfully signing up a new tenant user.
+   * It checks if the service correctly creates a tenant profile.
+   */
   it('should successfully create a new tenant user', async () => {
     dataLayer.getUserByEmail.mockResolvedValue(null);
     dataLayer.createUser.mockResolvedValue({ id: 1, userName: 'newUser', email: 'test@example.com' });
@@ -89,7 +98,15 @@ const { sign } = require('jsonwebtoken');
 jest.mock('bcrypt');
 jest.mock('jsonwebtoken');
 jest.mock("../../Data/Users");
+/**
+ * Test suite for 'loginUser' function in the user service.
+ * It tests the login process for users.
+ */
 describe('loginUser', () => {
+    /**
+   * Test case for successfully logging in a registered user.
+   * It checks if the service correctly authenticates and generates a token.
+   */
     it('should successfully log in a registered user', async () => {
       const mockUser = { id: 1, userName: 'user1', email: 'user1@example.com', password: 'hashedPassword', role: 'Tenant' };
       dataLayer.getUserByEmail.mockResolvedValue(mockUser);
@@ -117,7 +134,10 @@ describe('loginUser', () => {
       expect(result).toEqual({ success: false, error: 'User is not registered' });
     });
   
-    // Additional test cases for wrong password, exception handling, etc.
+    /**
+   * Test case for handling login attempts with incorrect credentials.
+   * It expects the service to return an error for wrong password or non-registered user.
+   */
     it('should return an error for incorrect password', async () => {
         const mockUser = { id: 1, email: 'user@example.com', password: 'hashedPassword' };
         dataLayer.getUserByEmail.mockResolvedValue(mockUser);

@@ -3,8 +3,17 @@ const { notices, managers, tenants, buildings} = require("../../Models");
 
 jest.mock("../../Models");
 
+/**
+ * Test suite for notice retrieval, creation, update, and deletion functionalities.
+ */
+
+// Tests for getNoticeById function
 describe('getNoticeById', () => {
-  // Test for Manager finding a notice
+ 
+   /**
+   * Test to verify retrieving a notice for a manager.
+   * Checks if a manager can successfully fetch a notice by its ID.
+   */
   it('should retrieve a notice for a manager', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     notices.findOne.mockResolvedValue({ id: 1, title: 'Notice 1', managerId: 1 });
@@ -13,7 +22,10 @@ describe('getNoticeById', () => {
     expect(result).toEqual(expect.any(Object));
   });
 
-  // Test for Tenant finding a notice
+ /**
+   * Test to verify retrieving a notice for a tenant.
+   * Checks if a tenant can successfully fetch a notice related to their building.
+   */
   it('should retrieve a notice for a tenant', async () => {
     tenants.findOne.mockResolvedValue({ id: 1, userId: 123, buildingId: 2 });
     notices.findOne.mockResolvedValue({ id: 1, title: 'Notice 1', buildingId: 2 });
@@ -21,22 +33,42 @@ describe('getNoticeById', () => {
     const result = await noticeService.getNoticeById(1, 'Tenant', 123);
     expect(result).toEqual(expect.any(Object));
   });
+   
+  /**
+   * Test to verify that an invalid role cannot retrieve a notice.
+   * Ensures that the function returns null when called with an unrecognized role.
+   */
   it('should return null for an invalid role', async () => {
     const result = await noticeService.getNoticeById(1, 'InvalidRole', 123);
     expect(result).toBeNull();
   });
+
+  /**
+   * Test to verify the behavior when a manager is not found in the database.
+   * Checks if the function returns null when the manager does not exist.
+   */
   it('should return null if the manager is not found', async () => {
     managers.findOne.mockResolvedValue(null); // Manager not found
   
     const result = await noticeService.getNoticeById(1, 'Manager', 123);
     expect(result).toBeNull();
   });
+
+  /**
+   * Test to verify the behavior when a tenant is not found in the database.
+   * Checks if the function returns null when the tenant does not exist.
+   */
   it('should return null if the tenant is not found', async () => {
     tenants.findOne.mockResolvedValue(null); // Tenant not found
   
     const result = await noticeService.getNoticeById(1, 'Tenant', 123);
     expect(result).toBeNull();
   });
+
+   /**
+   * Test to verify the behavior when a notice is not found in the database.
+   * Ensures that the function returns null if the notice does not exist for a manager.
+   */
   it('should return null if the notice is not found', async () => {
     managers.findOne.mockResolvedValue({ id: 1, userId: 123 });
     notices.findOne.mockResolvedValue(null); // Notice not found for manager
@@ -45,6 +77,10 @@ describe('getNoticeById', () => {
     expect(result).toBeNull();
   });
   
+    /**
+   * Test to verify the behavior when a notice is not found for a tenant.
+   * Ensures that the function returns null if the notice relevant to the tenant does not exist.
+   */
   it('should return null if the notice is not found for a tenant', async () => {
     tenants.findOne.mockResolvedValue({ id: 1, userId: 123, buildingId: 2 });
     notices.findOne.mockResolvedValue(null); // Notice not found for tenant
@@ -52,12 +88,21 @@ describe('getNoticeById', () => {
     const result = await noticeService.getNoticeById(1, 'Tenant', 123);
     expect(result).toBeNull();
   });
+
+  /**
+   * Test to handle errors during notice retrieval for a manager.
+   * Verifies that the function correctly throws an error in case of database issues.
+   */
   it('should handle errors during retrieval for a manager', async () => {
     managers.findOne.mockRejectedValue(new Error('Database error')); // Simulate database error
   
     await expect(noticeService.getNoticeById(1, 'Manager', 123)).rejects.toThrow('Database error');
   });
   
+  /**
+   * Test to handle errors during notice retrieval for a tenant.
+   * Verifies that the function correctly throws an error in case of database issues.
+   */
   it('should handle errors during retrieval for a tenant', async () => {
     tenants.findOne.mockRejectedValue(new Error('Database error')); // Simulate database error
   

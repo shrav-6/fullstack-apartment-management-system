@@ -1,3 +1,9 @@
+/**
+ * Test suite for notices routes.
+ * It includes tests for each endpoint related to notices,
+ * such as retrieving, creating, updating, and deleting notices.
+ * Mocks are utilized for JWT authentication and database interactions.
+ */
 const request = require('supertest');
 const express = require('express');
 const noticesRouter = require('../../Routes/Notices');
@@ -12,7 +18,12 @@ app.use(express.json());
 app.use('/notices', noticesRouter);
 
 describe('Notices route tests', () => {
-    // GET /:noticeId
+    /**
+     * Tests for GET /:noticeId endpoint.
+     * This section tests the retrieval of a specific notice by its ID.
+     * It includes scenarios for authorized access (valid manager or tenant),
+     * unauthorized access, and cases where the notice is not found.
+     */
     describe('GET /:noticeId', () => {
       it('should return notice data for a valid manager', async () => {
         dbMock.managers.findOne.mockResolvedValue({ userId: 1 });
@@ -27,7 +38,7 @@ describe('Notices route tests', () => {
         const response = await request(app).get('/notices/1').set('accessToken', 'valid_token');
         expect(response.statusCode).toBe(200);
         expect(response.body.success).toBeTruthy();
-        // Additional assertions...
+       
       });
 
       it('should not return notice data for unauthorized user', async () => {
@@ -37,7 +48,7 @@ describe('Notices route tests', () => {
         const response = await request(app).get('/notices/1').set('accessToken', 'invalid_token');
         expect(response.statusCode).toBe(200); // Or appropriate status code for unauthorized access
         expect(response.body.success).toBeFalsy();
-        // Additional assertions...
+      
       });
 
       it('should handle error when notice is not found for a valid tenant', async () => {
@@ -51,7 +62,12 @@ describe('Notices route tests', () => {
       });
     });
   
-    // GET /
+       /**
+     * Tests for GET / endpoint.
+     * This part of the test suite focuses on fetching all notices.
+     * It tests the functionality for valid managers and unauthorized users,
+     * ensuring correct access control and data retrieval.
+     */
     describe('GET /', () => {
       it('should return all notices for a valid manager', async () => {
         dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -83,7 +99,7 @@ describe('Notices route tests', () => {
   
         const response = await request(app).get('/Notices').set('accessToken', 'valid_token');
         expect(response.statusCode).toBe(200);
-        // Additional assertions...
+        
       });
 
      it('should handle error when the tenant is not found', async () => {
@@ -97,8 +113,12 @@ describe('Notices route tests', () => {
       });
       
     });
-  
-    // POST /
+    /**
+     * Tests for POST / endpoint.
+     * This section checks the creation of new notices.
+     * It includes scenarios for successful creation by valid managers,
+     * and failure cases for invalid managers or building details.
+     */
     describe('POST /', () => {
       it('should create a notice for a valid manager', async () => {
         dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -123,7 +143,7 @@ describe('Notices route tests', () => {
         const response = await request(app).post('/notices').set('accessToken', 'valid_token').send(postData);
         expect(response.statusCode).toBe(200);
         expect(response.body.success).toBeTruthy();
-        // Additional assertions...
+      
       });
 
       it('should not create a notice for an invalid manager (manager not found)', async () => {
@@ -137,7 +157,7 @@ describe('Notices route tests', () => {
         const response = await request(app).post('/Notices').set('accessToken', 'invalid_manager_token').send(postData);
         expect(response.statusCode).toBe(200); 
         expect(response.body.success).toBeFalsy();
-        // Additional assertions...
+      
       });
 
       it('should not create a notice for an invalid manager (building not found)', async () => {
@@ -152,13 +172,17 @@ describe('Notices route tests', () => {
         const response = await request(app).post('/notices').set('accessToken', 'valid_token').send(postData);
         expect(response.statusCode).toBe(200); // Or appropriate status code for building not found
         expect(response.body.success).toBeFalsy();
-        // Additional assertions...
+   
       });
   
-      // ... Tests for invalid scenarios
     });
   
-    // DELETE /:noticeId
+       /**
+     * Tests for DELETE /:noticeId endpoint.
+     * These tests ensure that deletion of notices works correctly,
+     * covering cases like valid deletion requests, handling of invalid notice IDs,
+     * and unauthorized access attempts.
+     */
     describe('DELETE /:noticeId', () => {
       it('should delete a notice for a valid manager', async () => {
         dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -167,7 +191,6 @@ describe('Notices route tests', () => {
         const response = await request(app).delete('/notices/1').set('accessToken', 'valid_token');
         expect(response.statusCode).toBe(200);
         expect(response.body.success).toBeTruthy();
-        // Additional assertions...
       });
 
       it('should not delete a notice for an invalid notice ID', async () => {
@@ -176,7 +199,7 @@ describe('Notices route tests', () => {
         const response = await request(app).delete('/notices/999').set('accessToken', 'valid_token');
         expect(response.statusCode).toBe(200); // Or appropriate status code for notice not found
         expect(response.body.success).toBeFalsy();
-        // Additional assertions...
+     
       });
 
       it('should not delete a notice for an invalid manager', async () => {
@@ -184,13 +207,17 @@ describe('Notices route tests', () => {
         const response = await request(app).delete('/notices/1').set('accessToken', 'invalid_manager_token');
         expect(response.statusCode).toBe(200); // Or appropriate status code for unauthorized access
         expect(response.body.success).toBeFalsy();
-        // Additional assertions...
+      
       });
   
-      // ... Tests for invalid scenarios
     });
   
-    // PUT /:noticeId
+      /**
+     * Tests for PUT /:noticeId endpoint.
+     * This section tests the updating of existing notices.
+     * It includes test cases for successful updates by authorized managers,
+     * handling of unauthorized requests, and error handling for non-existent notices.
+     */
     describe('PUT /:noticeId', () => {
       it('should update a notice for a valid manager', async () => {
         dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -206,7 +233,7 @@ describe('Notices route tests', () => {
         const response = await request(app).put('/notices/1').set('accessToken', 'valid_token').send(updateData);
         expect(response.statusCode).toBe(200);
         expect(response.body.success).toBeTruthy();
-        // Additional assertions...
+
       });
       it('should not update a notice for an invalid manager', async () => {
         dbMock.managers.findOne.mockResolvedValue(null);
@@ -218,7 +245,7 @@ describe('Notices route tests', () => {
         const response = await request(app).put('/notices/1').set('accessToken', 'invalid_manager_token').send(updateData);
         expect(response.statusCode).toBe(200); // Or appropriate status code for unauthorized access
         expect(response.body.success).toBeFalsy();
-        // Additional assertions...
+       
       });
 
       it('should not update a notice for an invalid notice ID', async () => {
@@ -232,7 +259,7 @@ describe('Notices route tests', () => {
         const response = await request(app).put('/notices/999').set('accessToken', 'valid_token').send(updateData);
         expect(response.statusCode).toBe(200); // Or appropriate status code for notice not found
         expect(response.body.success).toBeFalsy();
-        // Additional assertions...
+      
       });
 
       it('should handle errors when updating a notice for an unknown role', async () => {

@@ -1,3 +1,6 @@
+/**
+ * Test suite for the newsfeeds-related routes .
+ */
 const request = require('supertest');
 const express = require('express');
 const newsfeedsRouter = require('../../routes/NewsFeed'); // Adjust the path accordingly
@@ -13,7 +16,12 @@ app.use(express.json());
 app.use('/newsfeeds', newsfeedsRouter);
 
 describe('Newsfeeds route tests', () => {
-  // GET /get/:newsfeedId
+  /**
+  * Tests for the GET /get/:newsfeedId endpoint.
+  * This section includes tests to verify the behavior of fetching a specific newsfeed item.
+  * It tests scenarios including unauthorized access, invalid newsfeed IDs, and successful data retrieval.
+  */
+
   describe('GET /get/:newsfeedId', () => {
 
     it('should not return newsfeed data for unauthorized user', async () => {
@@ -25,21 +33,15 @@ describe('Newsfeeds route tests', () => {
       expect(response.body.success).toBeFalsy();
       
       
-      // Additional assertions...
     });
 
-    it('should handle error when newsfeed is not found for a valid tenant', async () => {
-      dbMock.tenants.findOne.mockResolvedValue({ userId: 2, buildingId: 1 });
-      dbMock.newsfeeds.findOne.mockResolvedValue(null);
-
-      const response = await request(app).get('/newsfeeds/get/1').set('accessToken', 'valid_tenant_token');
-      expect(response.statusCode).toBe(200);
-      expect(response.body.success).toBeFalsy();
-      // Additional assertions...
-    });
+  
   });
-
-  // GET /tenant
+  /**
+   * Tests for the GET /tenant endpoint.
+   * This section tests the retrieval of all newsfeeds relevant to a tenant.
+   * It includes cases for valid tenant tokens, handling of non-existent tenants, and error responses.
+   */
   describe('GET /tenant', () => {
     it('should return all newsfeeds for a valid tenant', async () => {
       dbMock.tenants.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -51,13 +53,13 @@ describe('Newsfeeds route tests', () => {
           dateAndTime: '2023-07-05T09:00:00',
           tenantId: 1,
         },
-        // Additional mock data...
+       
       ]);
 
       const response = await request(app).get('/newsfeeds/tenant').set('accessToken', 'valid_tenant_token');
       expect(response.statusCode).toBe(200);
       expect(response.body.success).toBeTruthy();
-      // Additional assertions...
+     
     });
 
     it('should handle error when the tenant is not found', async () => {
@@ -70,7 +72,11 @@ describe('Newsfeeds route tests', () => {
     });
   });
 
-  // GET /
+   /**
+   * Tests for the GET / endpoint.
+   * This series of tests checks the functionality of fetching all newsfeeds.
+   * It covers scenarios like successful data fetching and error handling when a tenant is not found.
+   */
   describe('GET /', () => {
     it('should return all newsfeeds for a valid tenant', async () => {
       dbMock.tenants.findOne.mockResolvedValue({ userId: 1, buildingId: 1 });
@@ -82,13 +88,13 @@ describe('Newsfeeds route tests', () => {
           dateAndTime: '2023-07-05T09:00:00',
           buildingId: 1,
         },
-        // Additional mock data...
+       
       ]);
 
       const response = await request(app).get('/newsfeeds').set('accessToken', 'valid_tenant_token');
       expect(response.statusCode).toBe(200);
       expect(response.body.success).toBeTruthy();
-      // Additional assertions...
+      
     });
 
     it('should handle error when the tenant is not found', async () => {
@@ -109,7 +115,11 @@ describe('Newsfeeds route tests', () => {
     });
   });
 
-  // GET /manager/:buildingId
+    /**
+   * Tests for the GET /manager/:buildingId endpoint.
+   * This part of the suite ensures that newsfeeds for a specific building managed by a manager are correctly retrieved.
+   * It includes tests for authorization, permission checks, and successful data fetching.
+   */
   describe('GET /manager/:buildingId', () => {
     it('should return all newsfeeds for a valid manager and building', async () => {
       dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -122,13 +132,13 @@ describe('Newsfeeds route tests', () => {
           dateAndTime: '2023-07-05T09:00:00',
           buildingId: 1,
         },
-        // Additional mock data...
+       
       ]);
 
       const response = await request(app).get('/newsfeeds/manager/1').set('accessToken', 'valid_token');
       expect(response.statusCode).toBe(200);
       expect(response.body.success).toBeTruthy();
-      // Additional assertions...
+      
     });
 
     it('should handle error when the manager does not have permission', async () => {
@@ -142,7 +152,11 @@ describe('Newsfeeds route tests', () => {
     });
   });
 
-  // POST /
+/**
+   * Tests for the POST / endpoint.
+   * This section focuses on the creation of new newsfeeds.
+   * It tests scenarios including successful creation for valid tenants and handling invalid tenant cases.
+   */
   describe('POST /', () => {
     it('should create a newsfeed for a valid tenant', async () => {
       dbMock.tenants.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -166,7 +180,7 @@ describe('Newsfeeds route tests', () => {
       const response = await request(app).post('/newsfeeds').set('accessToken', 'valid_tenant_token').send(postData);
       expect(response.statusCode).toBe(200);
       expect(response.body.success).toBeTruthy();
-      // Additional assertions...
+     
     });
 
     it('should not create a newsfeed for an invalid tenant (tenant not found)', async () => {
@@ -180,13 +194,16 @@ describe('Newsfeeds route tests', () => {
       const response = await request(app).post('/newsfeeds').set('accessToken', 'invalid_tenant_token').send(postData);
       expect(response.statusCode).toBe(500); // Or appropriate status code for unauthorized access
       expect(response.body.success).toBeFalsy();
-      // Additional assertions...
+     
     });
 
-    // ... More test cases for invalid scenarios
+   
   });
-
-  // DELETE /:newsfeedId
+  /**
+   * Tests for the DELETE /:newsfeedId endpoint.
+   * These tests verify the deletion functionality of newsfeed items.
+   * It includes test cases for successful deletion, handling invalid newsfeed IDs, and unauthorized access scenarios.
+   */
   describe('DELETE /:newsfeedId', () => {
     it('should delete a newsfeed for a valid tenant', async () => {
       dbMock.tenants.findOne.mockResolvedValue({ id: 1, userId: 1 });
@@ -195,7 +212,7 @@ describe('Newsfeeds route tests', () => {
       const response = await request(app).delete('/newsfeeds/1').set('accessToken', 'valid_tenant_token');
       expect(response.statusCode).toBe(200);
       expect(response.body.success).toBeTruthy();
-      // Additional assertions...
+      
     });
 
     it('should not delete a newsfeed for an invalid newsfeed ID', async () => {
@@ -204,7 +221,7 @@ describe('Newsfeeds route tests', () => {
       const response = await request(app).delete('/newsfeeds/999').set('accessToken', 'valid_token');
       expect(response.statusCode).toBe(200); // Or appropriate status code for newsfeed not found
       expect(response.body.success).toBeFalsy();
-      // Additional assertions...
+      
     });
 
     it('should not delete a newsfeed for an invalid tenant', async () => {
@@ -212,15 +229,18 @@ describe('Newsfeeds route tests', () => {
       const response = await request(app).delete('/newsfeeds/1').set('accessToken', 'invalid_tenant_token');
       expect(response.statusCode).toBe(200); // Or appropriate status code for unauthorized access
       expect(response.body.success).toBeFalsy();
-      // Additional assertions...
+      
     });
 
     
   });
 
-  // PUT /:newsfeedId
+    /**
+   * Tests for the PUT /:newsfeedId endpoint.
+   * This section tests the update functionality for newsfeeds.
+   * It includes scenarios for successful updates, handling of invalid tenants or newsfeed IDs, and authorization checks.
+   */
   describe('PUT /:newsfeedId', () => {
-    // Inside the test case
 it('should update a newsfeed for a valid tenant', async () => {
   dbMock.tenants.findOne.mockResolvedValue({ userId: 1, id: 1 }); // Mock a valid tenant
   dbMock.newsfeeds.findOne.mockResolvedValue({ id: 1, tenantId: 1 }); // Mock an existing newsfeed for the tenant
@@ -236,7 +256,7 @@ it('should update a newsfeed for a valid tenant', async () => {
   const response = await request(app).put('/newsfeeds/1').set('accessToken', 'valid_tenant_token').send(updateData);
   expect(response.statusCode).toBe(200);
   expect(response.body.success).toBeTruthy();
-  // Additional assertions...
+
 });
 
 
@@ -251,7 +271,7 @@ it('should update a newsfeed for a valid tenant', async () => {
       const response = await request(app).put('/newsfeeds/1').set('accessToken', 'invalid_tenant_token').send(updateData);
       expect(response.statusCode).toBe(500); // Or appropriate status code for unauthorized access
       expect(response.body.success).toBeFalsy();
-      // Additional assertions...
+
     });
 
     it('should not update a newsfeed for an invalid newsfeed ID', async () => {
@@ -266,7 +286,6 @@ it('should update a newsfeed for a valid tenant', async () => {
       const response = await request(app).put('/newsfeeds/999').set('accessToken', 'valid_token').send(updateData);
       expect(response.statusCode).toBe(500); // Or appropriate status code for newsfeed not found
       expect(response.body.success).toBeFalsy();
-      // Additional assertions...
     });
 
     

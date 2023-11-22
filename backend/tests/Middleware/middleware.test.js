@@ -1,3 +1,6 @@
+/**
+ * Test suite for the 'validateToken' middleware function.
+ */
 const { validateToken } = require('../../Middleware/Middleware');
 const { sign, verify } = require('jsonwebtoken');
 
@@ -24,6 +27,10 @@ describe('validateToken Middleware', () => {
     jest.clearAllMocks();
   });
 
+  /**
+ * Test to verify the functionality with a valid access token.
+ * Checks if the middleware correctly processes a valid token and populates the request with user information.
+ */
   it('should pass with a valid accessToken', () => {
     const req = mockRequest();
     const res = mockResponse();
@@ -37,6 +44,10 @@ describe('validateToken Middleware', () => {
     expect(req.user.sub).toBe('user_id');
   });
 
+  /**
+ * Test to handle the scenario where an access token is not provided.
+ * Ensures that the middleware responds with an error message indicating the user is not logged in.
+ */
   it('should handle error when accessToken is not provided', () => {
     const req = mockRequest();
     const res = mockResponse();
@@ -46,6 +57,10 @@ describe('validateToken Middleware', () => {
     expect(res.json).toHaveBeenCalledWith({ error: 'User not logged in!' });
   });
 
+  /**
+ * Test to handle the scenario where an invalid access token is provided.
+ * Verifies that the middleware responds with an appropriate error message for an invalid token.
+ */
   it('should handle error when accessToken is invalid', () => {
     const req = mockRequest();
     const res = mockResponse();
@@ -59,6 +74,10 @@ describe('validateToken Middleware', () => {
     expect(res.json).toHaveBeenCalledWith({ error: expect.any(Error) }); // Updated expectation
   });
 
+  /**
+ * Test to handle the scenario where access token verification fails.
+ * Checks if the middleware responds correctly with an error message when token verification fails.
+ */
   it('should handle error when accessToken verification fails', () => {
     const req = mockRequest();
     const res = mockResponse();
@@ -72,5 +91,5 @@ describe('validateToken Middleware', () => {
     expect(res.json).toHaveBeenCalledWith({ error: expect.any(Error) }); // Updated expectation
   });
 
-  // Add more test cases for various scenarios
+  
 });

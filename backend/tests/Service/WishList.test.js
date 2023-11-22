@@ -3,8 +3,16 @@ const wishListService=require('../../Service/WishList');
 const dataLayer = require('../../Data/WishList');
 
 jest.mock('../../Data/WishList');
+/**
+ * Test suite for 'getWishlistedListings' function in the wish list service.
+ * It tests the retrieval of wishlisted listings for an authenticated user.
+ */s
 
 describe('getWishlistedListings', () => {
+  /**
+   * Test case for successfully retrieving wishlisted listings.
+   * It checks if the service correctly returns the listings for a given user.
+   */
   it('should return wishlisted listings for an authenticated user', async () => {
     const mockUser = { id: 1 };
     const mockListings = [{ id: 101, unitAvailable: true, rent: 1000 }];
@@ -22,6 +30,10 @@ describe('getWishlistedListings', () => {
       data: expect.any(Array),
     });
   });
+    /**
+   * Test case for handling errors during wishlist retrieval.
+   * It expects the service to return an error when there are issues accessing the database.
+   */
 
   it('should handle errors', async () => {
     const mockUser = { id: 3 };
@@ -38,7 +50,15 @@ describe('getWishlistedListings', () => {
   });
 });
 
+/**
+ * Test suite for 'addWishlistItem' function in the wish list service.
+ * It tests the addition of a listing to a user's wishlist.
+ */
 describe('addWishlistItem', () => {
+   /**
+   * Test case for adding a listing to the wishlist of an authenticated user.
+   * It verifies if the service correctly adds the item and returns a success message.
+   */
   it('should add a wishlist item for an authenticated user', async () => {
     const mockReqBody = { listingId: 101, status: true };
     const mockUser = { id: 1 };
@@ -53,6 +73,10 @@ describe('addWishlistItem', () => {
       message: "Successfully wishlisted",
     });
   });
+  /**
+   * Test case for handling errors and invalid inputs during wishlist addition.
+   * It expects the service to return an error for invalid listings or statuses.
+   */
 
   it('should return an error for an invalid listing or status', async () => {
     const mockReqBody = { listingId: 999, status: false };
@@ -86,8 +110,15 @@ describe('addWishlistItem', () => {
     });
   });
 });
-
+/**
+ * Test suite for 'removeWishlistItem' function in the wish list service.
+ * It tests the removal of a listing from a user's wishlist.
+ */
 describe('removeWishlistItem', () => {
+    /**
+   * Test case for removing a listing from the wishlist of an authenticated user.
+   * It checks if the service correctly removes the item and returns a success message.
+   */
   it('should remove a wishlist item for an authenticated user', async () => {
     const mockReqBody = { listingId: 101 };
     const mockUser = { id: 1 };
@@ -102,6 +133,10 @@ describe('removeWishlistItem', () => {
       message: "Successfully removed from wishlist",
     });
   });
+   /**
+   * Test case for handling errors and invalid inputs during wishlist item removal.
+   * It expects the service to return an error for non-existent wishlist items.
+   */
 
   it('should return an error for a non-existent wishlist item', async () => {
     const mockReqBody = { listingId: 999 };
