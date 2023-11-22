@@ -26,8 +26,8 @@ app.use("/Buildings", buildingsRouter);
 const wishlistRouter = require("./Routes/WishList");
 app.use("/wishlist", wishlistRouter);
 
-const NewsFeedRouter = require("./routes/NewsFeed");
-app.use("/NewsFeed",NewsFeedRouter )
+const NewsFeedsRouter = require("./routes/NewsFeeds");
+app.use("/NewsFeeds",NewsFeedsRouter )
 
 const applicationRouter = require("./Routes/Applications");
 app.use('/Applications', applicationRouter);
