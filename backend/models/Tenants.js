@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     });
     tenants.associate = (models) => {
           tenants.belongsTo(models.users);
+          tenants.hasMany(models.newsfeeds, {
+            onDelete: 'cascade',
+});
         
       };
 
