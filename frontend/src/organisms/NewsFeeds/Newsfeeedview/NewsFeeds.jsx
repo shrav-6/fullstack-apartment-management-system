@@ -4,74 +4,68 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
-  message, Modal, Input, Button, Select,
+  message, Modal, Input, Button,
 } from 'antd';
 import _get from 'lodash/get';
-import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
-import SortRoundedIcon from '@mui/icons-material/SortRounded';
-import { FaPlus } from 'react-icons/fa';
 import Card from '../../../molecules/Card/CardCompound/Card';
 import {
-  getAllNotices,
-  postAllNotices,
-  editAllNotices,
-  deleteNotice,
-  getAllNoticesForManager,
-} from './Notices.service';
+  getAllNewsfeed,
+  postAllNewsfeed,
+  deleteNewfeed,
+  editAllNewsfeed,
+  getAllNewsfeedForManager,
+} from './NewsFeeds.service';
 import {
-  setNotices,
-  setTitle,
+  setnewsfeed,
   setDescription,
+  setTitle,
   setPostType,
-  setPriority,
   resetPostData,
-  resetAllData,
-} from '../data/notice.actions';
-import { STRING_CONSTANTS } from '../constants/notice.constant';
+} from '../data/newsfeed.actions';
+import { STRING_CONSTANTS } from '../constants/newsfeed.constant';
 // styles
-import styles from './Notice.module.scss';
+import styles from './NewsfeedView.module.scss';
+
 const { TextArea } = Input;
 
-function Notices({
-  allNotices: notices = [],
+function Newsfeed({
+  allNewsfeed: newsfeed = [],
   title,
   description,
-  authorName,
   postType = '',
-  priority,
   onSetTitle,
-  onSetNotices,
+  onSetNewsFeed,
   onSetDescription,
-  onSetPriority,
   onSetPostType = () => {},
   onResetPostData = () => {},
-  onResetAllPostData = () => {},
 }) {
-  const [editTrigger, setEditTrigger] = useState(0); // State to trigger useEffect on edits
+  const [editTrigger, setEditTrigger] = useState(0);
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
 
   const location = useLocation();
 
-  // Access the state passed through Link
   const buildingId = location.state ? location.state.buildingId : null;
 
-  const fetchNotices = () => {
-    getAllNotices()
+  useEffect(() => {
+    fetchNewsFeed();
+  }, []);
+
+  const fetchNewsFeed = () => {
+    getAllNewsfeed()
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: response?.data?.data });
+          onSetNewsFeed({ allNewsfeed: response?.data?.data });
         }
       })
       .catch((err) => {
         message.error(err);
       });
   };
-
-  const fetchNoticesForManager = () => {
-    getAllNoticesForManager(buildingId)
+  const fetchNewsFeedForManager = () => {
+    getAllNewsfeedForManager(buildingId)
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: response?.data?.data });
+          onSetNewsFeed({ allNewsfeed: response?.data?.data });
         }
       })
       .catch((err) => {
@@ -81,14 +75,11 @@ function Notices({
 
   useEffect(() => {
     if (role === 'Manager') {
-      fetchNoticesForManager(buildingId); // Fetch notices for a manager
+      fetchNewsFeedForManager(buildingId); // Fetch notices for a manager
     } else {
-      fetchNotices(); // Fetch notices when the component mounts
+      fetchNewsFeed(); // Fetch notices when the component mounts
     }
-    return () => {
-      onResetAllPostData();
-    };
-  }, [editTrigger]); // Include editTrigger in the dependency array
+  }, [editTrigger]);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [editedTitle, setEditedTitle] = useState('');
@@ -105,11 +96,12 @@ function Notices({
     setEditedTitle('');
     setEditedDescription('');
   };
-  const handlePriorityChange = (value) => {
-    onSetPriority(value);
-  };
 
   const handleSave = () => {
+    if (role !== 'Tenant') {
+      message.error('Unauthorized action');
+      return;
+    }
     const payload = {
       title: postType === STRING_CONSTANTS.POST_TYPE_EDIT
         ? editedTitle
@@ -118,13 +110,13 @@ function Notices({
         ? editedDescription
         : description,
       dateAndTime: new Date().valueOf(),
-      priority,
+      type: 'General',
     };
 
-    postAllNotices(payload)
+    postAllNewsfeed(payload)
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: [...notices, response?.data?.data] });
+          // onSetNewsFeed({ allNewsfeed: [...newsfeed, response?.data?.data] });
           setModalVisible(false);
           onSetTitle('');
           onSetDescription('');
@@ -139,34 +131,34 @@ function Notices({
   };
 
   // eslint-disable-next-line no-shadow
-  const handleEditNotice = (id, editedTitle, editedDescription) => {
-    if (role !== 'Manager') {
-      message.error('Unauthorized access');
+  const handleEditNewsFeed = (id, editedTitle, editedDescription) => {
+    if (role !== 'Tenant') {
+      message.error('Unauthorized action');
       return;
     }
-    const updatedNotices = notices.map((notice) => {
-      if (notice.id === id) {
+    const updatedNewsFeed = newsfeed.map((news) => {
+      if (news.id === id) {
         return {
-          ...notice,
+          ...news,
           title: editedTitle,
           description: editedDescription,
           updatedAt: new Date().valueOf(),
         };
       }
-      return notice;
+      return news;
     });
 
     const payload = {
       title: editedTitle,
-      Description: editedDescription,
-      Author_name: authorName,
-      updatedAt: new Date().valueOf(),
+      description: editedDescription,
+      dateAndTime: new Date().valueOf(),
+      type: 'General',
     };
 
-    editAllNotices(id, payload)
+    editAllNewsfeed(id, payload)
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: updatedNotices });
+          onSetNewsFeed({ allNewsfeed: updatedNewsFeed });
           setEditTrigger(prev => prev + 1);
         } else {
           message.error(response.data.error);
@@ -180,17 +172,17 @@ function Notices({
     setEditedDescription('');
   };
 
-  const handleDeleteNotice = (id) => {
-    if (role !== 'Manager') {
-      message.error('Unauthorized access');
+  const handleDeleteNewsFeed = (id) => {
+    if (role !== 'Tenant') {
+      message.error('Unauthorized action');
       return;
     }
-    deleteNotice(id)
+    deleteNewfeed(id)
       .then((response) => {
         if (!response?.data?.error) {
-          const updatedNotices = notices.filter(notice => notice.id !== id);
-          onSetNotices({ allNotices: updatedNotices });
-          message.success('Notice deleted successfully');
+          const updatedNews = newsfeed.filter(news => news.id !== id);
+          onSetNewsFeed({ allNewsfeed: updatedNews });
+          message.success('Feed deleted successfully');
         } else {
           message.error(response.data.error);
         }
@@ -201,37 +193,28 @@ function Notices({
   };
 
   return (
-    <div className={styles.noticeContainer}>
-      <h1 className={styles.navNotice}>Notices</h1>
-      <div style={{ float: 'right' }}>
-        <div>
-          {role === 'Manager' && (
-            <div
-              tabIndex="0"
-              role="button"
-              className="card-post"
-              onClick={handlePlusIconClick}
-            >
-              <FaPlus />
-            </div>
-          )}
-        </div>
-
-        <div>
-          <FilterAltRoundedIcon />
-        </div>
-        <div>
-          <SortRoundedIcon />
-        </div>
+    <div className={styles.newsContainer}>
+      <h1 className={`${styles.navNotice} ${styles.h1CustomStyle}`}>
+        NewsFeed
+      </h1>
+      <div className={styles.addBtn}>
+        {role === 'Tenant' && (
+          <Button
+            type="primary"
+            onClick={handlePlusIconClick}
+          >
+            + Add a new post
+          </Button>
+        )}
       </div>
       <div className={styles.cardComponentContainer}>
-        {(notices || []).map(notice => (
+        {(newsfeed || []).map(news => (
           <Card
-            key={notice.id}
-            notice={notice}
-            onSaveEdit={handleEditNotice}
-            onDelete={handleDeleteNotice}
-            showReadMore
+            notice={news}
+            onSaveEdit={handleEditNewsFeed}
+            onDelete={() => handleDeleteNewsFeed(news?.id)}
+            showReadMore={false}
+            context="newsfeed"
           />
         ))}
       </div>
@@ -266,45 +249,25 @@ function Notices({
               autoSize={{ minRows: 3, maxRows: 5 }}
             />
           </section>
-          <section>
-            <label htmlFor="priority">
-              Priority:
-            </label>
-            <Select
-              id="priority"
-              name="priority"
-              value={priority}
-              style={{ width: 200 }}
-              onChange={handlePriorityChange}
-            >
-              <Select.Option value="HIGH">HIGH</Select.Option>
-              <Select.Option value="MEDIUM">MEDIUM</Select.Option>
-              <Select.Option value="LOW">LOW</Select.Option>
-            </Select>
-          </section>
         </div>
       </Modal>
     </div>
   );
 }
 
-const mapStateToProps = ({ noticeReducer }) => ({
-  allNotices: _get(noticeReducer, 'allNotices'),
-  title: _get(noticeReducer, 'title'),
-  description: _get(noticeReducer, 'description'),
-  postType: _get(noticeReducer, 'postType'),
-  priority: _get(noticeReducer, 'priority'),
+const mapStateToProps = ({ newsfeedReducer }) => ({
+  allNewsfeed: _get(newsfeedReducer, 'allNewsfeed'),
+  title: _get(newsfeedReducer, 'title'),
+  description: _get(newsfeedReducer, 'description'),
+  postType: _get(newsfeedReducer, 'postType'),
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSetNotices: payload => dispatch(setNotices(payload)),
+  onSetNewsFeed: payload => dispatch(setnewsfeed(payload)),
   onSetTitle: title => dispatch(setTitle(title)),
   onSetDescription: description => dispatch(setDescription(description)),
   onSetPostType: postType => dispatch(setPostType(postType)),
   onResetPostData: () => dispatch(resetPostData()),
-  onResetAllPostData: () => dispatch(resetAllData()),
-  onSetPriority: priority => dispatch(setPriority(priority)),
-
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notices);
+export default connect(mapStateToProps, mapDispatchToProps)(Newsfeed);

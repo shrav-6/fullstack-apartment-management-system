@@ -54,7 +54,8 @@ function ListingsForm() {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
-      }).then((res) => {
+      },
+    ).then((res) => {
       if (res.data.error) {
         // eslint-disable-next-line no-alert
         alert(res.data.error);

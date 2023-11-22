@@ -33,8 +33,25 @@
 
 .modaleditContainer{
   :global([class*='ant-modal-close']) {
-    color: white;
+    color: black;
+
+    :global([class*='postCreationContainer']) {
+      color: black;
+    }
   }
+  :global([class*='ant-modal-body']){
+
+    :global([class*='containerInput']){
+      font-weight:600
+    }
+  } 
+  :global([class*='ant-modal-header']){
+    :global([class*='ant-modal-title']){
+      font-size: large;
+      font-weight:700;
+    }
+  }
+
   :global([class*='ant-modal-header']) {
     background-color: transparent;
     text-align: center;

@@ -1,30 +1,26 @@
 /* eslint-disable default-param-last */
 import { EMPTY_OBJECT } from '../../../utilities/shared/global.constants';
-import { ACTION_TYPES } from '../constants/notice.constant';
+import { ACTION_TYPES } from '../constants/newsfeed.constant';
 
 const initialState = {
-  allNotices: [],
+  allNewsfeed: [],
   title: '',
   description: '',
-  authorName: '',
   postType: '',
-  priority: '',
 };
 
-const noticeReducer = (state = initialState, { type, payload }) => {
+const newsfeedReducer = (state = initialState, { type, payload }) => {
   const {
-    allNotices,
+    allNewsfeed,
     title,
     description,
-    authorName,
     postType = '',
-    priority,
   } = payload || EMPTY_OBJECT;
   switch (type) {
-    case ACTION_TYPES.SET_NOTICE:
+    case ACTION_TYPES.SET_NEWSFEED:
       return {
         ...state,
-        allNotices,
+        allNewsfeed,
       };
     case ACTION_TYPES.SET_TITLE:
       return {
@@ -36,16 +32,6 @@ const noticeReducer = (state = initialState, { type, payload }) => {
         ...state,
         description,
       };
-    case ACTION_TYPES.SET_PRIORTIY:
-      return {
-        ...state,
-        priority,
-      };
-    case ACTION_TYPES.SET_AUTHOR_NAME:
-      return {
-        ...state,
-        authorName,
-      };
     case ACTION_TYPES.SET_POST_TYPE:
       return {
         ...state,
@@ -56,16 +42,10 @@ const noticeReducer = (state = initialState, { type, payload }) => {
         ...state,
         title: '',
         description: '',
-        authorName: '',
         postType: '',
-      };
-    case ACTION_TYPES.RESET_ALL_DATA:
-      return {
-        ...state,
-        ...initialState,
       };
     default:
       return state;
   }
 };
-export default noticeReducer;
+export default newsfeedReducer;
