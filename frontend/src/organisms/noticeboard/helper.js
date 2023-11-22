@@ -55,21 +55,15 @@ export function filterNoticesSince1Year(notice) {
 }
 
 export function filterNoticesForLowPriority(notice, lowThreshold) {
-    if (notice.priority >= lowThreshold) {
-        return notice;
-    }
+    return notice.priority >= lowThreshold ? notice : undefined;
 }
 
 export function filterNoticesForNormalPriority(notice, normalThreshold) {
-    if (notice.priority >= normalThreshold) {
-        return notice;
-    }
+    return notice.priority >= normalThreshold ? notice : undefined;
 }
 
 export function filterNoticesForHighPriority(notice, highThreshold) {
-    if (notice.priority >= highThreshold) {
-        return notice;
-    }
+    return notice.priority >= highThreshold ? notice : undefined;
 }
 
 export function filterNotices(allNotices, parameter) {

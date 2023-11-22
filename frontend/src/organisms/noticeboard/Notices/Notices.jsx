@@ -171,8 +171,14 @@ function Notices({
               </span>
               {
                 <select className={styles.select} defaultValue={'none'} onChange={(change) => {
-                  filterNotices(notices, change.target.value);
-                  mapDispatchToProps;
+                  // onSetNotices({ allNotices: filterNotices(notices, change.target.value) });
+                  notices = filterNotices(notices, change.target.value);
+                  // if (!notices) {
+                  //   onSetNotices({ allNotices: [] });
+                  // } else {
+                  //   onSetNotices({ allNotices: notices });
+                  // }
+                  mapStateToProps;
                   handleMouseEnter();
                 }}>
                   <option value="none">None</option>
