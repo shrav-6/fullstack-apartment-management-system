@@ -26,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         });
         buildings.hasMany(models.listings, {
           onDelete: "cascade",
-        })
+        });
+        buildings.hasMany(models.newsfeeds, {
+          onDelete: "cascade",
+        });
+
     };
   
     return buildings;

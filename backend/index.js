@@ -14,7 +14,7 @@ app.use("/Notices", NoticeRouter);
 const ListingsRouter = require("./Routes/Listings");
 app.use("/Listings", ListingsRouter);
 
-const usersRouter = require("./Routes/Users");
+const usersRouter = require("./routes/users");
 app.use("/auth", usersRouter);
 
 const buildingsRouter = require("./Routes/Buildings");
@@ -25,6 +25,9 @@ app.use("/Buildings", buildingsRouter);
 
 const wishlistRouter = require("./Routes/WishList");
 app.use("/wishlist", wishlistRouter);
+
+const NewsFeedRouter = require("./routes/NewsFeed");
+app.use("/NewsFeed",NewsFeedRouter )
 
 const applicationRouter = require("./Routes/Applications");
 app.use('/Applications', applicationRouter);
