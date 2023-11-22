@@ -188,7 +188,9 @@ import CardModal from './Modal/CardModal';
 import styles from '../Card.module.scss';
 import '../CardModal.css';
 
-function Card({ notice, onSaveEdit, onDelete }) {
+function Card({
+  notice, onSaveEdit, onDelete, context, showReadMore,
+}) {
   const {
     id,
     description,
@@ -240,6 +242,7 @@ function Card({ notice, onSaveEdit, onDelete }) {
         updatedAt={updatedAt}
         createdAt={createdAt}
         onReadMore={handleReadMore}
+        showReadMore={showReadMore}
       />
       <CardModal
         isModalVisible={isModalVisible}
@@ -252,6 +255,7 @@ function Card({ notice, onSaveEdit, onDelete }) {
         onDescriptionChange={setEditedDescription}
         onOk={handleAction}
         onCancel={handleCancel}
+        context={context}
       />
     </div>
   );

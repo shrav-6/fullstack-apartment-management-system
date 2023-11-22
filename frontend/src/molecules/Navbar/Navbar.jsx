@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../organisms/PublicView/images/logo.svg';
-import { HiArchiveBox } from 'react-icons/hi2';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
   const userName = JSON.parse(sessionStorage.getItem('userCred'))?.username;
@@ -25,9 +24,9 @@ function Navbar() {
       case 'Guest':
         return (
           <>
-           <li>
-                <Link to="/rooms">New Listings</Link>
-              </li>
+            <li>
+              <Link to="/rooms">New Listings</Link>
+            </li>
             <li>
               <Link to="/wishlist">My Wishlist</Link>
             </li>
@@ -46,9 +45,9 @@ function Navbar() {
               <Link to="/home">Home</Link>
             </li>
             <li>
-                <Link to="/rooms">New Listings</Link>
-              </li>
-              <li>
+              <Link to="/rooms">New Listings</Link>
+            </li>
+            <li>
               <Link to="/wishlist">My Wishlist</Link>
             </li>
             <li>

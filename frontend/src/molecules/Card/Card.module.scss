@@ -36,7 +36,7 @@ body {
 }
 
 .modaleditContainer{
-    :global([class*='ant-modal-close']) {
-      color: white;
+    :global([class*='ant-modal-body']) {
+      color: red;
   }
 }

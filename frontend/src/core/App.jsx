@@ -11,6 +11,7 @@ import Apps from '../organisms/PublicView/Apps';
 import ViewListings from '../organisms/Managers/ViewListings';
 import ListingsForm from '../organisms/Managers/addListings';
 import UpdateListings from '../organisms/Managers/updateListings';
+import NewsFeeds from '../organisms/NewsFeeds/Newsfeeedview/NewsFeeds';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/home" exact element={<Home />} />
           <Route path="/notices" exact element={<Notices />} />
           <Route path="/signup" exact element={<Signup />} />
+          <Route path="/newsfeed" exact element={<NewsFeeds />} />
           <Route path="/signin" exact element={<Signin />} />
           <Route path="/logout" exact element={<Logout />} />
           <Route path="/Dashboard" element={<Buildings />} />

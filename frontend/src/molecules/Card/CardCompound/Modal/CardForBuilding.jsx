@@ -1,14 +1,15 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 // CardForBuilding.js
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import BuildingImage from '../../../../organisms/Managers/Images/buildings.jpg';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { MdModeEditOutline, MdDelete } from 'react-icons/md';
+import BuildingImage from '../../../../organisms/Managers/Images/buildings.jpg';
 
-const IconButton = ({ type, onClick, styles }) => {
+function IconButton({ type, onClick, styles }) {
   const Icon = type === 'edit' ? MdModeEditOutline : MdDelete;
 
   return (
@@ -24,9 +25,11 @@ const IconButton = ({ type, onClick, styles }) => {
       onClick={onClick}
     />
   );
-};
+}
 
-const EditBuildingModal = ({ show, onHide, onUpdate, building }) => {
+function EditBuildingModal({
+  show, onHide, onUpdate, building,
+}) {
   const [buildingName, setBuildingName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -45,14 +48,14 @@ const EditBuildingModal = ({ show, onHide, onUpdate, building }) => {
           headers: {
             accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
           },
-        }
+        },
       );
       onUpdate();
       onHide();
       // Refresh the page after successful update
       window.location.reload();
     } catch (error) {
-      console.log(error);
+      (error);
     }
   };
 
@@ -67,21 +70,21 @@ const EditBuildingModal = ({ show, onHide, onUpdate, building }) => {
           <input
             type="text"
             value={buildingName}
-            onChange={(e) => setBuildingName(e.target.value)}
+            onChange={e => setBuildingName(e.target.value)}
           />
           <br></br>
           <label>Address:</label>
           <input
             type="text"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={e => setAddress(e.target.value)}
           />
           <br></br>
           <label>Phone Number:</label>
           <input
             type="text"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={e => setPhoneNumber(e.target.value)}
           />
         </form>
       </Modal.Body>
@@ -95,9 +98,9 @@ const EditBuildingModal = ({ show, onHide, onUpdate, building }) => {
       </Modal.Footer>
     </Modal>
   );
-};
+}
 
-const CardforBuilding = ({ building, onDelete, onUpdate }) => {
+function CardforBuilding({ building, onDelete, onUpdate }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const buildingId = building.id;
@@ -125,14 +128,14 @@ const CardforBuilding = ({ building, onDelete, onUpdate }) => {
               onClick={async () => {
                 try {
                   const buildingId = building.id;
-                  await axios.delete(`http://localhost:3001/Buildings/${buildingId}`, {
+                  await axios.delete(`http://localhost:3001/${buildingId}`, {
                     headers: {
                       accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
                     },
                   });
                   onDelete();
                 } catch (error) {
-                  console.log(error);
+                  (error);
                 }
               }}
               styles={{ right: '15px' }}
@@ -154,15 +157,15 @@ const CardforBuilding = ({ building, onDelete, onUpdate }) => {
         </ListGroup>
         <Card.Body>
           <Card.Link>
-            <Link to='/Notices' state={{ buildingId : buildingId}} >My Notices</Link>
+            <Link to="/Notices" state={{ buildingId }}>My Notices</Link>
           </Card.Link>
           <br />
           <Card.Link>
-            <Link to='/listings' state={{ buildingId : buildingId}}>My New Listings</Link>
+            <Link to="/listings" state={{ buildingId }}>My New Listings</Link>
           </Card.Link>
           <br />
           <Card.Link>
-            <Link to="/NewsFeed" state={{ buildingId : buildingId}}>New NewsFeeds</Link>
+            <Link to="/NewsFeed" state={{ buildingId }}>New NewsFeeds</Link>
           </Card.Link>
         </Card.Body>
       </Card>
@@ -173,12 +176,12 @@ const CardforBuilding = ({ building, onDelete, onUpdate }) => {
         onHide={handleModalClose}
         onUpdate={() => {
           // Placeholder for update logic
-          console.log('Updating building...');
+          //  ('Updating building...');
         }}
         building={building}
       />
     </>
   );
-};
+}
 
 export default CardforBuilding;

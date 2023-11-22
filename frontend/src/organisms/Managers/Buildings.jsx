@@ -1,12 +1,12 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 // Building.js
 import React, { useState, useEffect } from 'react';
-import CardforBuilding from '../../molecules/Card/CardCompound/Modal/CardForBuilding';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { MdModeEditOutline } from 'react-icons/md';
+import CardforBuilding from '../../molecules/Card/CardCompound/Modal/CardForBuilding';
 
 // New Building Form Component
-const NewBuildingForm = ({ onCancel }) => {
+function NewBuildingForm({ onCancel }) {
   // Add your form logic here
 
   return (
@@ -14,12 +14,15 @@ const NewBuildingForm = ({ onCancel }) => {
       {/* Form content */}
       {/* For example: */}
       <form>
-        <label>Building Name:</label>
-        <input type="text" />
-        <label>Address:</label>
-        <input type="text" />
-        <label>Phone Number:</label>
-        <input type="text" />
+        <label htmlFor="buildingName">Building Name:</label>
+        <input type="text" id="buildingName" />
+
+        <label htmlFor="address">Address:</label>
+        <input type="text" id="address" />
+
+        <label htmlFor="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" />
+
         {/* Add other form fields as needed */}
         <button type="submit">Submit</button>
         <button type="button" onClick={onCancel}>
@@ -28,7 +31,7 @@ const NewBuildingForm = ({ onCancel }) => {
       </form>
     </div>
   );
-};
+}
 
 function Building() {
   const [data, setData] = useState([]);
@@ -45,7 +48,7 @@ function Building() {
       });
       setData(response.data.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }
@@ -81,7 +84,7 @@ function Building() {
         <p>Loading...</p>
       ) : (
         <div style={{ display: 'flex' }}>
-          {data.map((building) => (
+          {data.map(building => (
             <CardforBuilding
               key={building.id}
               building={building}

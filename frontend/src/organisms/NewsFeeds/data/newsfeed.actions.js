@@ -1,7 +1,7 @@
-import { ACTION_TYPES } from '../constants/notice.constant';
+import { ACTION_TYPES } from '../constants/newsfeed.constant';
 
-export const setNotices = payload => ({
-  type: ACTION_TYPES.SET_NOTICE,
+export const setnewsfeed = payload => ({
+  type: ACTION_TYPES.SET_NEWSFEED,
   payload,
 });
 
@@ -15,11 +15,6 @@ export const setDescription = description => ({
   payload: { description },
 });
 
-export const setAuthorName = authorName => ({
-  type: ACTION_TYPES.SET_AUTHOR_NAME,
-  payload: { authorName },
-});
-
 export const setPostType = postType => ({
   type: ACTION_TYPES.SET_POST_TYPE,
   payload: postType,
@@ -27,10 +22,5 @@ export const setPostType = postType => ({
 
 export const resetPostData = () => ({
   type: ACTION_TYPES.RESET_POST_DATA,
-  payload: {},
-});
-
-export const resetAllData = () => ({
-  type: ACTION_TYPES.RESET_ALL_DATA,
   payload: {},
 });
