@@ -90,7 +90,7 @@ function Buildings({
         </div>
         <div
           className="addBuildings"
-          style={{ paddingTop: '25px', marginRight: '40px'}}
+          style={{ paddingTop: '25px', marginRight: '40px' }}
         >
           <button
             type="button"
