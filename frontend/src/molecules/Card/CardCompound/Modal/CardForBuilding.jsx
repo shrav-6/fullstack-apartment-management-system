@@ -70,7 +70,7 @@ function EditBuildingModal({
         <Modal.Title>Edit Building</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
+        <form className={styles.editBuildingForm}>
           <label>Building Name:</label>
           <input
             type="text"
@@ -132,7 +132,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
               type="delete"
               onClick={async () => {
                 try {
-                  await axios.delete(`http://localhost:3001/${buildingId}`, {
+                  await axios.delete(`http://localhost:3001/Buildings/${buildingId}`, {
                     headers: {
                       accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
                     },

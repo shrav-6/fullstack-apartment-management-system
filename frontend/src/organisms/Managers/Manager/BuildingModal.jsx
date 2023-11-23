@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import _get from 'lodash/get';
+
 import {
   message,
   Modal,
@@ -9,20 +12,19 @@ import {
 } from 'antd';
 import {
   postAllBuilding,
-  getAllBuilding,
 } from './buildings.service';
+import { setBuildingName } from '../data/building.actions';
 
 function BuildingModal({
-  // allBuildings,
   onCancel,
   showNewBuildingModal,
   setShowNewBuildingModal,
   onSetBuildingName,
   onSetPhoneNumber,
   onSetAddress,
-  onSetBuildings,
+  fetchData,
+  buildingName,
 }) {
-  const [buildingName, setBuildingName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   // const role = JSON.parse(sessionStorage.getItem('userCred'))
@@ -33,26 +35,14 @@ function BuildingModal({
       address,
       phoneNumber,
     };
-    const fetchBuildings = () => {
-      getAllBuilding()
-        .then((response) => {
-          if (!response?.data?.error) {
-            onSetBuildings({ allBuildings: response?.data?.data });
-          }
-        })
-        .catch((err) => {
-          message.error(err);
-        });
-    };
 
     postAllBuilding(payload)
       .then((response) => {
         if (!response?.data?.error) {
           setShowNewBuildingModal(false);
-          onSetBuildingName('');
           onSetAddress('');
           onSetPhoneNumber('');
-          fetchBuildings();
+          fetchData();
         } else {
           message.error(response.data.error);
         }
@@ -81,7 +71,7 @@ function BuildingModal({
         <Input
           id="buildingName"
           value={buildingName}
-          onChange={e => setBuildingName(e.target.value)}
+          onChange={e => onSetBuildingName(e.target.value)}
         />
 
         <label htmlFor="address">Address:</label>
@@ -102,4 +92,12 @@ function BuildingModal({
   );
 }
 
-export default BuildingModal;
+const mapStateToProps = ({ buildingReducer }) => ({
+  buildingName: _get(buildingReducer, 'buildingName'),
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSetBuildingName: buildingName => dispatch(setBuildingName(buildingName)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuildingModal);

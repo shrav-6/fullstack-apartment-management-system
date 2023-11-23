@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaAlignRight } from 'react-icons/fa';
+import { FaAlignRight, FaUser } from 'react-icons/fa';
 import logo from '../../organisms/PublicView/images/logo.svg';
+import './Navbar.css';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,11 +68,11 @@ function Navbar() {
               <Link to="/applications">Applications</Link>
             </li>
             <li>
-                <Link to="/services">Services</Link>
-              </li>
-              <li>
-                <Link to="/help">Help</Link>
-              </li>
+              <Link to="/services">Services</Link>
+            </li>
+            <li>
+              <Link to="/help">Help</Link>
+            </li>
             <li>
               <Link to="/logout">Logout</Link>
             </li>
@@ -95,7 +96,7 @@ function Navbar() {
         return null;
     }
   };
-  
+
   // const SearchBar = ({query}) => (
   //   <form>
   //     <TextField>
@@ -119,9 +120,8 @@ function Navbar() {
 
   // const openApartmentListing = () => {
   //   console.log("Listing to be opened!");
-  // } 
+  // }
 
-  
   return (
     <nav className="navbar">
       <div className="nav-center">
@@ -132,29 +132,38 @@ function Navbar() {
             <FaAlignRight className="nav-icon" />
           </button>
         </div>
-        <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
-          {accessToken ? (
-            <>
-              {getLinksBasedOnRole()}
-              <h6 style={{ marginTop: '12px', marginLeft: '100px' }}>{userName}</h6>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/about-us">About Us</Link>
-              </li>
-              <li>
-                <Link to="/rooms">New Listings</Link>
-              </li>
-              <li>
-                <Link to="/signin">Sign In</Link>
-              </li>
-              <li>
-                <Link to="/signup">Sign Up</Link>
-              </li>
-            </>
-          )}
-        </ul>
+        <div className="navbar-content">
+          <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
+            {accessToken ? (
+              <>
+                {getLinksBasedOnRole()}
+                <h6
+                  style={{
+                    marginTop: '12px', marginLeft: '40rem', display: 'flex', alignItems: 'center',
+                  }}
+                >
+                  <FaUser style={{ marginRight: '5px' }} />
+                  {userName}
+                </h6>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/about-us">About Us</Link>
+                </li>
+                <li>
+                  <Link to="/rooms">New Listings</Link>
+                </li>
+                <li>
+                  <Link to="/signin">Sign In</Link>
+                </li>
+                <li>
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );

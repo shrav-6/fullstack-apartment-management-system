@@ -27,6 +27,7 @@ import { STRING_CONSTANTS } from '../constants/newsfeed.constant';
 import styles from './NewsfeedView.module.scss';
 
 const { TextArea } = Input;
+//const { pathname } = useLocation();
 
 function Newsfeed({
   allNewsfeed: newsfeed = [],
@@ -39,6 +40,7 @@ function Newsfeed({
   onSetPostType = () => {},
   onResetPostData = () => {},
 }) {
+  const { pathname } = useLocation();
   const [editTrigger, setEditTrigger] = useState(0);
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
 

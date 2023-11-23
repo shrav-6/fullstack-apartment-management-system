@@ -97,11 +97,11 @@ router.post("/", validateToken, async (req, res) => {
     if (result) {
       res.json({ success: true, message: "Created successfully" });
     } else {
-      res.status.json({ success: false, error: "Building name already exists or user doesn't have the permission" });
+      res.json({ success: false, error: "Building name already exists or user doesn't have the permission" });
     }
   } catch (error) {
     console.error("Error in create building:", error);
-    res.status.json({ success: false, error: "Internal Server Error" });
+    res.json({ success: false, error: "Internal Server Error" });
   }
 });
 

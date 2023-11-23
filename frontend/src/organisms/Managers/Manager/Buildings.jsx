@@ -13,12 +13,13 @@ import {
 import BuildingModal from './BuildingModal';
 
 function Buildings({
+  allBuildings,
   onSetBuildingName,
   onSetPhoneNumber,
   onSetAddress,
   onSetBuildings,
 }) {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showNewBuildingModal, setShowNewBuildingModal] = useState(false);
 
@@ -31,7 +32,7 @@ function Buildings({
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
       });
-      setData(response.data.data);
+      onSetBuildings({ allBuildings: response?.data?.data });
     } finally {
       setLoading(false);
     }
@@ -117,7 +118,7 @@ function Buildings({
         <p>Loading...</p>
       ) : (
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {data.map(building => (
+          {(allBuildings || []).map(building => (
             <CardforBuilding
               key={building.id}
               building={building}
@@ -135,7 +136,7 @@ function Buildings({
         onSetBuildingName={onSetBuildingName}
         onSetPhoneNumber={onSetPhoneNumber}
         onSetAddress={onSetAddress}
-        onSetBuildings={onSetBuildings}
+        fetchData={fetchData}
       />
     </div>
   );

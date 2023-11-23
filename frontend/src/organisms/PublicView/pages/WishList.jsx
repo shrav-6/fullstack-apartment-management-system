@@ -32,7 +32,7 @@ function Wishlist() {
     // Call the fetchWishlist function
     fetchWishlist();
   }, []); // The empty dependency array ensures the effect runs only once after the initial render
-  const heading = 'WishList Page';
+  const heading = '';
   return (
     <div>
       <h1

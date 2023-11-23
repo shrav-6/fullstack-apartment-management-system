@@ -5,9 +5,9 @@ export const setBuildings = payload => ({
   payload,
 });
 
-export const setBuildingName = buildingName => ({
+export const setBuildingName = payload => ({
   type: ACTION_TYPES.SET_BUILDINGNAME,
-  payload: { buildingName },
+  payload,
 });
 
 export const setAddress = address => ({
