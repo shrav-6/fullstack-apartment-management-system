@@ -1,0 +1,23 @@
+.cardTitle {
+  font-weight: 600;
+  font-size: 24px;
+  display: grid;
+  grid-template-columns: 3fr 0.2fr 0.2fr;
+
+  .textTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 18ch;
+  }
+
+  .cardEdit {
+    opacity: 0;
+    font-size: 1.2rem;
+  }
+
+  .cardDelete {
+    opacity: 0;
+    font-size: 1.2rem;
+  }
+}

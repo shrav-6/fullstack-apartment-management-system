@@ -1,18 +1,32 @@
 const express = require("express");
 const router = express.Router();
-const { listings,tenants,buildings,users, payments } = require("../models");
-const {validateToken}=require("../Middleware/middleware");
+const { validateToken } = require("../Middleware/Middleware");
+const service = require("../Service/Payments");
+
+//const { listings,tenants,buildings,users, payments } = require("../models");
+//const {validateToken}=require("../Middleware/middleware");
 
 //router.post("")
 router.post("/pay",validateToken, async (req, res) => {
+  try {
     const date = req.body.date;
     const amount = req.body.amount;
     const cardinfo = req.body.cardinfo;
     const cvv = req.body.cvv;
     const user_id=req.user.id;
-    const role=req.user.role;
+    // const role=req.user.role;
+
+    // Call the service layer to accept or reject the application
+    const result = await service.payRent(date, amount, cardinfo, cvv, user_id);
+
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.json(result);
+    }
     //const buildingName=req.body.buildingName;
-    if(role=="Tenant"){
+    /*if(role=="Tenant"){
     const tenant = await tenants.findOne({ where: { userId: user_id } });
     //const building=await buildings.findOne({ where: { managerId:manager.id,buildingName:buildingName} });
     //if(manager!=null && building!=null){
@@ -29,11 +43,31 @@ router.post("/pay",validateToken, async (req, res) => {
     }
   else{
     res.json({"success": false,error: "user doesn't have the permissions"});
-  }}  
-);
+  } */} catch (error) {
+    console.error("Error in payment of rent:", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
+});
 
-router.get("/getInfo", validateToken, async (req, res) => {
-    const user_id=req.user.id;
+router.get("/getPaymentInfo", validateToken, async (req, res) => {
+  try {
+    console.log('in payment router');
+    const user_id = req.user.id;
+
+    const result = await service.getPaymentInfo(user_id);
+
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.json(result);
+    }
+
+  } catch (error) {
+    console.error("Error in getting payment info", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
+    /*const user_id=req.user.id;
     const role=req.user.role;
     if(role=="Tenant"){
         const tenant = await tenants.findOne({where: {userId: user_id}});
@@ -42,7 +76,7 @@ router.get("/getInfo", validateToken, async (req, res) => {
         
     } else {
         res.json({"success": false,error: "user doesn't have the permissions"});
-    }
+    }*/
 
 });
 

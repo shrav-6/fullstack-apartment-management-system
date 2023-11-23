@@ -1,20 +1,87 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaAlignRight } from "react-icons/fa";
-import logo from "../../organisms/public view/images/logo.svg";
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FaAlignRight } from 'react-icons/fa';
+import logo from '../../organisms/PublicView/images/logo.svg';
+import { HiArchiveBox } from 'react-icons/hi2';
 
-const Navbar = () => {
+function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
-  const accessToken = sessionStorage.getItem("accessToken");
+  const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
+  const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
+  const userName = JSON.parse(sessionStorage.getItem('userCred'))?.username;
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
   const imageStyles = {
-    width: "90px",
-    height: "auto",
+    width: '90px',
+    height: '60px',
+  };
+
+  const getLinksBasedOnRole = () => {
+    switch (role) {
+      case 'Guest':
+        return (
+          <>
+           <li>
+                <Link to="/rooms">New Listings</Link>
+              </li>
+            <li>
+              <Link to="/wishlist">My Wishlist</Link>
+            </li>
+            <li>
+              <Link to="/applications">Applications</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      case 'Tenant':
+        return (
+          <>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+                <Link to="/rooms">New Listings</Link>
+              </li>
+              <li>
+              <Link to="/wishlist">My Wishlist</Link>
+            </li>
+            <li>
+              <Link to="/notices">Notices</Link>
+            </li>
+            <li>
+              <Link to="/newsfeed">NewsFeed</Link>
+            </li>
+            <li>
+              <Link to="/applications">Applications</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      case 'Manager':
+        return (
+          <>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/dashboard">Buildings</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -26,31 +93,20 @@ const Navbar = () => {
             <FaAlignRight className="nav-icon" />
           </button>
         </div>
-        <ul className={isOpen ? "nav-links show-nav" : "nav-links"}>
+        <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
           {accessToken ? (
             <>
-              
-              <li>
-                <Link to="/home">Home</Link>
-              </li>
-              <li>
-                <Link to="/notices">Notices</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/logout">Logout</Link>
-              </li>
+              {getLinksBasedOnRole()}
+              <h6 style={{ marginTop: '12px', marginLeft: '100px' }}>{userName}</h6>
             </>
           ) : (
             <>
-             <li>
-            <Link to="/">About</Link>
-          </li>
-          <li>
-            <Link to="/rooms">New Listings</Link>
-          </li>
+              <li>
+                <Link to="/">About</Link>
+              </li>
+              <li>
+                <Link to="/rooms">New Listings</Link>
+              </li>
               <li>
                 <Link to="/signin">Sign In</Link>
               </li>
@@ -63,6 +119,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

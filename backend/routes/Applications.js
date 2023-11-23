@@ -1,18 +1,45 @@
-const express = require('express');
-const router = express.Router();
-const { applications,guests,listings,users, tenants, managers } = require("../models");
-const {validateToken}=require("../Middleware/middleware");
-const { build } = require('sequelize/lib/model');
+/**
+ * Express router to handle application-related routes.
+ * @module Routes/Applications
+ */
 
-// create new application from user type: guest
-router.post('/create',validateToken, async (req, res) => {
-    console.log("inside create application");
+const express = require("express");
+const router = express.Router();
+const { validateToken } = require("../Middleware/Middleware");
+const service = require("../Service/Applications");
+
+/**
+ * Route to create a new application.
+ * @name POST/create
+ * @function
+ * @memberof module:Routes/Applications
+ * @inner
+ * @param {string} path - Express route path ("/create").
+ * @param {function} middleware - Middleware function to validate the user's token.
+ * @param {function} callback - Express route callback.
+ */
+router.post("/create", validateToken, async (req, res) => {
+  try {
+    // Extract application and user_id from the request body and token
     const application = req.body;
     const user_id=req.user.id;
     const role=req.user.role;
     const listingId =req.body.listingId;
     const status="waitlisted";
-    const listing=await listings.findOne({ where: { id:application.listingId} });
+    // Call the service layer to create the application
+    const result = await service.createApplication(application, status, listingId, user_id);
+
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.json(result);
+    }
+  } catch (error) {
+    console.error("Error in create application:", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
+    /*const listing=await listings.findOne({ where: { id:application.listingId} });
     if(listing!=null){
       await applications.create({
         firstName: application.firstName,
@@ -33,11 +60,11 @@ router.post('/create',validateToken, async (req, res) => {
   }
     else{
       res.json({"success": false,error: "You can't apply for this Apartment"});
-    }
+    }*/
 });
 
 // manager can accept/rejected applications
-router.put('/updateStatus/:applicationId',validateToken, async (req, res) => {
+/*router.put('/updateStatus/:applicationId',validateToken, async (req, res) => {
   const applicationId = req.params.applicationId;
   // const message = req.params.message;
   // const gender = req.params.gender;
@@ -101,10 +128,10 @@ router.put('/updateStatus/:applicationId',validateToken, async (req, res) => {
   } else {
     res.json({"success": false,error: "Can perform two operation either approved or rejected"});
   }
-});
+});*/
 
 //to get all applications based on listingId
-router.get("/all/:listingId",validateToken, async (req, res) => {
+/*router.get("/all/:listingId",validateToken, async (req, res) => {
     const listingId = req.params.listingId
     const role=req.user.role;
     const user_id=req.user.id;
@@ -120,43 +147,146 @@ router.get("/all/:listingId",validateToken, async (req, res) => {
         else {
             res.json({"success": false,error: "user doesn't have the permission"});
         }
+    const user_id = req.user.id;
+
+    // Call the service layer to create the application
+    const result = await service.createApplication(application, user_id);
+
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
     } else {
-        res.json({"success": false, error: "Only manager can view the applications"});
-    } 
-});
+      res.json(result);
+    }
+  } catch (error) {
+    console.error("Error in create application:", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
+});*/
 
-// view a particular application based on application_id
-router.get("/get/:applicationId",validateToken, async (req, res) => {
+/**
+ * Route to accept or reject an application.
+ * @name PUT/accept_reject/:applicationId
+ * @function
+ * @memberof module:Routes/Applications
+ * @inner
+ * @param {string} path - Express route path ("/accept_reject/:applicationId").
+ * @param {function} middleware - Middleware function to validate the user's token.
+ * @param {function} callback - Express route callback.
+ */
+router.put("/updateStatus/:applicationId", validateToken, async (req, res) => {
+  try {
+    // Extract applicationId, status, and user_id from the request body and token
     const applicationId = req.params.applicationId;
-    const role=req.user.role;
-    const user_id=req.user.id;
-    if(role=="Manager"){
-        const manager = await managers.findOne({ where: { userId: user_id } });
-        const application = await applications.findOne({ where: { id: applicationId,userId: user_id } });
-        if(manager!=null && application!=null){ 
-            res.json({"success": true, "message": "Retrieved successfully","data":application});
-        }
-        else{
-            res.json({"success": false,error: "user doesn't have the permission"});
-        }
+    const status = req.body.status;
+    const user_id = req.user.id;
+
+    // Call the service layer to accept or reject the application
+    const result = await service.updateStatusApplication(applicationId, status, user_id);
+    console.log('result in routes', result);
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.json(result);
     }
+  } catch (error) {
+    console.error("Error in update status application:", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
 });
 
-//to get all applications
-// view a particular application based on application_id
-router.get("/getAll",validateToken, async (req, res) => {
-    const role=req.user.role;
-    const user_id=req.user.id;
-    if(role=="Manager"){
-        const manager = await managers.findOne({ where: { userId: user_id } });
-        const application = await applications.findAll();
-        if(manager!=null && application!=null){ 
-            res.json({"success": true, "message": "Retrieved successfully","data":application});
-        }
-        else{
-            res.json({"success": false,error: "user doesn't have the permission"});
-        }
+/**
+ * Route to get all applications for a specific listing.
+ * @name GET/all/:listingId
+ * @function
+ * @memberof module:Routes/Applications
+ * @inner
+ * @param {string} path - Express route path ("/all/:listingId").
+ * @param {function} middleware - Middleware function to validate the user's token.
+ * @param {function} callback - Express route callback.
+ */
+router.get("/allApplicationsForListing/:listingId", validateToken, async (req, res) => {
+  try {
+    // Extract listingId and user_id from the request parameters and token
+    console.log('inside log of applications route');
+    const { listingId } = req.params;
+    const user_id = req.user.id;
+
+    // Call the service layer to get all applications for the listing
+    const result = await service.getAllApplicationsForListing(listingId, user_id);
+
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.json(result);
     }
+  } catch (error) {
+    console.error("Error in get all applications for listing:", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
+});
+
+/**
+ * Route to get a specific application by ID.
+ * @name GET/get/:applicationId
+ * @function
+ * @memberof module:Routes/Applications
+ * @inner
+ * @param {string} path - Express route path ("/get/:applicationId").
+ * @param {function} middleware - Middleware function to validate the user's token.
+ * @param {function} callback - Express route callback.
+ */
+router.get("/get/:applicationId", validateToken, async (req, res) => {
+  try {
+    // Extract applicationId and user_id from the request parameters and token
+    const { applicationId } = req.params;
+    const user_id = req.user.id;
+
+    // Call the service layer to get the application by ID
+    const result = await service.getApplicationById(applicationId, user_id);
+
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.json(result);
+    }
+  } catch (error) {
+    console.error("Error in get application by ID:", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
+});
+
+/**
+ * Route to get all applications.
+ * @name GET/getAll
+ * @function
+ * @memberof module:Routes/Applications
+ * @inner
+ * @param {string} path - Express route path ("/getAll").
+ * @param {function} middleware - Middleware function to validate the user's token.
+ * @param {function} callback - Express route callback.
+ */
+router.get("/getAll", validateToken, async (req, res) => {
+  try {
+    // Extract user_id from the token
+    const user_id = req.user.id;
+
+    // Call the service layer to get all applications
+    const result = await service.getAllApplications(user_id);
+
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.json(result);
+    }
+  } catch (error) {
+    console.error("Error in get all applications:", error);
+    res.json({ success: false, error: "Internal Server Error" });
+  }
 });
 
 module.exports = router;
