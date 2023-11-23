@@ -6,14 +6,15 @@ import AboutUs from '../pages/AboutUs/AboutUs';
 import Notices from '../organisms/noticeboard/Notices/Notices';
 import Services from '../pages/Services/Services';
 import Help from '../pages/Help/Help';
-import Signup from '../organisms/noticeboard/Signup/Signup';
-import Signin from '../organisms/noticeboard/Signin/Signin';
-import Logout from '../organisms/noticeboard/Logout/Logout';
-import Buildings from '../organisms/noticeboard/Managers/DashBoard';
+import Signup from '../organisms/Signup/Signup';
+import Signin from '../organisms/Signin/Signin';
+import Logout from '../organisms/Logout/Logout';
+import Buildings from '../organisms/Managers/Manager/Buildings';
 import Apps from '../organisms/PublicView/Apps';
-import ViewListings from '../organisms/noticeboard/Managers/ViewListings';
-import ListingsForm from '../organisms/noticeboard/Managers/addListings';
-import UpdateListings from '../organisms/noticeboard/Managers/updateListings';
+import ViewListings from '../organisms/Managers/ViewListings';
+import ListingsForm from '../organisms/Managers/addListings';
+import UpdateListings from '../organisms/Managers/updateListings';
+import NewsFeeds from '../organisms/NewsFeeds/Newsfeeedview/NewsFeeds';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/services" exact element={<Services />} />
           <Route path="/help" exact element={<Help />} />
           <Route path="/signup" exact element={<Signup />} />
+          <Route path="/newsfeed" exact element={<NewsFeeds />} />
           <Route path="/signin" exact element={<Signin />} />
           <Route path="/logout" exact element={<Logout />} />
           <Route path="/Dashboard" element={<Buildings />} />

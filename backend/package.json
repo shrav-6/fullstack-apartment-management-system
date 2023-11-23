@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon index.js",
-    "serve": "node index.js"
+    "serve": "node index.js",
+    "test:coverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -22,5 +23,16 @@
     "nodemon": "^2.0.7",
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.2.0"
+
+
+    
+  },
+  "devDependencies": {
+   
+    "jest": "^29.7.0",
+    "nyc": "^15.1.0",
+    "sequelize": "^6.34.0",
+    "sequelize-mock": "^0.10.2",
+    "supertest": "^6.3.3"
   }
 }

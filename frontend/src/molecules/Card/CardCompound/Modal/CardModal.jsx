@@ -17,10 +17,17 @@ function CardModal({
   onDescriptionChange,
   onOk,
   onCancel,
+  context,
 }) {
+  let modalTitle;
+  if (mode === 'edit') {
+    modalTitle = context === 'newsfeed' ? 'Edit Newsfeed' : 'Edit Notice';
+  } else {
+    modalTitle = 'Notice Details';
+  }
   return (
     <Modal
-      title={mode === 'edit' ? 'Edit Notice' : 'Notice Details'}
+      title={modalTitle}
       open={isModalVisible}
       onOk={onOk}
       onCancel={onCancel}

@@ -23,9 +23,14 @@ app.use("/Buildings", buildingsRouter);
 //const imageGalleryRoutes = require("./routes/imageGallery");
 //app.use("/gallery", imageGalleryRoutes); // Use the router directly
 
+const wishlistRouter = require("./routes/WishList");
+app.use("/wishlist", wishlistRouter);
+
+const NewsFeedRouter = require("./routes/Newsfeeds");
+app.use("/NewsFeeds",NewsFeedRouter )
+
 const applicationRouter = require("./routes/Applications");
 app.use('/Applications', applicationRouter);
-
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

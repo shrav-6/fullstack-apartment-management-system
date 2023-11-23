@@ -5,8 +5,13 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import styles from './CardTitle.module.scss';
 
-function CardTitle({ title, onEdit, onDelete }) {
+function CardTitle({
+  title,
+  onEdit,
+  onDelete,
+}) {
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
+  const allowedRoles = ['Manager', 'Tenant'];
   return (
     <div className={styles.cardTitle}>
       <span
@@ -14,7 +19,7 @@ function CardTitle({ title, onEdit, onDelete }) {
         className={styles.textTitle}
       >{title}
       </span>
-      {role === 'Manager' && (
+      {allowedRoles.includes(role) && (
         <>
           <span
             tabIndex="0"

@@ -8,6 +8,7 @@ const initialState = {
   description: '',
   authorName: '',
   postType: '',
+  priority: '',
 };
 
 const noticeReducer = (state = initialState, { type, payload }) => {
@@ -17,6 +18,7 @@ const noticeReducer = (state = initialState, { type, payload }) => {
     description,
     authorName,
     postType = '',
+    priority,
   } = payload || EMPTY_OBJECT;
   switch (type) {
     case ACTION_TYPES.SET_NOTICE:
@@ -33,6 +35,11 @@ const noticeReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         description,
+      };
+    case ACTION_TYPES.SET_PRIORTIY:
+      return {
+        ...state,
+        priority,
       };
     case ACTION_TYPES.SET_AUTHOR_NAME:
       return {
@@ -51,6 +58,11 @@ const noticeReducer = (state = initialState, { type, payload }) => {
         description: '',
         authorName: '',
         postType: '',
+      };
+    case ACTION_TYPES.RESET_ALL_DATA:
+      return {
+        ...state,
+        ...initialState,
       };
     default:
       return state;

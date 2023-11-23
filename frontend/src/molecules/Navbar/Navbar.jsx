@@ -5,8 +5,11 @@ import logo from '../../organisms/PublicView/images/logo.svg';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  // const { pathname } = useLocation();
-  const accessToken = sessionStorage.getItem('accessToken');
+  // eslint-disable-next-line no-unused-vars
+  const { pathname } = useLocation();
+  const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
+  const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
+  const userName = JSON.parse(sessionStorage.getItem('userCred'))?.username;
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -14,10 +17,85 @@ function Navbar() {
 
   const imageStyles = {
     width: '90px',
-    height: 'auto',
+    height: '60px',
+  };
+
+  const getLinksBasedOnRole = () => {
+    switch (role) {
+      case 'Guest':
+        return (
+          <>
+            <li>
+              <Link to="/about-us">About Us</Link>
+            </li>
+            <li>
+              <Link to="/rooms">New Listings</Link>
+            </li>
+            <li>
+              <Link to="/wishlist">My Wishlist</Link>
+            </li>
+            <li>
+              <Link to="/applications">Applications</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      case 'Tenant':
+        return (
+          <>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/about-us">About Us</Link>
+            </li>
+            <li>
+              <Link to="/rooms">New Listings</Link>
+            </li>
+            <li>
+              <Link to="/wishlist">My Wishlist</Link>
+            </li>
+            <li>
+              <Link to="/notices">Notices</Link>
+            </li>
+            <li>
+              <Link to="/newsfeed">NewsFeed</Link>
+            </li>
+            <li>
+              <Link to="/applications">Applications</Link>
+            </li>
+            <li>
+                <Link to="/services">Services</Link>
+              </li>
+              <li>
+                <Link to="/help">Help</Link>
+              </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      case 'Manager':
+        return (
+          <>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/dashboard">Buildings</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </>
+        );
+      default:
+        return null;
+    }
   };
   
-  const { pathname } = useLocation();
   // const SearchBar = ({query}) => (
   //   <form>
   //     <TextField>
@@ -57,27 +135,8 @@ function Navbar() {
         <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
           {accessToken ? (
             <>
-              <li>
-                <Link to="/home">Home</Link>
-              </li>
-              <li>
-                <Link to="/about-us">About Us</Link>
-              </li>
-              <li>
-                <Link to="/notices">Notices</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/services">Services</Link>
-              </li>
-              <li>
-                <Link to="/help">Help</Link>
-              </li>
-              <li>
-                <Link to="/logout">Logout</Link>
-              </li>
+              {getLinksBasedOnRole()}
+              <h6 style={{ marginTop: '12px', marginLeft: '100px' }}>{userName}</h6>
             </>
           ) : (
             <>
@@ -93,34 +152,6 @@ function Navbar() {
               <li>
                 <Link to="/signup">Sign Up</Link>
               </li>
-
-
-
-              {/* FOR TESTING ONLY */}
-              {/* <li>
-                <Link to="/home">Home</Link>
-              </li>
-              <li>
-                <Link to="/about-us">About Us</Link>
-              </li>
-              <li>
-                <Link to="/rooms">New Listings</Link>
-              </li>
-              <li>
-                <Link to="/notices">Notices</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/services">Services</Link>
-              </li>
-              <li>
-                <Link to="/help">Help</Link>
-              </li>
-              <li>
-                <Link to="/logout">Logout</Link>
-              </li> */}
             </>
           )}
         </ul>

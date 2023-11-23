@@ -6,7 +6,9 @@ import { FaClock } from 'react-icons/fa';
 // styles
 import styles from './CardFooter.module.scss';
 
-function CardFooter({ updatedAt, createdAt, onReadMore }) {
+function CardFooter({
+  updatedAt, createdAt, onReadMore, showReadMore,
+}) {
   return (
     <div className={styles.cardFooter}>
       <div className={styles.createdAt}>
@@ -16,12 +18,14 @@ function CardFooter({ updatedAt, createdAt, onReadMore }) {
           : moment(createdAt).format(' DD MMM')}
       </div>
       <div className={styles.buttonContainer}>
-        <button
-          type="button"
-          className={styles.readBtn}
-          onClick={onReadMore}
-        >Read More
-        </button>
+        {showReadMore && (
+          <button
+            type="button"
+            className={styles.readBtn}
+            onClick={onReadMore}
+          >Read More
+          </button>
+        )}
       </div>
     </div>
   );

@@ -12,7 +12,6 @@ frontend-build:
         - echo "🏃‍♀️ running frontend build job"
         - cd frontend/
         - yarn install --network-timeout 600000
-        - yarn add vite
         - yarn run build
         - echo "✅ frontend build completed succesfully!"
 
@@ -82,7 +81,7 @@ deploy:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app-frontend || true"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app-backend || true"
     
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:3000 --name my-app-frontend docker.io/csci5308vm18/shelter:frontend_$CI_COMMIT_SHORT_SHA"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:5173 --name my-app-frontend docker.io/csci5308vm18/shelter:frontend_$CI_COMMIT_SHORT_SHA"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8074:3001 --name my-app-backend docker.io/csci5308vm18/shelter:backend_$CI_COMMIT_SHORT_SHA"
   environment:
     name: production

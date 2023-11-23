@@ -15,6 +15,11 @@ export const setDescription = description => ({
   payload: { description },
 });
 
+export const setPriority = priority => ({
+  type: ACTION_TYPES.SET_PRIORTIY,
+  payload: { priority },
+});
+
 export const setAuthorName = authorName => ({
   type: ACTION_TYPES.SET_AUTHOR_NAME,
   payload: { authorName },
@@ -27,5 +32,10 @@ export const setPostType = postType => ({
 
 export const resetPostData = () => ({
   type: ACTION_TYPES.RESET_POST_DATA,
+  payload: {},
+});
+
+export const resetAllData = () => ({
+  type: ACTION_TYPES.RESET_ALL_DATA,
   payload: {},
 });
