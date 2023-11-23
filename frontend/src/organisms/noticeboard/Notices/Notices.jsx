@@ -30,7 +30,6 @@ import {
 import { STRING_CONSTANTS } from '../constants/notice.constant';
 // styles
 import styles from './Notice.module.scss';
-
 const { TextArea } = Input;
 
 function Notices({
@@ -59,7 +58,6 @@ function Notices({
   const handleMouseLeave = () => {
     setDropdownVisible(false);
   };
-
 
   const location = useLocation();
 
