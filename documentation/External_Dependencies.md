@@ -65,7 +65,36 @@ To install these dependencies:
 
 ### Backend-Testing
 
----To be completed by praveen,just mention external dependencies and the configuration for testing
+
+#### Jest
+- Visit the official [Jest website](https://jestjs.io//).
+- Install Jest version 29.7.0 using npm based on your OS.
+- Verify the installation by running `npm list jest` in the terminal.
+
+
+#### External Dependencies (from `backend/package.json`)
+```json
+{
+   "devDependencies": {
+   
+    "jest": "^29.7.0",
+    "sequelize": "^6.34.0",
+    "sequelize-mock": "^0.10.2",
+    "supertest": "^6.3.3"
+  }
+}
+
+  ```
+- **jest:** Installs the Jest testing framework.
+- **sequelize:**  It is used for handling database operations and mapping database entries to JavaScript objects in an easy and efficient way.
+- **sequelize-mock:** Includes Sequelize Mock for mocking database behavior during testing
+- **supertest:** Adds the Supertest library for testing HTTP requests.
+
+
+To install these dependencies:
+
+1. Run `npm install` in the terminal, in  the folder level of `backend/package.json`.
+2. Install individual packages using `npm install package-name@version`.
 
 
 ### Database
