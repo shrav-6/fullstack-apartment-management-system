@@ -32,7 +32,7 @@ db.sequelize.sync().then(() => {
   });
   ```
 
-The backend code will run in http://localhost:3001/ and will create and initialize all the database Models used in backend.
+The backend code will run in http://localhost:3001/ (this url will be running and will be mapped with the another port in docker)and will create and initialize all the database Models used in backend.
 
 
 ### **Frontend Application**
