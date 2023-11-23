@@ -19,7 +19,7 @@ The configuration is mentioned in backend/package.json
     "test": "jest",
     "start": "nodemon index.js",
     "serve": "node index.js",
-    "test:coverage": "jest --coverage
+    "test:coverage": "jest --coverage,
   },
   ```
 
@@ -57,7 +57,7 @@ The configuration is mentioned in backend/package.json
     "test": "jest",
     "start": "nodemon index.js",
     "serve": "node index.js",
-    "test:coverage": "jest --coverage
+    "test:coverage": "jest --coverage,
   },
   ```
 
