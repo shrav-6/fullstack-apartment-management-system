@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import {
-  message, Modal, Input, Button, Select,
-} from 'antd';
+import { message, Modal, Input, Button, Select } from 'antd';
 import _get from 'lodash/get';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
 import { FaPlus } from 'react-icons/fa';
 import Card from '../../../molecules/Card/CardCompound/Card';
+import { sortNotices } from '../helper';
+import { filterNotices } from '../helper';
 import {
   getAllNotices,
   postAllNotices,
@@ -30,6 +30,7 @@ import {
 import { STRING_CONSTANTS } from '../constants/notice.constant';
 // styles
 import styles from './Notice.module.scss';
+
 const { TextArea } = Input;
 
 function Notices({
@@ -70,6 +71,7 @@ function Notices({
       .then((response) => {
         if (!response?.data?.error) {
           onSetNotices({ allNotices: response?.data?.data });
+          noticesCopy = JSON.parse(JSON.stringify(notices));
         }
       })
       .catch((err) => {
@@ -221,19 +223,13 @@ function Notices({
           </span>
           {
             <select className={styles.select} defaultValue={'none'} onChange={(change) => {
-              // onSetNotices({ allNotices: filterNotices(notices, change.target.value) });
-              notices = filterNotices(notices, change.target.value);
-              // if (!notices) {
-              //   onSetNotices({ allNotices: [] });
-              // } else {
-              //   onSetNotices({ allNotices: notices });
-              // }
-              mapStateToProps;
-              handleMouseEnter();
+              // onResetAllPostData();
+              const filteredNotices = filterNotices(notices, change.target.value);
+              onSetNotices({ allNotices: filteredNotices });
             }}>
               <option value="none">None</option>
               <option value="lowPriority">Low Priority</option>
-              <option value="normalPriority">Normal Priority</option>
+              <option value="normalPriority">Medium Priority</option>
               <option value="highPriority">High Priority</option>
               <option value="last1Day">Last 1 Day</option>
               <option value="last1Week">Last 1 Week</option>
