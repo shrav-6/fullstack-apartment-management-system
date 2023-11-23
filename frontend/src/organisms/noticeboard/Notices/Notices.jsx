@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import {
-  message, Modal, Input, Button, Select,
-} from 'antd';
+import { message, Modal, Input, Button, Select } from 'antd';
 import _get from 'lodash/get';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
 import { FaPlus } from 'react-icons/fa';
 import Card from '../../../molecules/Card/CardCompound/Card';
+import { sortNotices } from '../helper';
+import { filterNotices } from '../helper';
 import {
   getAllNotices,
   postAllNotices,
@@ -49,6 +49,15 @@ function Notices({
 }) {
   const [editTrigger, setEditTrigger] = useState(0); // State to trigger useEffect on edits
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    setDropdownVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setDropdownVisible(false);
+  };
 
   const location = useLocation();
 
@@ -60,6 +69,7 @@ function Notices({
       .then((response) => {
         if (!response?.data?.error) {
           onSetNotices({ allNotices: response?.data?.data });
+          noticesCopy = JSON.parse(JSON.stringify(notices));
         }
       })
       .catch((err) => {
@@ -203,27 +213,60 @@ function Notices({
   return (
     <div className={styles.noticeContainer}>
       <h1 className={styles.navNotice}>Notices</h1>
-      <div style={{ float: 'right' }}>
-        <div>
+
+      <center onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <span>
+          <span>
+            <FilterAltRoundedIcon className={styles.icon} />
+          </span>
+          {
+            <select className={styles.select} defaultValue={'none'} onChange={(change) => {
+              // onResetAllPostData();
+              const filteredNotices = filterNotices(notices, change.target.value);
+              onSetNotices({ allNotices: filteredNotices });
+            }}>
+              <option value="none">None</option>
+              <option value="lowPriority">Low Priority</option>
+              <option value="normalPriority">Medium Priority</option>
+              <option value="highPriority">High Priority</option>
+              <option value="last1Day">Last 1 Day</option>
+              <option value="last1Week">Last 1 Week</option>
+              <option value="last1Month">Last 1 Month</option>
+              <option value="last1Year">Last 1 Year</option>
+            </select>
+          }
+        </span>
+        <span>
+          <span>
+            <SortRoundedIcon className={styles.icon} />
+          </span>
+          {
+            <select className={styles.select} defaultValue={'none'} onChange={(change) => {
+              sortNotices(notices, change.target.value);
+              mapStateToProps;
+              handleMouseEnter();
+            }}>
+              <option value="none">None</option>
+              <option value="date">Date</option>
+              <option value="title">Title</option>
+              <option value="priority">Priority</option>
+            </select>
+          }
+        </span>
+        <span>
           {role === 'Manager' && (
-            <div
+            <span
               tabIndex="0"
               role="button"
               className="card-post"
               onClick={handlePlusIconClick}
             >
               <FaPlus />
-            </div>
+            </span>
           )}
-        </div>
+        </span>
+      </center>
 
-        <div>
-          <FilterAltRoundedIcon />
-        </div>
-        <div>
-          <SortRoundedIcon />
-        </div>
-      </div>
       <div className={styles.cardComponentContainer}>
         {(notices || []).map(notice => (
           <Card

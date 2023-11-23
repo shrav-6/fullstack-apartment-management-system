@@ -8,28 +8,28 @@ app.use(cors());
 const db = require("./models");
 
 // Routers
-const NoticeRouter = require("./Routes/Notices");
+const NoticeRouter = require("./routes/Notices");
 app.use("/Notices", NoticeRouter);
 
-const ListingsRouter = require("./Routes/Listings");
+const ListingsRouter = require("./routes/Listings");
 app.use("/Listings", ListingsRouter);
 
 const usersRouter = require("./routes/users");
 app.use("/auth", usersRouter);
 
-const buildingsRouter = require("./Routes/Buildings");
+const buildingsRouter = require("./routes/Buildings");
 app.use("/Buildings", buildingsRouter);
 
 //const imageGalleryRoutes = require("./routes/imageGallery");
 //app.use("/gallery", imageGalleryRoutes); // Use the router directly
 
-const wishlistRouter = require("./Routes/WishList");
+const wishlistRouter = require("./routes/WishList");
 app.use("/wishlist", wishlistRouter);
 
-const NewsFeedRouter = require("./routes/NewsFeeds");
+const NewsFeedRouter = require("./routes/Newsfeeds");
 app.use("/NewsFeeds",NewsFeedRouter )
 
-const applicationRouter = require("./Routes/Applications");
+const applicationRouter = require("./routes/Applications");
 app.use('/Applications', applicationRouter);
 
 db.sequelize.sync().then(() => {

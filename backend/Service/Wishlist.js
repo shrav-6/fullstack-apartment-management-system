@@ -1,5 +1,5 @@
 // service.js
-const { validateToken } = require("../Middleware/Middleware");
+const { validateToken } = require("../Middleware/middleware");
 const dataLayer = require("../Data/WishList");
 
 /**

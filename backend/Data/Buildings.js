@@ -1,4 +1,4 @@
-const { buildings, managers } = require("../Models");
+const { buildings, managers } = require("../models");
 
 /**
  * Get a building by ID based on user role.

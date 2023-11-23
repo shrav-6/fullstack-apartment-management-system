@@ -1,7 +1,7 @@
 const dataLayer = require("../Data/Users");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
-const { managers, buildings, tenants, guests } = require("../Models");
+const { managers, buildings, tenants, guests } = require("../models");
 
 /**
  * Sign up a new user based on provided data.

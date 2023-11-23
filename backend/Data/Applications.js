@@ -1,6 +1,6 @@
 // data.js
 
-const { applications, managers, listings,users } = require("../Models");
+const { applications, managers, listings,users } = require("../models");
 
 /**
  * Create a new application from a guest user

@@ -1,5 +1,5 @@
 // data-layer.js
-const { wishlists, listings, buildings } = require("../Models");
+const { wishlists, listings, buildings } = require("../models");
 
 /**
  * Get wishlists of the corresponding user, including associated listings and buildings.

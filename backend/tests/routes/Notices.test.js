@@ -6,7 +6,7 @@
  */
 const request = require('supertest');
 const express = require('express');
-const noticesRouter = require('../../Routes/Notices');
+const noticesRouter = require('../../routes/Notices');
 const jwtMock = require('../mocks/jwtMock');
 const dbMock = require('../mocks/dbMock');
 

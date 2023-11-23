@@ -1,6 +1,6 @@
 /**
  * Express router to handle notice-related routes.
- * @module Routes/Notices
+ * @module routes/Notices
  */
 
 const express = require('express');
@@ -12,7 +12,7 @@ const service = require('../Service/Notices');
  * Route to get a particular notice by ID.
  * @name GET/:noticeId
  * @function
- * @memberof module:Routes/Notices
+ * @memberof module:routes/Notices
  * @inner
  * @param {string} path - Express route path ("/:noticeId").
  * @param {function} middleware - Middleware function to validate the user's token.
@@ -46,7 +46,7 @@ router.get('/:noticeId', validateToken, async (req, res) => {
  * Route to get all notices for tenants.
  * @name GET/
  * @function
- * @memberof module:Routes/Notices
+ * @memberof module:routes/Notices
  * @inner
  * @param {string} path - Express route path ("/").
  * @param {function} middleware - Middleware function to validate the user's token.
@@ -76,7 +76,7 @@ router.get('/', validateToken, async (req, res) => {
  * Route to get all notices for a manager based on buildingId.
  * @name GET/manager/:buildingId
  * @function
- * @memberof module:Routes/Notices
+ * @memberof module:routes/Notices
  * @inner
  * @param {string} path - Express route path ("/manager/:buildingId").
  * @param {function} middleware - Middleware function to validate the user's token.
@@ -107,7 +107,7 @@ router.get('/manager/:buildingId', validateToken, async (req, res) => {
  * Route to post a new notice.
  * @name POST/
  * @function
- * @memberof module:Routes/Notices
+ * @memberof module:routes/Notices
  * @inner
  * @param {string} path - Express route path ("/").
  * @param {function} middleware - Middleware function to validate the user's token.

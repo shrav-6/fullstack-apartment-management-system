@@ -103,8 +103,8 @@ function ListingsForm() {
  
   return (
     <div class="card-group" width="10px">
-      <h1 class="card-header" paddingBottom="50px">Add a new listing</h1>
-      <form class="card-body" className="form-group" name="post listing" onSubmit={handleSubmit}>
+      <h1 class="card-header heading" paddingBottom="50px">Add a new listing</h1>
+      <form class="card-body" className="form-group heading" name="post listing" onSubmit={handleSubmit}>
         <br></br>
         <br></br>
         <br></br>

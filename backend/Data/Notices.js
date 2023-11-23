@@ -1,5 +1,5 @@
 // Import required models
-const { notices, managers, tenants, buildings, users } = require("../Models");
+const { notices, managers, tenants, buildings, users } = require("../models");
 
 /**
  * Get a notice by ID based on user role.

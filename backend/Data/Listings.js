@@ -1,4 +1,4 @@
-const { listings, managers, buildings } = require("../Models");
+const { listings, managers, buildings } = require("../models");
 
 /**
  * Create a new listing for a manager.

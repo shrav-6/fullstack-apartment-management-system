@@ -26,6 +26,9 @@ function Navbar() {
         return (
           <>
             <li>
+              <Link to="/about-us">About Us</Link>
+            </li>
+            <li>
               <Link to="/rooms">New Listings</Link>
             </li>
             <li>
@@ -46,6 +49,9 @@ function Navbar() {
               <Link to="/home">Home</Link>
             </li>
             <li>
+              <Link to="/about-us">About Us</Link>
+            </li>
+            <li>
               <Link to="/rooms">New Listings</Link>
             </li>
             <li>
@@ -60,6 +66,12 @@ function Navbar() {
             <li>
               <Link to="/applications">Applications</Link>
             </li>
+            <li>
+                <Link to="/services">Services</Link>
+              </li>
+              <li>
+                <Link to="/help">Help</Link>
+              </li>
             <li>
               <Link to="/logout">Logout</Link>
             </li>
@@ -83,12 +95,39 @@ function Navbar() {
         return null;
     }
   };
+  
+  // const SearchBar = ({query}) => (
+  //   <form>
+  //     <TextField>
+  //       onInput{(input) => {
+  //         setQuery(input.target.value);
+  //       }}
+  //       placeholder="Search .."
+  //     </TextField>
+  //     <IconButton type = "submit">
+  //       <SearchIcon style={{fill: "blue"}} />
+  //     </IconButton>
+  //   </form>
+  // )
+  // const filterData = (query, dataList) => {
+  //   if (query === "") {
+  //     return dataList;
+  //   } else {
+  //     return dataList.filter((data) => {data.description.includes(query)});
+  //   }
+  // }
 
+  // const openApartmentListing = () => {
+  //   console.log("Listing to be opened!");
+  // } 
+
+  
   return (
     <nav className="navbar">
       <div className="nav-center">
         <div className="nav-header">
           <img src={logo} alt="Shelter App" style={imageStyles} />
+
           <button type="button" className="nav-btn" onClick={handleToggle}>
             <FaAlignRight className="nav-icon" />
           </button>
@@ -102,7 +141,7 @@ function Navbar() {
           ) : (
             <>
               <li>
-                <Link to="/">About</Link>
+                <Link to="/about-us">About Us</Link>
               </li>
               <li>
                 <Link to="/rooms">New Listings</Link>

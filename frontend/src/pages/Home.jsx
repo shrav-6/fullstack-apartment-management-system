@@ -1,7 +1,10 @@
-import React from 'react';
+import Location from '../molecules/Location/Location.jsx'
 
 export default function Home() {
   return (
-    <h1 style={{marginTop: '50px'}}> Welcome to Shelter</h1>
+    <div>
+      <h1 style={{marginTop: '50px'}}> Welcome to Shelter</h1>
+      <Location />
+    </div>
   );
 }

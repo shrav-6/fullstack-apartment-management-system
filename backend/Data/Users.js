@@ -1,4 +1,4 @@
-const { users, tenants, managers, buildings, guests } = require("../Models");
+const { users, tenants, managers, buildings, guests } = require("../models");
 const bcrypt = require("bcrypt");
 
 /**
