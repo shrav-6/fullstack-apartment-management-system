@@ -10,10 +10,7 @@ const { applications, managers, listings,users } = require("../models");
  */
 async function createApplication(application, user_id) {
   try {
-    console.log("inside create application");
-    const status = "In progress";
-    console.log(application);
-    console.log(application.listingId);
+    const status = "waitlisted";
     const listing = await listings.findOne({ where: { id: application.listingId } });
 
     if (!listing) {
@@ -50,30 +47,52 @@ async function createApplication(application, user_id) {
  */
 async function acceptRejectApplication(applicationId, status, user_id) {
   try {
-    if (!(status === "accept" || status === "reject")) {
-      return { success: false, error: "Can perform two operations either accept or reject" };
-    }
+    if (status == 'approved' || status == 'rejected' || status == 'waitlisted') {
+      //const user_id=req.user.id;
+      const role = await getRoleByUserId(user_id);
+      if (role && role === "Manager") {
+        const manager = await managers.findOne({ where: { userId: user_id } });
+        const application = await applications.findOne({ where: { id: applicationId } });
+        if (manager && application) {
+          await applications.update(
+            { status: status },
+            { where: { id: applicationId } }
+          );
 
-    const role = await getRoleByUserId(user_id);
+          if (status === 'approved') {
+            const guestUser = await users.findOne({ where: { id: application.userId } });
 
-    if (role !== "Manager") {
-      return { success: false, error: "User is not a manager! Only managers can accept/reject applications!" };
-    }
+            if (guestUser) {
+              await users.update(
+                { role: 'Tenant' },
+                { where: { id: application.userId } }
+              );
 
-    const [manager, application] = await Promise.all([
-      managers.findOne({ where: { userId: user_id } }),
-      applications.findOne({ where: { id: applicationId, userId: user_id } }),
-    ]);
+              const listing = await listings.findOne({ where: { id: application.listingId } });
+              const tenant = {
+                "name": application.firstName + " " + application.lastName,
+                "phoneNumber": application.phoneNumber,
+                "apartmentNumber": listing.apartmentNumber,
+                "userId": application.userId,
+                "managerId": manager.id,
+                "buildingId": listing.buildingId,
+                "listingId": listing.listingId
+              };
+              await tenants.create(tenant);
+              await guests.destroy(
+                { where: { userId: application.userId } }
+              );
 
-    if (!manager || !application) {
-      return { success: false, error: "User is not a manager! Only managers can accept/reject applications!" };
-    }
-
-    await applications.update({ status: status }, { where: { id: applicationId } });
-
-    if (status === "accept") {
-      // notify guest that application is accepted
-      // change role from guest to tenant
+              return { success: true, message: "Updated successfully" };
+            }
+          }
+        } else {
+          console.log('Manager or Application not found');
+        }
+      } else {
+        console.log('Not a Manager role');
+        return { success: false, error: "User is not a manager! Only managers can accept/reject applications!" };
+      }
     } else {
       // notify tenant that application is rejected
     }

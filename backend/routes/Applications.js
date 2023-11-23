@@ -22,10 +22,12 @@ router.post("/create", validateToken, async (req, res) => {
   try {
     // Extract application and user_id from the request body and token
     const application = req.body;
-    const user_id = req.user.id;
-
+    const user_id=req.user.id;
+    const role=req.user.role;
+    const listingId =req.body.listingId;
+    const status="waitlisted";
     // Call the service layer to create the application
-    const result = await service.createApplication(application, user_id);
+    const result = await service.createApplication(application, status, listingId, user_id);
 
     // Respond with the result
     if (result.success) {
