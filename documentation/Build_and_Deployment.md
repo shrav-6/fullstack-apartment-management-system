@@ -50,7 +50,7 @@ For running backend testing, navigate to the project backend directory and run t
 npm test
 ```
 
-The configuration is mentioned in backend/package.json
+These are the test scripts for backend/package.json
 
 ```json
 "scripts": {
