@@ -66,12 +66,6 @@ To install these dependencies:
 ### Backend-Testing
 
 
-#### Jest
-- Visit the official [Jest website](https://jestjs.io//).
-- Install Jest version 29.7.0 using npm based on your OS.
-- Verify the installation by running `npm list jest` in the terminal.
-
-
 #### External Dependencies (from `backend/package.json`)
 ```json
 {
