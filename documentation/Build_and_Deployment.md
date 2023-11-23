@@ -16,9 +16,10 @@ The configuration is mentioned in backend/package.json
 
 ```json
 "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon index.js",
-    "serve": "node index.js"
+    "serve": "node index.js",
+    "test:coverage": "jest --coverage
   },
   ```
 
@@ -43,8 +44,25 @@ The backend code will run in http://localhost:3001/ (this url will be running an
 
 ### **Running Testcases **
 
-------------To be completed by praveen on how to run the testcases in Local system
+For running backend testing, navigate to the project backend directory and run the following command to build  and run the the application:  
 
+```node
+npm test
+```
+
+The configuration is mentioned in backend/package.json
+
+```json
+"scripts": {
+    "test": "jest",
+    "start": "nodemon index.js",
+    "serve": "node index.js",
+    "test:coverage": "jest --coverage
+  },
+  ```
+
+  when you run the command npm test,it will run the command jest for testing as mentioned in scripts.
+  
 ## Building and Running Application in Remote server
 
 ### **Backend Application**
