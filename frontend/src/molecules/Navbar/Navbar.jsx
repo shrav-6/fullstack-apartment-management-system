@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaAlignRight } from 'react-icons/fa';
 import logo from '../../organisms/PublicView/images/logo.svg';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  // const { pathname } = useLocation();
+  // eslint-disable-next-line no-unused-vars
+  const { pathname } = useLocation();
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
   const userName = JSON.parse(sessionStorage.getItem('userCred'))?.username;

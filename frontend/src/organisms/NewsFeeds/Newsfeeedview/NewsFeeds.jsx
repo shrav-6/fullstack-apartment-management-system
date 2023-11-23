@@ -75,9 +75,9 @@ function Newsfeed({
 
   useEffect(() => {
     if (role === 'Manager') {
-      fetchNewsFeedForManager(buildingId); // Fetch notices for a manager
+      fetchNewsFeedForManager(buildingId);
     } else {
-      fetchNewsFeed(); // Fetch notices when the component mounts
+      fetchNewsFeed();
     }
   }, [editTrigger]);
 
