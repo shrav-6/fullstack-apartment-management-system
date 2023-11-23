@@ -10,11 +10,11 @@ export const noticesService = {
 };
 
 export const newsfeedService = {
-  getAllNewsfeed: `${baseUrl}NewsFeed`,
-  getAllNewsfeedById: `${baseUrl}NewsFeed/id`,
-  editAllNewsfeed: `${baseUrl}NewsFeed/:id`,
-  deleteNewfeed: `${baseUrl}NewsFeed/:id`,
-  postAllNewsfeed: `${baseUrl}NewsFeed`,
+  getAllNewsfeed: `${baseUrl}NewsFeeds`,
+  getAllNewsfeedById: `${baseUrl}NewsFeeds/id`,
+  editAllNewsfeed: `${baseUrl}NewsFeeds/:id`,
+  deleteNewfeed: `${baseUrl}NewsFeeds/:id`,
+  postAllNewsfeed: `${baseUrl}NewsFeeds`,
   getAllNewsfeedForManager: `${baseUrl}NewsFeed/manager/:buildingId`,
 };
 
