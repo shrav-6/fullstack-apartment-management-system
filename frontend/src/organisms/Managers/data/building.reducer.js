@@ -13,7 +13,6 @@ const initialState = {
 const buildingReducer = (state = initialState, { type, payload }) => {
   const {
     allBuildings,
-    buildingName,
     address,
     phoneNumber,
     postType = '',
@@ -27,7 +26,7 @@ const buildingReducer = (state = initialState, { type, payload }) => {
     case ACTION_TYPES.SET_BUILDINGNAME:
       return {
         ...state,
-        buildingName,
+        buildingName: payload,
       };
     case ACTION_TYPES.SET_ADDRESS:
       return {

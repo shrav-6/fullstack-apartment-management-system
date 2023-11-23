@@ -60,9 +60,7 @@ function Signup() {
       });
   }, []);
 
-  const filteredBuildingNames = buildingNames.filter((building) =>
-    building.buildingName === selectedBuildingName
-  );
+  const filteredBuildingNames = buildingNames.filter(building => building.buildingName === selectedBuildingName);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -267,7 +265,7 @@ function Signup() {
                         }}
                       >
                         <InputLabel htmlFor="buildingName">Select Building Name</InputLabel>
-                        {buildingNames.map((building) => (
+                        {buildingNames.map(building => (
                           <MenuItem key={building.buildingName} value={building.buildingName}>
                             {building.buildingName}
                           </MenuItem>

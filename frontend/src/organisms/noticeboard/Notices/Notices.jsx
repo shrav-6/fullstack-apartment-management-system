@@ -28,10 +28,11 @@ import {
   resetAllData,
 } from '../data/notice.actions';
 import { STRING_CONSTANTS } from '../constants/notice.constant';
+
 // styles
 import styles from './Notice.module.scss';
 const { TextArea } = Input;
-
+// const { pathname } = useLocation();
 function Notices({
   allNotices: notices = [],
   title,
@@ -39,6 +40,8 @@ function Notices({
   authorName,
   postType = '',
   priority,
+  buildings,
+  buildingName,
   onSetTitle,
   onSetNotices,
   onSetDescription,
@@ -47,7 +50,7 @@ function Notices({
   onResetPostData = () => {},
   onResetAllPostData = () => {},
 }) {
-  const [editTrigger, setEditTrigger] = useState(0); // State to trigger useEffect on edits
+  const [editTrigger, setEditTrigger] = useState(0);
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
@@ -61,7 +64,6 @@ function Notices({
 
   const location = useLocation();
 
-  // Access the state passed through Link
   const buildingId = location.state ? location.state.buildingId : null;
 
   const fetchNotices = () => {
@@ -91,14 +93,14 @@ function Notices({
 
   useEffect(() => {
     if (role === 'Manager') {
-      fetchNoticesForManager(buildingId); // Fetch notices for a manager
+      fetchNoticesForManager(buildingId);
     } else {
-      fetchNotices(); // Fetch notices when the component mounts
+      fetchNotices();
     }
     return () => {
       onResetAllPostData();
     };
-  }, [editTrigger]); // Include editTrigger in the dependency array
+  }, [editTrigger]);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [editedTitle, setEditedTitle] = useState('');
@@ -129,6 +131,7 @@ function Notices({
         : description,
       dateAndTime: new Date().valueOf(),
       priority,
+      buildingName,
     };
 
     postAllNotices(payload)
@@ -168,7 +171,7 @@ function Notices({
 
     const payload = {
       title: editedTitle,
-      Description: editedDescription,
+      description: editedDescription,
       Author_name: authorName,
       updatedAt: new Date().valueOf(),
     };
@@ -273,7 +276,7 @@ function Notices({
             key={notice.id}
             notice={notice}
             onSaveEdit={handleEditNotice}
-            onDelete={handleDeleteNotice}
+            onDelete={() => handleDeleteNotice(notice.id)}
             showReadMore
           />
         ))}
@@ -325,14 +328,25 @@ function Notices({
               <Select.Option value="LOW">LOW</Select.Option>
             </Select>
           </section>
+          <section>
+            <label htmlFor="priority">
+              Building Name: {buildingName || ''}
+            </label>
+            {/* <select>
+              {buildings.map(building => (
+                <option key={building.id} value={building.id}>{building.buildingName}</option>
+              ))}
+            </select> */}
+          </section>
         </div>
       </Modal>
     </div>
   );
 }
 
-const mapStateToProps = ({ noticeReducer }) => ({
+const mapStateToProps = ({ noticeReducer, buildingReducer }) => ({
   allNotices: _get(noticeReducer, 'allNotices'),
+  buildingName: _get(buildingReducer, 'buildingName'),
   title: _get(noticeReducer, 'title'),
   description: _get(noticeReducer, 'description'),
   postType: _get(noticeReducer, 'postType'),
