@@ -13,7 +13,6 @@ import ListingsForm from '../organisms/Managers/addListings';
 import UpdateListings from '../organisms/Managers/updateListings';
 import ViewApplications from '../organisms/Managers/Applications';
 import ViewTenant from '../organisms/tenant view/Tenant';
-import RentalAgreementPDF from '../organisms/tenant view/RentalAgreementPDF';
 
 function App() {
   return (

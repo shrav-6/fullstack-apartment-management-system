@@ -21,16 +21,13 @@ function ViewApplications() {
   // const [approvedApplicationId] = useState(null);
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   useEffect(() => {
-    console.log('Inside Applications.jsx: View applications for listing with ID:', listingId);
     axios.get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
       headers: {
         accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
       },
     })
       .then((response) => {
-      // console.log('Applications received successfully:', response);
         setApplications(response.data.data);
-        console.log('applications', applications);
         setLoading(false);
       })
       .catch((error) => {
@@ -41,7 +38,6 @@ function ViewApplications() {
 
   const handleApprove = (applicationId) => {
     alert('Once approved cannot be revoked!');
-    console.log('inside handle approve applications');
     // once the approve button is clicked, call the backend to set status to approve
     axios
       .put(`http://localhost:3001/Applications/updateStatus/${applicationId}`, { status: 'approved' }, {
@@ -50,10 +46,6 @@ function ViewApplications() {
         },
       })
       .then((response) => {
-        console.log('response inside handle approve', response);
-        //reload
-        // window.location.reload({ state: applications });
-        // handleViewApplications(listingId);
         window.location.reload({ state: listingId });
       })
       .catch((error) => {
@@ -62,7 +54,6 @@ function ViewApplications() {
   };
 
   const handleReject = (applicationId) => {
-    console.log('inside reject handler');
     axios
       .put(`http://localhost:3001/Applications/updateStatus/${applicationId}`, { status: 'rejected' }, {
         headers: {
@@ -70,10 +61,8 @@ function ViewApplications() {
         },
       })
       .then((response) => {
-        console.log('response inside handle rejected', response);
         //reload
         window.location.reload({ state: listingId });
-        //handleViewApplications(listingId);
       })
       .catch((error) => {
         console.error('Error updating status', error);
@@ -81,7 +70,6 @@ function ViewApplications() {
   };
 
   const handleInProgress = (applicationId) => {
-    console.log('inside reject handler');
     axios
       .put(`http://localhost:3001/Applications/updateStatus/${applicationId}`, { status: 'waitlisted' }, {
         headers: {
@@ -89,9 +77,6 @@ function ViewApplications() {
         },
       })
       .then((response) => {
-        console.log('response inside handle rejected', response);
-        //reload
-        // window.location.reload({ state: applications });
         window.location.reload({ state: listingId });
       })
       .catch((error) => {
@@ -102,7 +87,6 @@ function ViewApplications() {
   // Separate applications based on status
   const approvedApplications = applications.filter(application => application.status === 'approved');
   const inProgressApplications = applications.filter(application => application.status === 'waitlisted');
-  console.log('inProgressApplications', inProgressApplications);
   const rejectedApplications = applications.filter(application => application.status === 'rejected');
 
   return (

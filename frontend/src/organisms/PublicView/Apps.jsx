@@ -4,11 +4,9 @@ import './Apps.css';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Rooms from './pages/Rooms';
-// import { Route, Routes } from 'react-router-dom';
 import { RoomProvider } from './context';
 import SingleRoom from './pages/SingleRoom';
 import ApplicationForm from './pages/ApplicationForm';
-// import ProtectedRoute from '../public view/components/ProtectedRoute';
 import Wishlist from './pages/WishList';
 
 function App() {

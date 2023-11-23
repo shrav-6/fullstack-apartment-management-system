@@ -17,42 +17,16 @@ import './TenantView.css';
 
 // tenant view page
 function ViewTenant() {
-  //const [rentalAgreementText, setRentalAgreementText] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const [cardNumber, setCardNumber] = useState('');
   const [cvv, setCVV] = useState('');
   const [payments, setPayments] = useState([]);
-  //const location = useLocation();
   const userId = location.state?.userId;
-  console.log('in view tenant');
   const [data, setData] = useState([]);
-  /*const apartmentNumber = info[0];
-  const buildingName = info[1];
-  const buildingAddress = info[2];
-  const phoneNumber = info[3];
-  const rent = info[4];
-  const unit = info[5];
-  const startsFrom = info[6];
-  const description = info[7];
-  const extras = info[8];
-  const pets = info[9];
-  const managerName = info[10];*/
-  //const cardinfo = 0;
-  //const cvv = 0;
-  //const rentalAgreementText = 'RENTAL AGREEMENT';
-  //rent, unit, startsFrom, description, extras, pets
-  //const [loading, setLoading] = useState(true);
-  /*
-  It is the tenant's view.
-Once the Public User Sends Application to the Manager and on approval, the user will be promoted to Tenant View.
-The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Details and Services Requested.
-  */// buildingInfo
-  //const accessToken = sessionStorage.getItem('accessToken');
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
 
   useEffect(() => {
-    // console.log('Inside Applications.jsx: View applications for listing with ID:', listingId);
     axios
       .get('http://localhost:3001/Buildings/getBuildingInfo', {
         headers: {
@@ -62,7 +36,6 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
       .then((response) => {
         const { data } = response.data;
         setData(response.data.data);
-        console.log('data', data);
       })
       .catch((error) => {
         console.error('Error in getting building info for tenants:', error);
@@ -91,10 +64,7 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
         },
       })
       .then((response) => {
-        console.log('in payment response', response);
-        //console.log('Payment history:', response.data.data);
         setPayments(response.data.data);
-        console.log('payments', payments);
       })
       .catch((error) => {
         console.error('Error fetching listings:', error);
@@ -102,7 +72,6 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
   }, [accessToken]);
 
   const handleViewAgreement = () => {
-    console.log('rentalAgreementText:', rentalAgreementText);
     navigate('/viewagreement', { state: { rentalAgreementText } });
   };
 
@@ -121,10 +90,6 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
     setCVV(e.target.value);
   };
 
-  /*const handlePayment = () => {
-    // call backend api to insert a new record with amount and date
-  };*/
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Get the current date
@@ -137,7 +102,6 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
 
       // Format the date as 'YYYY-MM-DD'
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-      console.log(formattedDate);
 
       // Implement logic to update the listing on the backend
       axios
@@ -149,7 +113,6 @@ The Tenant View Contains Apartment details, Agreement, Rents Paid, Contact Detai
           },
         })
         .then((response) => {
-          console.log('response', response);
           // Redirect to the view listings page after updating
           window.location.reload();
         })
