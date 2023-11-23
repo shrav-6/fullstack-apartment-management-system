@@ -1,7 +1,6 @@
 // data.js
 
 const { listings,tenants,buildings,users, payments } = require("../Models");
-//const {  } = require("../models");
 
 async function payRent(date, amount, cardinfo, cvv, user_id) {
     try {
@@ -16,7 +15,6 @@ async function payRent(date, amount, cardinfo, cvv, user_id) {
             tenantId:tenant.id,
             });
             const newpaymentId = createdPayment.id;
-            //return { success: true, message: "Retrieved successfully", data: allApplications };
             return {"success": true, "message": "created successfully", "data": newpaymentId};
             }
           else{

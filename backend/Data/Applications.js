@@ -10,10 +10,7 @@ const { applications, managers, listings,users, tenants } = require("../Models")
  */
 async function createApplication(application, status, listingId, user_id) {
   try {
-    console.log("inside create application");
     const status = "waitlisted";
-    console.log(application);
-    console.log(application.listingId);
     const listing = await listings.findOne({ where: { id: application.listingId } });
 
     if (!listing) {
@@ -53,11 +50,9 @@ async function updateStatusApplication(applicationId, status, user_id) {
     if (status == 'approved' || status == 'rejected' || status == 'waitlisted') {
       //const user_id=req.user.id;
       const role = await getRoleByUserId(user_id);
-      console.log(user_id, role);
       if (role && role === "Manager") {
         const manager = await managers.findOne({ where: { userId: user_id } });
         const application = await applications.findOne({ where: { id: applicationId } });
-        console.log(status, applicationId);
         if (manager && application) {
           await applications.update(
             { status: status },

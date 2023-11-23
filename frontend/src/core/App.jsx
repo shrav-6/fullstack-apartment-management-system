@@ -32,8 +32,6 @@ function App() {
           <Route path="/updateListing" element={<UpdateListings />} />
           <Route path="/applications" element={<ViewApplications />} />
           <Route path="/tenant" element={<ViewTenant />} />
-          <Route path="/viewagreement" element={<RentalAgreementPDF />} />
-          {/* <Route path="/listings" element={<MyUploader />} /> */}
         </Routes>
       </div>
     </>

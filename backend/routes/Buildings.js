@@ -9,26 +9,6 @@ const { notices,managers,tenants,buildings,users, listings } = require("../model
 const { validateToken } = require("../Middleware/Middleware");
 const service = require("../Service/Buildings");
 
-/*router.get("/:buildingId",validateToken, async (req, res) => {
-  const buildingId = req.params.buildingId;
-  const role=req.user.role;
-  const user_id=req.user.id;
-  if(role=="Manager"){
-    const manager = await managers.findOne({ where: { userId: user_id } });
-    const building = await buildings.findOne({ where: { id:buildingId,managerId:manager.id } });
-    if(manager!=null && building!=null){ 
-    res.json({"success": true,
-    "message": "Retrieved successfully","data":building});
-  }
-  else{
-    res.json({"success": false,error: "user don't have the permission"});
-  }
-}
-  else{
-    res.json({"success": false,error: "user don't have the permission"});
-  }*/
-
-
 /**
  * Route to get a particular building by ID.
  * @name GET/:buildingId
@@ -39,13 +19,6 @@ const service = require("../Service/Buildings");
  * @param {function} middleware - Middleware function to validate the user's token.
  * @param {function} callback - Express route callback.
  */
-/*router.get("/:buildingId", validateToken, async (req, res) => {
-  //try {
-    // Extract buildingId, role, and user_id from the request parameters and token
-    const buildingId = req.params.buildingId;
-    const role = req.user.role;
-    const user_id = req.user.id;*/
-
 router.get("/",validateToken, async (req, res) => {
   const role=req.user.role;
   const user_id=req.user.id;
@@ -82,129 +55,7 @@ router.get("/",validateToken, async (req, res) => {
     console.error("Error in getting building info:", error);
     res.json({ success: false, error: "Internal Server Error" });
   }
-    /*console.log('in building info');
-    const role=req.user.role;
-    const user_id=req.user.id;
-    console.log('inside building info API', user_id);
-    const tenant = await tenants.findOne({ where: { userId: user_id } });  
-    console.log('backend tenant', tenant);  
-    if (tenant) {
-      const building = await buildings.findOne({ where: { id: tenant.buildingId } });
-      console.log('building', building);
-    
-      const apartmentNumber = tenant.apartmentNumber;
-      const buildingName = building.buildingName;
-      
-      const buildingPhoneNumber = building.phoneNumber;
-      const listingId = tenant.listingId;
-      console.log('listingId', listingId);
-      const listing = await listings.findOne({where: {id: listingId}});
-      const manager = await managers.findOne({where: {id: listing.managerId}});
-      const managerName = manager.name;
-      console.log('listing detail:', listing);
-      const address = listing.address;
-      const rent = listing.rent;
-      const unit = listing.unitAvailable;
-      const startsFrom = listing.startsFrom;
-      const description = listing.description;
-      const extras = listing.extras;
-      const pets = listing.pets;
-    
-      res.json({
-        "success": true,
-        "message": "Retrieved successfully",
-        "data": [apartmentNumber, buildingName, address, buildingPhoneNumber, rent, unit, startsFrom, description, extras, pets, managerName]
-      });
-    } else {
-      res.json({
-        "success": false,
-        "error": "Tenant not found"
-      });
-    }*/
   });
-
-  //for tenant view page
-  router.get("/new/buildingInfo",validateToken, async (req, res) => {
-    console.log('in building info');
-    const role=req.user.role;
-    const user_id=req.user.id;
-    console.log('inside building info API', user_id);
-    const tenant = await tenants.findOne({ where: { userId: user_id } });  
-    console.log('backend tenant', tenant);  
-    if (tenant) {
-      const building = await buildings.findOne({ where: { id: tenant.buildingId } });
-      console.log('building', building);
-    
-      const apartmentNumber = tenant.apartmentNumber;
-      const buildingName = building.buildingName;
-      
-      const buildingPhoneNumber = building.phoneNumber;
-      const listingId = tenant.listingId;
-      console.log('listingId', listingId);
-      const listing = await listings.findOne({where: {id: listingId}});
-      const manager = await managers.findOne({where: {id: listing.managerId}});
-      const managerName = manager.name;
-      console.log('listing detail:', listing);
-      const address = listing.address;
-      const rent = listing.rent;
-      const unit = listing.unitAvailable;
-      const startsFrom = listing.startsFrom;
-      const description = listing.description;
-      const extras = listing.extras;
-      const pets = listing.pets;
-    
-      res.json({
-        "success": true,
-        "message": "Retrieved successfully",
-        "data": [apartmentNumber, buildingName, address, buildingPhoneNumber, rent, unit, startsFrom, description, extras, pets, managerName]
-      });
-    } else {
-      res.json({
-        "success": false,
-        "error": "Tenant not found"
-      });
-    }
-  });
-
-//for posting 
-//get user_id from access token then found out the building and manager
-//if notice already exist,print the condition already existed
-//if role is manager,we will give the access and otherwise not.
-/*router.post("/",validateToken, async (req, res) => {
-  const data = req.body;
-  const user_id=req.user.id;
-  const role=req.user.role;
-  const buildingName=req.body.buildingName;
-  if(role=="Manager"){
-  const manager = await managers.findOne({ where: { userId: user_id } });
-  const building=await buildings.findOne({ where: { managerId:manager.id,buildingName:buildingName} });
-  if(manager!=null && building==null){
-    await buildings.create({
-      buildingName: buildingName,
-      address: data.address,
-      phoneNumber:data.phoneNumber,
-      managerId:manager.id
-    });
-    res.json( {"success": true,
-    "message": "created successfully"});
-  
-}
-  else{
-    res.status(500).json({"success": false,error: "Already have the same building name"});
-    // Call the service layer to get a building by ID
-    const building = await service.getBuildingById(buildingId, role, user_id);
-
-    // Check if building is found
-    if (building) {
-      res.json({ success: true, message: "Retrieved successfully", data: building });
-    } else {
-      res.json({ success: false, error: "User doesn't have the permission to see the buildings" });
-    }
-  } catch (error) {
-    console.error("Error in get building by ID:", error);
-    res.status.json({ success: false, error: "Internal Server Error" });
-  }
-});*/
 
 /**
  * Route to get all buildings.
