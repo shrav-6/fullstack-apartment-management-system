@@ -51,6 +51,24 @@ The backend code will run in http://localhost:3001/ (this url will be running an
 
 Once Docker is installed on the virtual machine, these steps outline how to deploy a node js application using Docker and establish a CI/CD pipeline
 
+### **Step 1**: Creating a Dockerfile
+FROM node:latest
+
+RUN apt-get update && apt-get install -y git
+
+
+WORKDIR /usr/src/app
+
+
+COPY . .
+
+
+EXPOSE 3001
+
+
+ENTRYPOINT ["node", "app.js"]
+
+
 ### **Frontend Application**
 
 ------------To be completed by Disha
