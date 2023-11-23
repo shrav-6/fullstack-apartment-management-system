@@ -12,21 +12,8 @@ import './pageStyle.scss';
 import AddListing from './addListings';
 import FuzzySearch from 'react-fuzzy';
 
-// get listings from a particular manager
 function ViewListings() {
-  // const location = useLocation();
-  // const buildingName = location.state?.buildingName;
-  // console.log('buildingName', buildingName);
-
   const location = useLocation();
-  /*const [buildingName, setBuildingName] = useState('');
-
-  useEffect(() => {
-    // Access buildingName from location.state after the component mounts
-    setBuildingName(location.state?.buildingName);
-  }, [location.state]);*/
-
-  // console.log('buildingName', buildingName);
 
   const buildingName = location.state?.buildingName;
 
@@ -103,10 +90,6 @@ function ViewListings() {
   }, [listings]);
 
   const handleUpdate = (listingId) => {
-    // You can implement the logic to open a modal or navigate to an edit page
-    // and pass the selected listing data to that modal or page for editing.
-    // For simplicity, let's log the listing ID for now.
-    console.log('Editing listing with ID:', listingId);
     // Find the selected listing based on listingId
     const selectedListing = listings.data.find(listing => listing.id === listingId);
 
@@ -119,9 +102,6 @@ function ViewListings() {
   };
 
   const handleDelete = (listingId) => {
-    // You can implement the logic to call the backend API for deleting the listing.
-    // For simplicity, let's log the listing ID for now.
-    console.log('Deleting listing with ID:', listingId);
     axios
       .delete(`http://localhost:3001/Listings/${listingId}`, {
         headers: {
@@ -140,10 +120,6 @@ function ViewListings() {
   };
 
   const handleViewApplications = (listingId) => {
-    // navigate('/applications', { state: { listingId } });
-    // You can implement the logic to call the backend API for deleting the listing.
-    // For simplicity, let's log the listing ID for now.
-    // console.log('View applications for listing with ID:', listingId);
     axios
       .get(`http://localhost:3001/Applications/all/${listingId}`, {
         headers: {
@@ -155,15 +131,9 @@ function ViewListings() {
         if (response.data.message === 'No applications for listing yet!') {
           console.log(response.data.message);
           alert(response.data.message);
-          //window.location.reload();
           navigate('/listings', { state: { buildingName } });
         } else {
           navigate('/applications', { state: { listingId } });
-          // go to view applications
-          // const applications = response.data.data;
-          // const
-          // console.log(applications);
-          // console.log('listing id', listingId);
         }
       })
       .catch((error) => {
