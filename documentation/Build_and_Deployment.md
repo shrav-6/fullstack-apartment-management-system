@@ -49,7 +49,7 @@ The backend code will run in http://localhost:3001/ (this url will be running an
 
 ### **Backend Application**
 
--------------To be completed by Disha
+Once Docker is installed on the virtual machine, these steps outline how to deploy a node js application using Docker and establish a CI/CD pipeline
 
 ### **Frontend Application**
 
