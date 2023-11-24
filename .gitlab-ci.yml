@@ -27,11 +27,12 @@ backend-build:
 
 backend-test:
     stage: test
+    image: node:16.20.1
     script:
        - echo "starting test"
        - cd backend/
        - npm install
- #      - npm run build
+       - npm run start
  #      - npm run build-test
        - npm run test
        - echo "all the backend tests ran successfully!"
