@@ -4,6 +4,7 @@ const { validateToken } = require("../Middleware/Middleware");
 const service = require("../Service/Payments");
 
 router.post("/pay",validateToken, async (req, res) => {
+  try {
     const date = req.body.date;
     const amount = req.body.amount;
     const cardinfo = req.body.cardinfo;

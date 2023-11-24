@@ -15,41 +15,22 @@ import FuzzySearch from 'react-fuzzy';
 function ViewListings() {
   const location = useLocation();
 
+  const buildingId = location.state?.buildingId;
   const buildingName = location.state?.buildingName;
 
   useEffect(() => {
-    console.log('buildingName:', buildingName);
-  }, [buildingName]);
+    console.log('buildingName:', buildingId);
+  }, [buildingId]);
 
   const [listings, setListings] = useState([]);
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   console.log('accessToken', accessToken);
   const [selectedListing, setSelectedListing] = useState(null);
   const navigate = useNavigate();
-  //const accessToken = sessionStorage.getItem('accessToken');
-  //const history = useHistory();
-  // const accessToken = ;
-  /*const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }; */
-
-  const list = [
-    {
-      id: 1,
-      description: "abc, ABC"
-    },
-    {
-      id: 1,
-      description: "Xyz, xyz"
-    }
-  ];
-
   useEffect(() => {
     // Fetch property listings from the API when the component mounts
     axios
-      .get(`http://localhost:3001/Listings/Building/6`, {
+      .get(`http://localhost:3001/Listings/Building/${buildingId}`, {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
@@ -121,7 +102,7 @@ function ViewListings() {
 
   const handleViewApplications = (listingId) => {
     axios
-      .get(`http://localhost:3001/Applications/all/${listingId}`, {
+      .get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
         headers: {
           accessToken: sessionStorage.getItem('accessToken'),
         },
@@ -145,39 +126,13 @@ function ViewListings() {
   console.log('response', listings);
   return (
     <div>
-      <h1 className="heading">{buildingName} Listings</h1>
-      <center>
-        <FuzzySearch list = {list} keys = {["description"]} width = {430}
-          onSelect = {(selectedListing) => {
-            setSelectedItem(selectedListing)
-          }}
-
-          // resultsTemplate={(state) => {
-          //   return state.results.map((val, i) => {
-          //     setState ({
-          //       list: state.results
-          //     });
-          //   });
-          // }}
-
-          resultsTemplate={(props, state, styles, openApartmentListing) => {
-            return state.results.map((val, i) => {
-              const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
-              return (
-                <div
-                  key={i}
-                  style={style}
-                  onClick={() => openApartmentListing(i)}
-                >
-                  {val.description}
-                  <span style={{ float: 'right', opacity: 0.5 }}>by {val.description}</span>
-                </div>
-              );
-            });
-          }}
-        />
-      </center>
-      
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <h1>{buildingName} Listings</h1>
       <div className="row">
         {listings?.data?.map(listing => (
           <div className="col-md-4 mb-4" key={listing.id}>

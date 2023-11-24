@@ -5,7 +5,8 @@
 
 const express = require("express");
 const router = express.Router();
-const { validateToken } = require("../Middleware/middleware");
+const { notices,managers,tenants,buildings,users, listings } = require("../models");
+const { validateToken } = require("../Middleware/Middleware");
 const service = require("../Service/Buildings");
 
 /**

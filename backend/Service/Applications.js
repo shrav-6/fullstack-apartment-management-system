@@ -8,8 +8,8 @@ const data = require("../Data/Applications");
  * @param {number} user_id - The user ID
  * @returns {Object} - Object containing success and message
  */
-async function createApplication(application, user_id) {
-  return await data.createApplication(application, user_id);
+async function createApplication(application, status, listingId, user_id) {
+  return await data.createApplication(application, status, listingId, user_id);
 }
 
 /**
@@ -19,8 +19,10 @@ async function createApplication(application, user_id) {
  * @param {number} user_id - The user ID (manager)
  * @returns {Object} - Object containing success, message, and additional notifications
  */
-async function acceptRejectApplication(applicationId, status, user_id) {
-  return await data.acceptRejectApplication(applicationId, status, user_id);
+async function updateStatusApplication(applicationId, status, user_id) {
+  const value = await data.updateStatusApplication(applicationId, status, user_id);
+  console.log('in service layer', value)
+  return value
 }
 
 /**
@@ -54,7 +56,7 @@ async function getAllApplications(user_id) {
 
 module.exports = {
   createApplication,
-  acceptRejectApplication,
+  updateStatusApplication,
   getAllApplicationsForListing,
   getApplicationById,
   getAllApplications,

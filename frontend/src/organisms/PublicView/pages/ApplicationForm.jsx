@@ -14,10 +14,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useLocation, useNavigate } from 'react-router-dom';
-import { useRoomContext } from "../context";
-import axios from "axios";
 
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useRoomContext } from '../context';
 
 export default function ApplicationForm() {
   const context = useRoomContext();
@@ -28,11 +28,7 @@ export default function ApplicationForm() {
   const unitAvailable = location?.state?.unitAvailable;
   const buildingName = location?.state?.buildingName;
   const listingId = location?.state?.listingId;
-  console.log('listing id', listingId);
-  /* if (listingId == null) {
-    const navigate = useNavigate();
-    navigate('/');
-  } */
+  console.log(listingId);
 
   const [formData, setFormData] = useState({
     moveInDate: '',
@@ -73,11 +69,9 @@ export default function ApplicationForm() {
         },
       );
       if (response.data.error) {
-           
-            alert(response.data.message);
-       } else {
-        navigate('/home')
-          }
+        alert(response.data.message);
+      } else {
+        navigate('/home');
       }
     }
   }

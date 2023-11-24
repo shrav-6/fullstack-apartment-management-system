@@ -1,6 +1,6 @@
 // data.js
 
-const { applications, managers, listings,users } = require("../models");
+const { applications, managers, listings,users, tenants } = require("../models");
 
 /**
  * Create a new application from a guest user
@@ -8,7 +8,7 @@ const { applications, managers, listings,users } = require("../models");
  * @param {number} user_id - The user ID
  * @returns {Object} - Object containing success and message
  */
-async function createApplication(application, user_id) {
+async function createApplication(application, status, listingId, user_id) {
   try {
     const status = "waitlisted";
     const listing = await listings.findOne({ where: { id: application.listingId } });
@@ -45,7 +45,7 @@ async function createApplication(application, user_id) {
  * @param {number} user_id - The user ID (manager)
  * @returns {Object} - Object containing success, message, and additional notifications
  */
-async function acceptRejectApplication(applicationId, status, user_id) {
+async function updateStatusApplication(applicationId, status, user_id) {
   try {
     if (status == 'approved' || status == 'rejected' || status == 'waitlisted') {
       //const user_id=req.user.id;
@@ -94,10 +94,9 @@ async function acceptRejectApplication(applicationId, status, user_id) {
         return { success: false, error: "User is not a manager! Only managers can accept/reject applications!" };
       }
     } else {
-      // notify tenant that application is rejected
+      console.error("User can only approve, reject, or waitlist");
+      return { success: false, error: "User can only approve, reject, or waitlist" };
     }
-
-    return { success: true, message: "Updated successfully" };
   } catch (error) {
     console.error("Error accepting/rejecting application:", error);
     return { success: false, error: "An error occurred while updating the application status" };
@@ -116,7 +115,7 @@ async function getAllApplicationsForListing(listingId, user_id) {
 
     if (role === "Manager") {
       const manager = await managers.findOne({ where: { userId: user_id } });
-      const allApplicationsForListing = await applications.findAll({ where: { listingId: listingId, userId: user_id } });
+      const allApplicationsForListing = await applications.findAll({ where: { listingId: listingId } });
 
       if (manager && allApplicationsForListing) {
         return { success: true, message: "Retrieved successfully", data: allApplicationsForListing };
@@ -197,7 +196,7 @@ async function getRoleByUserId(user_id) {
 
 module.exports = {
   createApplication,
-  acceptRejectApplication,
+  updateStatusApplication,
   getAllApplicationsForListing,
   getApplicationById,
   getAllApplications,
