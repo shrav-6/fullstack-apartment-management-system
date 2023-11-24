@@ -1,0 +1,59 @@
+/* PropertyListPage.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif; /* Optional: Set a default font-family */
+  }
+
+/* Apply styles to the overall container */
+.property-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-image: url('./tenant_bg.jpg');  /*Replace 'path/to/your/image.jpg' with the actual path to your image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 60px; /* Add padding to ensure content is readable */
+  }
+  
+  /* Apply styles to each card */
+  .card {
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: box-shadow 0.3s;
+  }
+
+  /* Add shadow effect on hover */
+    .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the values based on your preference */
+  }
+  
+  /* Apply styles to form elements */
+  form {
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: left; /* Align the form content to the left */
+  }
+  
+  label {
+    margin-bottom: 5px;
+  }
+  
+  input {
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #49574a;
+  }
+  

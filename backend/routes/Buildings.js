@@ -5,7 +5,8 @@
 
 const express = require("express");
 const router = express.Router();
-const { validateToken } = require("../Middleware/middleware");
+const { notices,managers,tenants,buildings,users, listings } = require("../models");
+const { validateToken } = require("../Middleware/Middleware");
 const service = require("../Service/Buildings");
 
 /**
@@ -18,27 +19,43 @@ const service = require("../Service/Buildings");
  * @param {function} middleware - Middleware function to validate the user's token.
  * @param {function} callback - Express route callback.
  */
-router.get("/:buildingId", validateToken, async (req, res) => {
-  try {
-    // Extract buildingId, role, and user_id from the request parameters and token
-    const buildingId = req.params.buildingId;
-    const role = req.user.role;
-    const user_id = req.user.id;
+router.get("/",validateToken, async (req, res) => {
+  const role=req.user.role;
+  const user_id=req.user.id;
+  if(role=="Manager"){
+    const manager = await managers.findOne({ where: { userId: user_id } });
+    const building  = await buildings.findAll({ where: { managerId:manager.id } });
+    if(manager!=null && building!=null){ 
+    res.json({"success": true,
+    "message": "Retrieved successfully","data":building});
+  }
+  else{
+    res.json({"success": false,error: "user don't have the permission"});
+  }
+  }
+  else{
+  res.json({"success": false,error: "user don't have the permission"});
+  }});
 
-    // Call the service layer to get a building by ID
-    const building = await service.getBuildingById(buildingId, role, user_id);
+  //for tenant view page
+  router.get("/getBuildingInfo",validateToken, async (req, res) => {
+    try {
+      const user_id=req.user.id;
+    // Call the service layer to accept or reject the application
+    const result = await service.getBuildingInfo(user_id);
+    console.log('in router layer', result);
 
-    // Check if building is found
-    if (building) {
-      res.json({ success: true, message: "Retrieved successfully", data: building });
+    // Respond with the result
+    if (result.success) {
+      res.json(result);
     } else {
-      res.json({ success: false, error: "User doesn't have the permission to see the buildings" });
+      res.json(result);
     }
   } catch (error) {
-    console.error("Error in get building by ID:", error);
-    res.status.json({ success: false, error: "Internal Server Error" });
+    console.error("Error in getting building info:", error);
+    res.json({ success: false, error: "Internal Server Error" });
   }
-});
+  });
 
 /**
  * Route to get all buildings.

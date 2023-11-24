@@ -11,7 +11,7 @@ import {
   setBuildings, setAddress, setPhoneNumber, setBuildingName,
 } from '../data/building.actions';
 import BuildingModal from './BuildingModal';
-
+ 
 function Buildings({
   allBuildings,
   onSetBuildingName,
@@ -22,9 +22,9 @@ function Buildings({
   // const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showNewBuildingModal, setShowNewBuildingModal] = useState(false);
-
+ 
   const navigate = useNavigate();
-
+ 
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:3001/Buildings', {
@@ -37,33 +37,37 @@ function Buildings({
       setLoading(false);
     }
   };
-
+ 
   useEffect(() => {
     fetchData();
   }, []);
-
+ 
   const addListingsHandler = () => {
     navigate('/addListing');
   };
-
+ 
   const handleDelete = () => {
     fetchData();
   };
-
+ 
   const handleUpdate = () => {
     fetchData();
   };
-
+ 
   const handleAddBuildingClick = () => {
     setShowNewBuildingModal(true);
   };
-
+ 
   const handleCancelModal = () => {
     setShowNewBuildingModal(false);
   };
-
+ 
   return (
     <div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div
           className="addListings"
@@ -141,19 +145,19 @@ function Buildings({
     </div>
   );
 }
-
+ 
 const mapStateToProps = ({ buildingReducer }) => ({
   allBuildings: _get(buildingReducer, 'allBuildings'),
   buildingName: _get(buildingReducer, 'buildingName'),
   address: _get(buildingReducer, 'address'),
   phoneNumber: _get(buildingReducer, 'phoneNumber'),
 });
-
+ 
 const mapDispatchToProps = dispatch => ({
   onSetBuildings: payload => dispatch(setBuildings(payload)),
   onSetBuildingName: buildingName => dispatch(setBuildingName(buildingName)),
   onSetAddress: address => dispatch(setAddress(address)),
   onSetPhoneNumber: phoneNumber => dispatch(setPhoneNumber(phoneNumber)),
 });
-
+ 
 export default connect(mapStateToProps, mapDispatchToProps)(Buildings);

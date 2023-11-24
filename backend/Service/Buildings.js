@@ -120,6 +120,13 @@ async function getAllBuildingsForSignUp() {
   }
 }
 
+async function getBuildingInfo(user_id) {
+  //console.log();
+  const value = await dataLayer.getBuildingInfo(user_id);
+  console.log('in service layer', value)
+  return value;
+}
+
 // Export the functions for use in other files
 module.exports = {
   getBuildingById,
@@ -128,4 +135,5 @@ module.exports = {
   deleteBuilding,
   updateBuilding,
   getAllBuildingsForSignUp,
+  getBuildingInfo,
 };

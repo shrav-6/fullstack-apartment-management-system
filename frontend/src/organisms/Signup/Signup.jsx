@@ -1,3 +1,6 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
+/* eslint-disable no-shadow */
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -108,6 +111,7 @@ function Signup() {
         const data = {
           userName, email, password, name: name1, role, phoneNumber, address, apartmentNumber, buildingName,
         };
+        console.log('role', role);
         axios.post('http://localhost:3001/auth/signup', data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);

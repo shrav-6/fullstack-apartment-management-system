@@ -1,4 +1,4 @@
-const { buildings, managers } = require("../models");
+const { buildings, managers, tenants, users, listings } = require("../models");
 
 /**
  * Get a building by ID based on user role.
@@ -204,6 +204,65 @@ async function getAllBuildingsForSignUp() {
   }
 }
 
+async function getBuildingInfo(user_id) {
+  try {
+  //console.log('in building info');
+    const role= await getRoleByUserId(user_id);
+    //const user_id=req.user.id;
+    console.log('inside building info API', user_id);
+    const tenant = await tenants.findOne({ where: { userId: user_id } });  
+    //console.log('backend tenant', tenant);  
+    if (tenant) {
+      const building = await buildings.findOne({ where: { id: tenant.buildingId } });
+      //console.log('building', building);
+    
+      const apartmentNumber = tenant.apartmentNumber;
+      const buildingName = building.buildingName;
+      
+      const buildingPhoneNumber = building.phoneNumber;
+      const listingId = tenant.listingId;
+      //console.log('listingId', listingId);
+      const listing = await listings.findOne({where: {id: listingId}});
+      const manager = await managers.findOne({where: {id: listing.managerId}});
+      const managerName = manager.name;
+      //console.log('listing detail:', listing);
+      const address = listing.address;
+      const rent = listing.rent;
+      const unit = listing.unitAvailable;
+      const startsFrom = listing.startsFrom;
+      const description = listing.description;
+      const extras = listing.extras;
+      const pets = listing.pets;
+      const returnData = [apartmentNumber, buildingName, address, buildingPhoneNumber, rent, unit, startsFrom, description, extras, pets, managerName]
+      console.log('returnData', returnData);
+      return {
+        "success": true,
+        "message": "Retrieved successfully",
+        "data": returnData
+      };
+      //return returnData;
+    } else {
+      return {
+        "success": false,
+        "error": "Tenant not found"
+      };
+    }
+  } catch (error) {
+    console.error("Error in gettting building info:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get user role by user ID
+ * @param {number} user_id - The user ID
+ * @returns {string} - The user role
+ */
+async function getRoleByUserId(user_id) {
+  const user = await users.findOne({ where: { id: user_id } });
+  return user ? user.role : null;
+}
+
 // Export the functions for use in other files
 module.exports = {
   getBuildingById,
@@ -212,4 +271,6 @@ module.exports = {
   deleteBuilding,
   updateBuilding,
   getAllBuildingsForSignUp,
+  getRoleByUserId,
+  getBuildingInfo,
 };

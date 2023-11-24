@@ -32,6 +32,9 @@ app.use("/NewsFeeds",NewsFeedRouter )
 const applicationRouter = require("./routes/Applications");
 app.use('/Applications', applicationRouter);
 
+const paymentRouter = require("./routes/Payments");
+app.use('/Payments', paymentRouter);
+
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
     console.log("Server running on port 3001");

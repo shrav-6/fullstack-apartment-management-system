@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable spaced-comment */
 /* eslint-disable no-console */
@@ -8,60 +9,28 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './pageStyle.scss';
-import AddListing from './addListings';
 import FuzzySearch from 'react-fuzzy';
+import AddListing from './addListings';
 
-// get listings from a particular manager
 function ViewListings() {
-  // const location = useLocation();
-  // const buildingName = location.state?.buildingName;
-  // console.log('buildingName', buildingName);
-
   const location = useLocation();
-  /*const [buildingName, setBuildingName] = useState('');
 
-  useEffect(() => {
-    // Access buildingName from location.state after the component mounts
-    setBuildingName(location.state?.buildingName);
-  }, [location.state]);*/
-
-  // console.log('buildingName', buildingName);
-
+  const buildingId = location.state?.buildingId;
   const buildingName = location.state?.buildingName;
 
   useEffect(() => {
-    console.log('buildingName:', buildingName);
-  }, [buildingName]);
+    console.log('buildingName:', buildingId);
+  }, [buildingId]);
 
   const [listings, setListings] = useState([]);
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   console.log('accessToken', accessToken);
   const [selectedListing, setSelectedListing] = useState(null);
   const navigate = useNavigate();
-  //const accessToken = sessionStorage.getItem('accessToken');
-  //const history = useHistory();
-  // const accessToken = ;
-  /*const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }; */
-
-  const list = [
-    {
-      id: 1,
-      description: "abc, ABC"
-    },
-    {
-      id: 1,
-      description: "Xyz, xyz"
-    }
-  ];
-
   useEffect(() => {
     // Fetch property listings from the API when the component mounts
     axios
-      .get(`http://localhost:3001/Listings/Building/6`, {
+      .get(`http://localhost:3001/Listings/Building/${buildingId}`, {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
@@ -102,10 +71,6 @@ function ViewListings() {
   }, [listings]);
 
   const handleUpdate = (listingId) => {
-    // You can implement the logic to open a modal or navigate to an edit page
-    // and pass the selected listing data to that modal or page for editing.
-    // For simplicity, let's log the listing ID for now.
-    console.log('Editing listing with ID:', listingId);
     // Find the selected listing based on listingId
     const selectedListing = listings.data.find(listing => listing.id === listingId);
 
@@ -118,9 +83,6 @@ function ViewListings() {
   };
 
   const handleDelete = (listingId) => {
-    // You can implement the logic to call the backend API for deleting the listing.
-    // For simplicity, let's log the listing ID for now.
-    console.log('Deleting listing with ID:', listingId);
     axios
       .delete(`http://localhost:3001/Listings/${listingId}`, {
         headers: {
@@ -138,49 +100,46 @@ function ViewListings() {
       });
   };
 
+  const handleViewApplications = (listingId) => {
+    axios
+      .get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
+        headers: {
+          accessToken: sessionStorage.getItem('accessToken'),
+        },
+      })
+      .then((response) => {
+        console.log('Applications received successfully:', response);
+        if (response.data.message === 'No applications for listing yet!') {
+          console.log(response.data.message);
+          alert(response.data.message);
+          navigate('/listings', { state: { buildingName } });
+        } else {
+          navigate('/applications', { state: { listingId } });
+        }
+      })
+      .catch((error) => {
+        console.error('Error viewing applications for this listing:', error);
+      });
+  };
+
   // eslint-disable-next-line no-console
   console.log('response', listings);
   return (
     <div>
-      <h1 className="heading">{buildingName} Listings</h1>
-      <center>
-        <FuzzySearch list = {list} keys = {["description"]} width = {430}
-          onSelect = {(selectedListing) => {
-            setSelectedItem(selectedListing)
-          }}
-
-          // resultsTemplate={(state) => {
-          //   return state.results.map((val, i) => {
-          //     setState ({
-          //       list: state.results
-          //     });
-          //   });
-          // }}
-
-          resultsTemplate={(props, state, styles, openApartmentListing) => {
-            return state.results.map((val, i) => {
-              const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
-              return (
-                <div
-                  key={i}
-                  style={style}
-                  onClick={() => openApartmentListing(i)}
-                >
-                  {val.description}
-                  <span style={{ float: 'right', opacity: 0.5 }}>by {val.description}</span>
-                </div>
-              );
-            });
-          }}
-        />
-      </center>
-      
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <h1>{buildingName} Listings</h1>
       <div className="row">
         {listings?.data?.map(listing => (
           <div className="col-md-4 mb-4" key={listing.id}>
             <div className="card-group">
               <div className="card-body">
                 <p className="card-text">Bedrooms: {listing.unitAvailable}</p>
+                <p className="card-text">Apartment Number: {listing.apartmentNumber}</p>
                 <p className="card-text">Description: {listing.description}</p>
                 <p className="card-text">Rent Per Month: ${listing.rent}</p>
                 <p className="card-text">Move-In Date: {listing.startsFrom}</p>
@@ -206,6 +165,7 @@ function ViewListings() {
                 <br></br><br></br>
                 <button type="button" onClick={() => handleDelete(listing.id)}>Delete Listing</button>
                 <br></br><br></br>
+                <button type="button" onClick={() => handleViewApplications(listing.id)}>View Applications for this Listing</button>
               </div>
             </div>
           </div>

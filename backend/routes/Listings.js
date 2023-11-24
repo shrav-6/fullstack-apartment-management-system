@@ -39,7 +39,105 @@ router.post("/", validateToken, async (req, res) => {
     console.error("Error in / route:", error);
     res.status(500).json({ success: false, error: "Internal server error" });
   }
-});
+  //else{
+    //res.json({"success": false,error: "user don't have the permissions"});
+ // }
+   
+  });
+ 
+ 
+  //to get all listings from one manager for landlord view
+  router.get("/",validateToken, async (req, res) => {
+    const role=req.user.role;
+    const user_id=req.user.id;
+    if(role=="Manager"){
+      const manager = await managers.findOne({ where: { userId: user_id } });
+      const listing = await listings.findAll({ where: { managerId:manager.id } });
+      if(manager!=null && listing!=null){
+      res.json({"success": true,
+      "message": "Retrieved successfully","data":listing});
+        }
+        else {
+        res.json({"success": false,error: "user doesn't have the permission"});
+        }
+    }  
+ 
+   });
+
+   //to get all listings from one building
+  router.get("/forOneBuilding/:buildingName",validateToken, async (req, res) => {
+    const role=req.user.role;
+    const user_id=req.user.id;
+    const buildingName=req.params.buildingName
+    if(role=="Manager"){
+      const manager = await managers.findOne({ where: { userId: user_id } });
+      const building = await buildings.findOne({where: { buildingName: buildingName}});
+      const listing = await listings.findAll({ where: { managerId:manager.id, buildingId: building.id } });
+      if(manager!=null && listing!=null && building!=null){
+      res.json({"success": true,
+      "message": "Retrieved successfully","data":listing});
+        }
+        else {
+        res.json({"success": false,error: "user doesn't have the permission"});
+        }
+    }  
+ 
+   });
+ 
+   //to get all listings for public view
+   /*router.get("/all", async (req, res) => {
+    try {
+      const listing = await listings.findAll({
+        include: buildings, // Include the Building model in the query
+      });
+ 
+      if (listing.length > 0) {
+        const responseData = listing.map((listing) => ({
+          id: listing.id,
+          unitAvailable: listing.unitAvailable,
+          apartmentNumber: listing.apartmentNumber,
+          rent: listing.rent,
+          address: listing.address,
+          pets: listing.pets,
+          startsFrom: listing.startsFrom,
+          description: listing.description,
+          extras: listing.extras,
+          buildingName: listing.building ? listing.building.buildingName : null, // Access the buildingName from the Building model
+        }));
+ 
+        res.json({
+          success: true,
+          message: "Retrieved successfully",
+          data: responseData,
+        });
+      } else {
+        res.json({
+          success: false,
+          error: "No listings found or user doesn't have permission",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      res.json({
+        success: false,
+        error: "An error occurred while retrieving data",
+      });
+    }
+  });*/
+ 
+ 
+//to get a particular listing based on listingId
+/*router.get("/:ListingId",validateToken, async (req, res) => {
+const listingId = req.params.ListingId;
+const role=req.user.role;
+const user_id=req.user.id;
+if(role=="Manager"){
+    const manager = await managers.findOne({ where: { userId: user_id } });
+    const listing = await listings.findOne({ where: { id:listingId,managerId:manager.id } });
+    if(manager!=null && listing!=null){
+        res.json({"success": true,
+        "message": "Retrieved successfully","data":listing});
+});*/
 
 /**
  * Route to get all listings from one building.
