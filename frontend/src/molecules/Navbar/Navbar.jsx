@@ -27,8 +27,9 @@ function Navbar() {
         return (
           <>
             <li>
-              <Link to="/about-us">About Us</Link>
+              <Link to="/home">Home</Link>
             </li>
+            <li></li>
             <li>
               <Link to="/rooms">New Listings</Link>
             </li>
@@ -49,9 +50,10 @@ function Navbar() {
             <li>
               <Link to="/home">Home</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/about-us">About Us</Link>
             </li>
+            <li> */}
             <li>
               <Link to="/rooms">New Listings</Link>
             </li>
@@ -66,12 +68,6 @@ function Navbar() {
             </li>
             <li>
               <Link to="/applications">Applications</Link>
-            </li>
-            <li>
-              <Link to="/services">Services</Link>
-            </li>
-            <li>
-              <Link to="/help">Help</Link>
             </li>
             <li>
               <Link to="/logout">Logout</Link>
@@ -148,6 +144,9 @@ function Navbar() {
               </>
             ) : (
               <>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
                 <li>
                   <Link to="/about-us">About Us</Link>
                 </li>

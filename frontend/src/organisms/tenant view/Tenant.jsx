@@ -25,6 +25,7 @@ function ViewTenant() {
   const userId = location.state?.userId;
   const [data, setData] = useState([]);
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
+  console.log("hello");
 
   useEffect(() => {
     axios
@@ -34,7 +35,7 @@ function ViewTenant() {
         },
       })
       .then((response) => {
-        const { data } = response.data;
+        //const { data } = response.data;
         setData(response.data.data);
       })
       .catch((error) => {
@@ -93,9 +94,12 @@ function ViewTenant() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Get the current date
-    const currentDate = new Date();
 
     // Validate card number and CVV length
+    if (cardNumber.length !== 16 || cvv.length !== 3) {
+      alert('Enter a 16-digit card number and a valid 3-digit CVV.');
+    } else {
+      const currentDate = new Date();
 
       // Format the date as 'YYYY-MM-DD'
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
@@ -195,5 +199,6 @@ function ViewTenant() {
       </div>
     </body>
   );
+}
 
 export default ViewTenant;

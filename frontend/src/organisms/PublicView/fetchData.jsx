@@ -7,7 +7,7 @@ const fetchData = async () => {
   try {
     const response = await axios.get('http://localhost:3001/Listings/all', {
       headers: {
-        accessToken: sessionStorage.getItem('accessToken'),
+        accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
       },
     });
     console.log(response.data);

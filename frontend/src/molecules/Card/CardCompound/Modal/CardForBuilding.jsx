@@ -12,11 +12,10 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import BuildingImage from '../../../../organisms/Managers/Images/buildings.jpg';
 import styles from './CardForBuilding.module.scss';
-import BuildingImage from '../../../../organisms/Managers/Images/buildings.jpg';
-
+ 
 function IconButton({ type, onClick, styles }) {
   const Icon = type === 'edit' ? MdModeEditOutline : MdDelete;
-
+ 
   return (
     <Icon
       style={{
@@ -31,14 +30,14 @@ function IconButton({ type, onClick, styles }) {
     />
   );
 }
-
+ 
 function EditBuildingModal({
   show, onHide, onUpdate, building,
 }) {
   const [buildingName, setBuildingName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-
+ 
   const handleUpdateClick = async () => {
     try {
       const buildingId = building.id;
@@ -64,7 +63,7 @@ function EditBuildingModal({
       (error);
     }
   };
-
+ 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
@@ -105,22 +104,21 @@ function EditBuildingModal({
     </Modal>
   );
 }
-
+ 
 function CardforBuilding({ building, onDelete, onUpdate }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const buildingId = building.id;
-  const buildingName = building.buildingName;
-
+ 
   const handleEditClick = () => {
     setShowEditModal(true);
     onUpdate();
   };
-
+ 
   const handleModalClose = () => {
     setShowEditModal(false);
   };
-
+ 
   return (
     <>
       <Card
@@ -162,21 +160,28 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
           <ListGroup.Item>Address: {building.address}</ListGroup.Item>
           <ListGroup.Item>Phone Number: {building.phoneNumber}</ListGroup.Item>
         </ListGroup>
-        <Card.Body>
-          <Card.Link>
-            <Link to="/Notices" state={{ buildingId }}>My Notices</Link>
-          </Card.Link>
-          <br />
-          <Card.Link>
-            <Link to="/listings" state={{ buildingId, buildingName }}>My New Listings</Link>
-          </Card.Link>
-          <br />
-          <Card.Link>
-            <Link to="/NewsFeed" state={{ buildingId }}>New NewsFeeds</Link>
-          </Card.Link>
+        <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <div className={styles.iconContainer}>
+            <Link to="/Notices" state={{ buildingId }} className={styles.myButton}>
+              <EventNoteIcon style={{ fontSize: 30, color: '#38598b' }} />
+            </Link>
+            <p className={styles.linkText}>Notices</p>
+          </div>
+          <div className={styles.iconContainer}>
+            <Link to="/listings" state={{ buildingId }} className={styles.myButton}>
+              <FormatListBulletedIcon style={{ fontSize: 30, color: '#38598b' }} />
+            </Link>
+            <p className={styles.linkText}>Listing</p>
+          </div>
+          <div className={styles.iconContainer}>
+            <Link to="/NewsFeed" state={{ buildingId }} className={styles.myButton}>
+              <FeedIcon style={{ fontSize: 30, color: '#38598b' }} />
+            </Link>
+            <p className={styles.linkText}>Feed</p>
+          </div>
         </Card.Body>
       </Card>
-
+ 
       {/* Render the EditBuildingModal */}
       <EditBuildingModal
         show={showEditModal}
@@ -188,5 +193,5 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
     </>
   );
 }
-
+ 
 export default CardforBuilding;

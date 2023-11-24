@@ -9,8 +9,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './pageStyle.scss';
-import AddListing from './addListings';
 import FuzzySearch from 'react-fuzzy';
+import AddListing from './addListings';
 
 function ViewListings() {
   const location = useLocation();
