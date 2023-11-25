@@ -1,7 +1,7 @@
 const noticeService = require('../../Data/Notices');
-const { notices, managers, tenants, buildings} = require("../../Models");
+const { notices, managers, tenants, buildings} = require("../../models");
 
-jest.mock("../../Models");
+jest.mock("../../models");
 
 /**
  * Test suite for notice retrieval, creation, update, and deletion functionalities.

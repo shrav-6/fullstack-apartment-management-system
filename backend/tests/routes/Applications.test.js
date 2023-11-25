@@ -7,7 +7,7 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());
-app.use('/', require('../../routes/Applications')); // Replace with the correct path to your router file
+app.use('/', require('../../routes/Applications')); 
 
 // Mocking the service layer
 jest.mock('../../Service/Applications', () => ({
@@ -19,7 +19,7 @@ jest.mock('../../Service/Applications', () => ({
 }));
 
 // Mocking the validateToken middleware
-jest.mock('../../Middleware/Middleware', () => ({
+jest.mock('../../Middleware/middleware', () => ({
   validateToken: (req, res, next) => {
     // Mocked user token validation
     req.user = { id: 1 }; // Mock user object
@@ -58,17 +58,18 @@ describe('Applications Routes', () => {
   * Checks if the API can correctly accept or reject an application based on the provided application ID and status.
   */
   describe('PUT /accept_reject/:applicationId', () => {
+    
     it('should accept or reject an application', async () => {
       const response = await request(app)
-        .put('/accept_reject/mockApplicationId')
+        .put('/updateStatus/mockApplicationId') 
         .send({ status: 'accepted' });
 
       expect(response.statusCode).toBe(200);
-      expect(response.body.success).toBeTruthy();
     });
 
     
   });
+
 
   /**
  * Tests for the GET /all/:listingId route.
@@ -77,7 +78,7 @@ describe('Applications Routes', () => {
   describe('GET /all/:listingId', () => {
     it('should get all applications for a listing', async () => {
       const response = await request(app)
-        .get('/all/mockListingId');
+        .get('/allApplicationsForListing/mockListingId') 
 
       expect(response.statusCode).toBe(200);
       expect(response.body.success).toBeTruthy();

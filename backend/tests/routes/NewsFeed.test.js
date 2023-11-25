@@ -3,10 +3,10 @@
  */
 const request = require('supertest');
 const express = require('express');
-const newsfeedsRouter = require('../../routes/NewsFeed'); // Adjust the path accordingly
+const newsfeedsRouter = require('../../routes/Newsfeeds'); 
 const jwtMock = require('../mocks/jwtMock');
 const dbMock = require('../mocks/dbMock');
-const { managers, tenants, newsfeeds } = require('../../Models');
+const { managers, tenants, newsfeeds } = require('../../models');
 
 jest.mock('jsonwebtoken', () => require('../mocks/jwtMock'));
 jest.mock('../../models', () => require('../mocks/dbMock'));

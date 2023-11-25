@@ -10,9 +10,9 @@
  */
 
 const buildingService = require("../../Data/Buildings");
-const { buildings, managers } = require("../../Models");
+const { buildings, managers } = require("../../models");
 
-jest.mock("../../Models");
+jest.mock("../../models");
 
 /**
  * Test suite for 'getBuildingById' functionality.

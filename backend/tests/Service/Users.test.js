@@ -1,9 +1,9 @@
 const userService = require('../../Service/Users');
 const dataLayer = require("../../Data/Users");
-const { managers, buildings, tenants, guests } = require("../../Models");
+const { managers, buildings, tenants, guests } = require("../../models");
 
 jest.mock("../../Data/Users");
-jest.mock("../../Models");
+jest.mock("../../models");
 
 /**
  * Test suite for 'signUpUser' function in the user service.
