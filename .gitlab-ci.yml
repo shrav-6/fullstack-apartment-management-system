@@ -32,7 +32,7 @@ backend-test:
        - echo "starting test"
        - cd backend/
        - npm install
-       - npm run start
+  #     - npm run start
  #      - npm run build-test
        - npm run test
        - echo "all the backend tests ran successfully!"
