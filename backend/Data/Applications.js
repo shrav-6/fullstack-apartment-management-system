@@ -200,4 +200,5 @@ module.exports = {
   getAllApplicationsForListing,
   getApplicationById,
   getAllApplications,
+  getRoleByUserId,
 };

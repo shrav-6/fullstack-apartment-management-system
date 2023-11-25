@@ -1,12 +1,12 @@
 
-const wishListService=require('../../Service/WishList');
+const wishListService=require('../../Service/Wishlist');
 const dataLayer = require('../../Data/WishList');
 
 jest.mock('../../Data/WishList');
 /**
  * Test suite for 'getWishlistedListings' function in the wish list service.
  * It tests the retrieval of wishlisted listings for an authenticated user.
- */s
+ */
 
 describe('getWishlistedListings', () => {
   /**

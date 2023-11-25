@@ -1,6 +1,6 @@
 // data.js
 
-const { listings,tenants,buildings,users, payments } = require("../Models");
+const { listings,tenants,buildings,users, payments } = require("../models");
 
 async function payRent(date, amount, cardinfo, cvv, user_id) {
     try {

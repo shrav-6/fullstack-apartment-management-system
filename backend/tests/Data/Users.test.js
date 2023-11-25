@@ -1,8 +1,8 @@
 const userService = require("../../Data/Users");
-const { users } = require("../../Models");
+const { users } = require("../../models");
 const bcrypt = require("bcrypt");
 
-jest.mock("../../Models");
+jest.mock("../../models");
 jest.mock("bcrypt");
 
 /**

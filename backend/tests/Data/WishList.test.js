@@ -1,12 +1,12 @@
 
 const dataLayer = require('../../Data/WishList'); 
-const { wishlists, listings, buildings } = require("../../Models");
+const { wishlists, listings, buildings } = require("../../models");
 /**
  * Test suite for wishlist functionalities in the data layer.
  */
 
 
-jest.mock("../../Models");
+jest.mock("../../models");
 /**
  * Test to verify retrieval of user wishlists with associated listings and buildings.
  * Checks if wishlists for a specific user can be fetched along with related listing and building data.

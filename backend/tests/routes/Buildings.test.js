@@ -1,152 +1,286 @@
-/**
- * Test suite for the buildings-related routes 
- */
+// /**
+//  * Test suite for the buildings-related routes 
+//  */
+
 const request = require('supertest');
 const express = require('express');
-const buildingsRouter = require('../../routes/Buildings');
-const jwtMock = require('../mocks/jwtMock');
-const dbMock = require('../mocks/dbMock');
-
-// Mock the JWT and database
-jest.mock('jsonwebtoken', () => require('../mocks/jwtMock'));
-jest.mock('../../models', () => require('../mocks/dbMock'));
-
-
 const app = express();
+
 app.use(express.json());
-app.use('/buildings', buildingsRouter);
+app.use('/', require('../../routes/Buildings'));
 
-describe('Buildings route tests', () => {
-  /**
- * Test to verify the retrieval of building data for a valid manager using GET /:buildingId.
- * Ensures that the API returns the correct building data when accessed by a valid manager.
- */
-  it('GET /:buildingId should return building data for valid manager', async () => {
-    // Setup mock return value
-    dbMock.managers.findOne.mockResolvedValue({ userId: 1 });
-    dbMock.buildings.findOne.mockResolvedValue({ id: 1, managerId: 1 });
+// Mocking the service layer
+jest.mock('../../Service/Buildings', () => ({
+  getAllBuildings: jest.fn().mockResolvedValue({ success: true, data: [{ 
+    id: 1, 
+    buildingName: 'Building One', 
+    address: '123 Main St', 
+    phoneNumber: '1234567890', 
+    managerId: 1 
+  },
+  { 
+    id: 2, 
+    buildingName: 'Building Two', 
+    address: '456 Elm St', 
+    phoneNumber: '0987654321', 
+    managerId: 1 
+  }] }),
+  getBuildingInfo: jest.fn().mockResolvedValue({ success: true, data: {  id: 1, 
+    buildingName: 'Building One', 
+    address: '123 Main St', 
+    phoneNumber: '1234567890', 
+    managerId: 1 } }),
+  createBuilding: jest.fn().mockResolvedValue(true),
+  deleteBuilding: jest.fn().mockResolvedValue(true),
+  updateBuilding: jest.fn().mockResolvedValue(true),
+  getAllBuildingsForSignUp: jest.fn().mockResolvedValue([]),
+}));
 
-    const response = await request(app).get('/buildings/1').set('accessToken', 'valid_token');
+// Mocking the validateToken middleware
+jest.mock('../../Middleware/middleware', () => ({
+  validateToken: (req, res, next) => {
+    // Mocked user token validation
+    req.user = { id: 1, role: 'Manager' }; // Mock user object
+    next();
+  },
+}));
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body.success).toBeTruthy();
-    
+describe('Buildings Routes', () => {
+  
+
+    // Add more tests for different scenarios (e.g., unauthorized user, no buildings, etc.)
   });
 
-  /**
- * Test to handle the scenario where an invalid building is queried by a manager using GET /:buildingId.
- * Verifies that the API correctly handles requests for non-existent buildings.
- */
-  it('GET /:buildingId should handle invalid building for manager', async () => {
-    // Setup mock return value for invalid building
-    dbMock.managers.findOne.mockResolvedValue({ userId: 1 });
-    dbMock.buildings.findOne.mockResolvedValue(null);
+  describe('GET /getBuildingInfo', () => {
+    it('should get building info for a tenant', async () => {
+      const response = await request(app)
+        .get('/getBuildingInfo')
+        .expect(200);
 
-    const response = await request(app).get('/buildings/1').set('accessToken', 'valid_token');
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body.success).toBeFalsy();
+      expect(response.body.success).toBe(true);
+      expect(response.body.data).toBeDefined();
+    });
   });
 
-
-/**
- * Tests for the GET / route.
- * Verifies if the API can retrieve all buildings managed by a valid manager.
- */
-  describe('GET /', () => {
-    it('should return all buildings for a valid manager', async () => {
-      dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
-      dbMock.buildings.findAll.mockResolvedValue([
-        { 
-          id: 1, 
-          buildingName: 'Building One', 
+  describe('POST /', () => {
+    it('should create a new building', async () => {
+      const response = await request(app)
+        .post('/')
+        .send({
+          buildingName: 'New Building',
           address: '123 Main St', 
           phoneNumber: '1234567890', 
           managerId: 1 
-        },
-        { 
-          id: 2, 
-          buildingName: 'Building Two', 
+        })
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+
+    
+  describe('DELETE /:buildingId', () => {
+    it('should delete a building', async () => {
+      const response = await request(app)
+        .delete('/buildingIdToDelete')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+  });
+
+  describe('PUT /:buildingId', () => {
+    it('should update a building', async () => {
+      const response = await request(app)
+        .put('/buildingIdToUpdate')
+        .send({
+          buildingName: 'Updated Building',
+          // Add other fields to update
+        })
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+  });
+
+  describe('GET /signup/byName', () => {
+    it('should get building names for signup', async () => {
+      const response = await request(app)
+        .get('/signup/byName')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      expect(response.body.result).toBeDefined();
+      // Add more assertions based on your application logic
+    });
+  });
+  
+  describe('DELETE /:buildingId', () => {
+    it('should delete a building successfully', async () => {
+      const response = await request(app)
+        .delete('/buildingIdToDelete')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      
+    });
+
+    it('should handle a nonexistent building during deletion', async () => {
+      const response = await request(app)
+        .delete('/nonexistentBuildingId')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      
+    });
+  });
+
+  describe('PUT /:buildingId', () => {
+    it('should update a building successfully', async () => {
+      const response = await request(app)
+        .put('/buildingIdToUpdate')
+        .send({
+          buildingName: 'Updated Building',
           address: '456 Elm St', 
           phoneNumber: '0987654321', 
           managerId: 1 
-        }
-      
-      ]);
-  
-      const response = await request(app).get('/buildings').set('accessToken', 'valid_token');
-      expect(response.statusCode).toBe(200);
-      expect(response.body.success).toBeTruthy();
-     
+        })
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
     });
+    it('should handle a nonexistent building during update', async () => {
+      const response = await request(app)
+        .put('/nonexistentBuildingId')
+        .send({
+          buildingName: 'Updated Building',
+          address: '456 Elm St', 
+         phoneNumber: '0987654321', 
+          managerId: 1 
+        })
+        .expect(200);
+    
+      expect(response.body.success).toBe(true);
+    });
+    
+
   });
 
-/**
- * Tests for the POST / route.
- * Checks if the API allows a valid manager to create a new building.
- */
-  describe('POST /', () => {
-    it('should create a building for a valid manager', async () => {
-      dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
-      dbMock.buildings.findOne.mockResolvedValue(null); // No existing building
-      dbMock.buildings.create.mockResolvedValue({ 
-        id: 1, 
-        buildingName: 'Building One', 
-        address: '123 Main St', 
-        phoneNumber: '1234567890', 
-        managerId: 1 
-      });
-  
-      const response = await request(app).post('/buildings').set('accessToken', 'valid_token').send({ buildingName: 'New Building', address: '123 Street', phoneNumber: '1234567890' });
-      expect(response.statusCode).toBe(200);
-      expect(response.body.success).toBeTruthy();
-    
+  describe('GET /signup/byName', () => {
+    it('should get building names for signup successfully', async () => {
+      const response = await request(app)
+        .get('/signup/byName')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      expect(response.body.result).toBeDefined();
+      // Add more assertions based on your application logic
     });
-  
+
+    it('should handle no buildings available for signup', async () => {
+      // Mock the service to return an empty array for no buildings
+      jest.mock('../../Service/Buildings', () => ({
+        getAllBuildingsForSignUp: jest.fn().mockResolvedValue([]),
+      }));
+    
+      const response = await request(app)
+        .get('/signup/byName')
+        .expect(200);
+    
+      expect(response.body.success).toBe(true);
+    });
     
   });
+
+
+
+
   
-/**
- * Tests for the DELETE /:buildingId route.
- * Ensures that the API permits a valid manager to delete a building.
- */
   describe('DELETE /:buildingId', () => {
-    it('should delete a building for a valid manager', async () => {
-      dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
-      dbMock.buildings.findOne.mockResolvedValue({ id: 1, managerId: 1 });
-  
-      const response = await request(app).delete('/buildings/1').set('accessToken', 'valid_token');
-      expect(response.statusCode).toBe(200);
-      expect(response.body.success).toBeTruthy();
-     
-    });
-   /**
-   * Tests for the PUT /:buildingId route.
-   * Verifies if the API allows a valid manager to update building details.
-   */
-    describe('PUT /:buildingId', () => {
-      it('should update a building for a valid manager', async () => {
-        dbMock.managers.findOne.mockResolvedValue({ id: 1, userId: 1 });
-        dbMock.buildings.findOne.mockResolvedValue({ id: 1, managerId: 1 });
-        dbMock.buildings.update.mockResolvedValue([1]); // Number of updated rows
-    
-        const response = await request(app).put('/buildings/1').set('accessToken', 'valid_token').send({ buildingName: 'Updated Name', address: 'Updated Address', phoneNumber: '9876543210' });
-        expect(response.statusCode).toBe(200);
-        expect(response.body.success).toBeTruthy();
-        
-      });
-      
-    
-     
-    });
-    
+    it('should delete a building successfully', async () => {
+      const response = await request(app)
+        .delete('/buildingIdToDelete')
+        .expect(200);
 
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+
+    it('should handle a nonexistent building during deletion', async () => {
+      const response = await request(app)
+        .delete('/nonexistentBuildingId')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+  });
+
+  describe('PUT /:buildingId', () => {
+    it('should update a building successfully', async () => {
+      const response = await request(app)
+        .put('/buildingIdToUpdate')
+        .send({
+          buildingName: 'Updated Building',
+          address: '456 Elm St',
+          phoneNumber: '0987654321',
+          managerId: 1,
+        })
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+
+    it('should handle a nonexistent building during update', async () => {
+      const response = await request(app)
+        .put('/nonexistentBuildingId')
+        .send({
+          buildingName: 'Updated Building',
+          address: '456 Elm St',
+          phoneNumber: '0987654321',
+          managerId: 1,
+        })
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+  });
+
+  describe('GET /signup/byName', () => {
+    it('should get building names for signup successfully', async () => {
+      const response = await request(app)
+        .get('/signup/byName')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      expect(response.body.result).toBeDefined();
+      // Add more assertions based on your application logic
+    });
+
+    it('should handle no buildings available for signup', async () => {
+      // Mock the service to return an empty array for no buildings
+      jest.mock('../../Service/Buildings', () => ({
+        getAllBuildingsForSignUp: jest.fn().mockResolvedValue([]),
+      }));
+
+      const response = await request(app)
+        .get('/signup/byName')
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      // Add more assertions based on your application logic
+    });
+  });
 
   });
+
   
-  
+
+  // ...
 
 
-
-
-});

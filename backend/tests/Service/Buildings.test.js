@@ -169,5 +169,34 @@ describe('getAllBuildingsForSignUp', () => {
   });
 });
 
+describe('Building Service Module - getBuildingInfo', () => {
+    it('should call dataLayer.getBuildingInfo with the provided user_id and return the result', async () => {
+      // Arrange
+      const user_id = '123';
+      const mockBuildingInfo = { /* mock building info */ };
+  
+      // Mocking the dataLayer.getBuildingInfo function
+      dataLayer.getBuildingInfo.mockResolvedValue(mockBuildingInfo);
+  
+      // Act
+      const result = await buildingsService.getBuildingInfo(user_id);
+  
+      // Assert
+      expect(dataLayer.getBuildingInfo).toHaveBeenCalledWith(user_id);
+      expect(result).toEqual(mockBuildingInfo);
+    });
+  
+    it('should handle errors during getBuildingInfo', async () => {
+      // Arrange
+      const user_id = '123';
+  
+      // Mocking the dataLayer.getBuildingInfo function to throw an error
+      dataLayer.getBuildingInfo.mockRejectedValue(new Error('Some error occurred'));
+  
+      // Act and Assert
+      await expect(buildingsService.getBuildingInfo(user_id)).rejects.toThrow('Some error occurred');
+    });
+  });
+
 
 

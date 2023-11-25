@@ -1,9 +1,9 @@
 // Importing the necessary dependencies and modules
 const listingsData = require('../../Data/Listings');
-const { managers, buildings, listings } = require("../../Models");
+const { managers, buildings, listings } = require("../../models");
 
 // Mock the models
-jest.mock("../../Models");
+jest.mock("../../models");
 
 /**
  * Test suite for listings data functionalities.

@@ -1,7 +1,7 @@
 /**
  * Test suite for the 'validateToken' middleware function.
  */
-const { validateToken } = require('../../Middleware/Middleware');
+const { validateToken } = require('../../Middleware/middleware');
 const { sign, verify } = require('jsonwebtoken');
 
 // Mocking the response objects
