@@ -27,7 +27,6 @@ import { STRING_CONSTANTS } from '../constants/newsfeed.constant';
 import styles from './NewsfeedView.module.scss';
 
 const { TextArea } = Input;
-//const { pathname } = useLocation();
 
 function Newsfeed({
   allNewsfeed: newsfeed = [],
@@ -209,6 +208,7 @@ function Newsfeed({
           </Button>
         )}
       </div>
+      {newsfeed.length === 0 && <div className={styles.emptynewsfeed}>Oops!!! No notice found 😕</div>}
       <div className={styles.cardComponentContainer}>
         {(newsfeed || []).map(news => (
           <Card

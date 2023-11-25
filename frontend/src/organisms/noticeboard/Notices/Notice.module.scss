@@ -5,6 +5,13 @@
     padding: 1rem;
     margin-bottom: 30px;
   }
+  .emptyNotice {
+    display:flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    
+  }
   // .sortFilterAdd {
   //   justify-content: space-between;
     .icon {
@@ -29,10 +36,17 @@
 .modalContainer {
   .postCreationContainer {
     section > label {
-      color: #eeecec;
+      color: #1c1919;
     }
+  :global([class*='ant-select']){
+      padding-top: 0.3rem;
+  }
   }
   :global([class*='ant-modal-close']) {
-    color: white;
+    color: rgb(50, 42, 42);
+  }
+  :global([class*='ant-modal-content']){
+    background: linear-gradient(to bottom, #b6c4d7, #8892c5);
+    font-weight: 600;
   }
 }

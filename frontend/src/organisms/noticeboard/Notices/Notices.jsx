@@ -3,14 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { message, Modal, Input, Button, Select } from 'antd';
+import {
+  message, Modal, Input, Button, Select,
+} from 'antd';
 import _get from 'lodash/get';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
 import { FaPlus } from 'react-icons/fa';
 import Card from '../../../molecules/Card/CardCompound/Card';
-import { sortNotices } from '../helper';
-import { filterNotices } from '../helper';
+import { sortNotices, filterNotices } from '../helper';
+
 import {
   getAllNotices,
   postAllNotices,
@@ -216,59 +218,67 @@ function Notices({
   return (
     <div className={styles.noticeContainer}>
       <h1 className={styles.navNotice}>Notices</h1>
-
-      <center onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <span>
+      {notices.length !== 0
+      && (
+        <center onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <span>
-            <FilterAltRoundedIcon className={styles.icon} />
+            <span>
+              <FilterAltRoundedIcon className={styles.icon} />
+            </span>
+            {
+              <select
+                className={styles.select}
+                defaultValue="none"
+                onChange={(change) => {
+                  // onResetAllPostData();
+                  const filteredNotices = filterNotices(notices, change.target.value);
+                  onSetNotices({ allNotices: filteredNotices });
+                }}
+              >
+                <option value="none">None</option>
+                <option value="lowPriority">Low Priority</option>
+                <option value="normalPriority">Medium Priority</option>
+                <option value="highPriority">High Priority</option>
+                <option value="last1Day">Last 1 Day</option>
+                <option value="last1Week">Last 1 Week</option>
+                <option value="last1Month">Last 1 Month</option>
+                <option value="last1Year">Last 1 Year</option>
+              </select>
+            }
           </span>
-          {
-            <select className={styles.select} defaultValue={'none'} onChange={(change) => {
-              // onResetAllPostData();
-              const filteredNotices = filterNotices(notices, change.target.value);
-              onSetNotices({ allNotices: filteredNotices });
-            }}>
-              <option value="none">None</option>
-              <option value="lowPriority">Low Priority</option>
-              <option value="normalPriority">Medium Priority</option>
-              <option value="highPriority">High Priority</option>
-              <option value="last1Day">Last 1 Day</option>
-              <option value="last1Week">Last 1 Week</option>
-              <option value="last1Month">Last 1 Month</option>
-              <option value="last1Year">Last 1 Year</option>
-            </select>
-          }
-        </span>
-        <span>
           <span>
-            <SortRoundedIcon className={styles.icon} />
-          </span>
-          {
-            <select className={styles.select} defaultValue={'none'} onChange={(change) => {
-              sortNotices(notices, change.target.value);
-              mapStateToProps;
-              handleMouseEnter();
-            }}>
+            <span>
+              <SortRoundedIcon className={styles.icon} />
+            </span>
+            <select
+              className={styles.select}
+              defaultValue="none"
+              onChange={(change) => {
+                sortNotices(notices, change.target.value);
+                handleMouseEnter();
+              }}
+            >
               <option value="none">None</option>
               <option value="date">Date</option>
               <option value="title">Title</option>
               <option value="priority">Priority</option>
             </select>
-          }
-        </span>
-        <span>
-          {role === 'Manager' && (
-            <span
-              tabIndex="0"
-              role="button"
-              className="card-post"
-              onClick={handlePlusIconClick}
-            >
-              <FaPlus />
-            </span>
-          )}
-        </span>
-      </center>
+          </span>
+          <span>
+            {role === 'Manager' && (
+              <span
+                tabIndex="0"
+                role="button"
+                className="card-post"
+                onClick={handlePlusIconClick}
+              >
+                <FaPlus />
+              </span>
+            )}
+          </span>
+        </center>
+      ) }
+      {notices.length === 0 && <div className={styles.emptyNotice}>Oops!!! No notice found 😕</div>}
 
       <div className={styles.cardComponentContainer}>
         {(notices || []).map(notice => (

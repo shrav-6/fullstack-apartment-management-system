@@ -52,6 +52,13 @@
     margin-right: 12rem;
     justify-content: end;
   }
+  .emptynewsfeed {
+    display:flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    
+  }
   .cardComponentContainer {
     display: flex;
     flex-wrap: wrap;
