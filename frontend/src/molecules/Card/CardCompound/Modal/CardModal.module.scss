@@ -29,6 +29,7 @@
       color:#eeecec;
     }
   }
+  color: red;
 }
 
 .modaleditContainer{
@@ -51,7 +52,9 @@
       font-weight:700;
     }
   }
-
+  :global([class*='ant-modal-content']){
+    background: linear-gradient(to bottom, #b6c4d7, #8892c5);
+  }
   :global([class*='ant-modal-header']) {
     background-color: transparent;
     text-align: center;

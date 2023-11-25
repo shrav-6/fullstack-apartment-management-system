@@ -67,7 +67,7 @@ function Buildings({
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div
           className="addListings"
-          style={{ paddingTop: '25px' }}
+          style={{ paddingTop: '1rem' }}
         >
           <button
             type="button"
@@ -91,7 +91,7 @@ function Buildings({
         </div>
         <div
           className="addBuildings"
-          style={{ paddingTop: '25px', marginRight: '40px' }}
+          style={{ paddingTop: '1.8rem', marginRight: '3rem' }}
         >
           <button
             type="button"

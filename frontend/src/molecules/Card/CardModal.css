@@ -19,7 +19,6 @@ body{
   margin:1rem 0 2rem 0;
   font-weight:400;
 
-
 }
 .ant-btn {
   background: #2b1d4b;
@@ -28,9 +27,4 @@ body{
 }
 .ant-btn:hover{
   background: #333;
-}
-.css-dev-only-do-not-override-xu9wm8 .ant-modal .ant-modal-content {
-  background: linear-gradient(to bottom, #b6c4d7,#8892c5);
-
-
 }
