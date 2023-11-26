@@ -25,7 +25,6 @@ function ViewTenant() {
   const userId = location.state?.userId;
   const [data, setData] = useState([]);
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
-  console.log("hello");
 
   useEffect(() => {
     axios

@@ -14,6 +14,7 @@ import {
   postAllBuilding,
 } from './buildings.service';
 import { setBuildingName } from '../data/building.actions';
+import styles from './BuildingModal.module.scss';
 
 function BuildingModal({
   onCancel,
@@ -65,6 +66,7 @@ function BuildingModal({
           Post
         </Button>,
       ]}
+      className={styles.buildingModalContainer}
     >
       <form>
         <label htmlFor="buildingName">Building Name:</label>

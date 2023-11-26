@@ -111,232 +111,118 @@ function Signup() {
   };
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.gradientBox}>
-          <h2 className={styles.title}>Sign Up</h2>
-          <form noValidate onSubmit={handleSubmit}>
-            <div className={styles.formControl}>
-              <label htmlFor="userName">Username</label>
-              <input
-                className={styles.input}
-                autoComplete="Username"
-                name="userName"
-                id="userName"
-                required
-                placeholder="Username"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.usernameError}</div>
-            </div>
+    <div className={styles.container}>
+      <div className={styles.gradientBox}>
+        <h2 className={styles.title}>Sign Up</h2>
+        <form noValidate onSubmit={handleSubmit}>
+          <div className={styles.formControl}>
+            <label htmlFor="userName">Username</label>
+            <input
+              className={styles.input}
+              autoComplete="Username"
+              name="userName"
+              id="userName"
+              required
+              placeholder="Username"
+              onChange={handleInputChange}
+            />
+            <div className={styles.errorMessage}>{errors.usernameError}</div>
+          </div>
 
-            <div className={styles.formControl}>
-              <label htmlFor="email">Email</label>
-              <input
-                className={styles.input}
-                autoComplete="Email"
-                name="email"
-                id="email"
-                required
-                placeholder="Email"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.emailError}</div>
-            </div>
+          <div className={styles.formControl}>
+            <label htmlFor="email">Email</label>
+            <input
+              className={styles.input}
+              autoComplete="Email"
+              name="email"
+              id="email"
+              required
+              placeholder="Email"
+              onChange={handleInputChange}
+            />
+            <div className={styles.errorMessage}>{errors.emailError}</div>
+          </div>
 
-            <div className={styles.formControl}>
-              <label htmlFor="password">Password</label>
-              <input
-                className={styles.input}
-                autoComplete="Password"
-                name="password"
-                id="password"
-                required
-                placeholder="Password"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.passwordError}</div>
-            </div>
+          <div className={styles.formControl}>
+            <label htmlFor="password">Password</label>
+            <input
+              className={styles.input}
+              autoComplete="Password"
+              name="password"
+              id="password"
+              required
+              placeholder="Password"
+              onChange={handleInputChange}
+            />
+            <div className={styles.errorMessage}>{errors.passwordError}</div>
+          </div>
 
-            <div className={styles.formControl}>
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                className={styles.input}
-                autoComplete="confirmPassword"
-                name="confirmPassword"
-                id="confirmPassword"
-                required
-                placeholder="Confirm Password"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.confirmPasswordError}</div>
-            </div>
+          <div className={styles.formControl}>
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              className={styles.input}
+              autoComplete="confirmPassword"
+              name="confirmPassword"
+              id="confirmPassword"
+              required
+              placeholder="Confirm Password"
+              onChange={handleInputChange}
+            />
+            <div className={styles.errorMessage}>{errors.confirmPasswordError}</div>
+          </div>
 
-            <div className={styles.formControl}>
-              <label htmlFor="role">Select Role</label>
-              <select
-                id="role"
-                name="role"
-                className={styles.select}
-                onChange={handleInputChange}
-              >
-                <option value="">None</option>
-                <option value="Manager">Manager</option>
-                <option value="Tenant">Tenant</option>
-                <option value="Guest">Guest</option>
-              </select>
-              <div className={styles.errorMessage}>{errors.roleError}</div>
-            </div>
-            {(inputs.role === 'Tenant') && (
-              <>
-                <div className={styles.formControl}>
-                  <label htmlFor="apartmentNumber">Apartment Number</label>
-                  <input
-                    required
-                    name="apartmentNumber"
-                    id="apartmentNumber"
-                    onChange={handleInputChange}
-                    autoComplete="apartmentNumber"
-                  />
-                </div>
-                <div className={styles.formControl}>
-                  <label htmlFor="buildingName">Select Building Name</label>
-                  <select
-                    id="buildingName"
-                    name="buildingName"
-                    onChange={(e) => {
-                      handleInputChange(e);
-                      setSelectedBuildingName(e.target.value);
-                    }}
-                  >
-                    {buildingNames.map(building => (
-                      <option key={building.buildingName} value={building.buildingName}>
-                        {building.buildingName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </>
-            )}
+          <div className={styles.formControl}>
+            <label htmlFor="role">Select Role</label>
+            <select
+              id="role"
+              name="role"
+              className={styles.select}
+              onChange={handleInputChange}
+            >
+              <option value="">None</option>
+              <option value="Manager">Manager</option>
+              <option value="Tenant">Tenant</option>
+              <option value="Guest">Guest</option>
+            </select>
+            <div className={styles.errorMessage}>{errors.roleError}</div>
+          </div>
+          {(inputs.role === 'Tenant') && (
+            <>
+              <div className={styles.formControl}>
+                <label htmlFor="apartmentNumber">Apartment Number</label>
+                <input
+                  required
+                  name="apartmentNumber"
+                  id="apartmentNumber"
+                  onChange={handleInputChange}
+                  autoComplete="apartmentNumber"
+                />
+              </div>
+              <div className={styles.formControl}>
+                <label htmlFor="buildingName">Select Building Name</label>
+                <select
+                  id="buildingName"
+                  name="buildingName"
+                  onChange={(e) => {
+                    handleInputChange(e);
+                    setSelectedBuildingName(e.target.value);
+                  }}
+                >
+                  {buildingNames.map(building => (
+                    <option key={building.buildingName} value={building.buildingName}>
+                      {building.buildingName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
+          )}
 
-            <button type="submit" className={styles.submitButton}>Sign Up</button>
-            <a href="/signin" className={styles.link}>Already have an account? Sign in</a>
-          </form>
-        </div>
+          <button type="submit" className={styles.submitButton}>Sign Up</button>
+          <a href="/signin" className={styles.link}>Already have an account? Sign in</a>
+        </form>
       </div>
-      <div className={styles.container}>
-        <div className={styles.gradientBox}>
-          <h2 className={styles.title}>Sign Up</h2>
-          <form noValidate onSubmit={handleSubmit}>
-            <div className={styles.formControl}>
-              <label htmlFor="userName">Username</label>
-              <input
-                className={styles.input}
-                autoComplete="Username"
-                name="userName"
-                id="userName"
-                required
-                placeholder="Username"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.usernameError}</div>
-            </div>
-
-            <div className={styles.formControl}>
-              <label htmlFor="email">Email</label>
-              <input
-                className={styles.input}
-                autoComplete="Email"
-                name="email"
-                id="email"
-                required
-                placeholder="Email"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.emailError}</div>
-            </div>
-
-            <div className={styles.formControl}>
-              <label htmlFor="password">Password</label>
-              <input
-                className={styles.input}
-                autoComplete="Password"
-                name="password"
-                id="password"
-                required
-                placeholder="Password"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.passwordError}</div>
-            </div>
-
-            <div className={styles.formControl}>
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                className={styles.input}
-                autoComplete="confirmPassword"
-                name="confirmPassword"
-                id="confirmPassword"
-                required
-                placeholder="Confirm Password"
-                onChange={handleInputChange}
-              />
-              <div className={styles.errorMessage}>{errors.confirmPasswordError}</div>
-            </div>
-
-            <div className={styles.formControl}>
-              <label htmlFor="role">Select Role</label>
-              <select
-                id="role"
-                name="role"
-                className={styles.select}
-                onChange={handleInputChange}
-              >
-                <option value="">None</option>
-                <option value="Manager">Manager</option>
-                <option value="Tenant">Tenant</option>
-                <option value="Guest">Guest</option>
-              </select>
-              <div className={styles.errorMessage}>{errors.roleError}</div>
-            </div>
-            {(inputs.role === 'Tenant') && (
-              <>
-                <div className={styles.formControl}>
-                  <label htmlFor="apartmentNumber">Apartment Number</label>
-                  <input
-                    required
-                    name="apartmentNumber"
-                    id="apartmentNumber"
-                    onChange={handleInputChange}
-                    autoComplete="apartmentNumber"
-                  />
-                </div>
-                <div className={styles.formControl}>
-                  <label htmlFor="buildingName">Select Building Name</label>
-                  <select
-                    id="buildingName"
-                    name="buildingName"
-                    onChange={(e) => {
-                      handleInputChange(e);
-                      setSelectedBuildingName(e.target.value);
-                    }}
-                  >
-                    {buildingNames.map(building => (
-                      <option key={building.buildingName} value={building.buildingName}>
-                        {building.buildingName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </>
-            )}
-
-            <button type="submit" className={styles.submitButton}>Sign Up</button>
-            <a href="/signin" className={styles.link}>Already have an account? Sign in</a>
-          </form>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
 

@@ -109,7 +109,7 @@ function EditBuildingModal({
 function CardforBuilding({ building, onDelete, onUpdate }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const buildingName = building.buildingName;
+  const { buildingName } = building;
   const buildingId = building.id;
 
   const handleEditClick = () => {
@@ -127,6 +127,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
         style={{ width: '18rem', margin: '10px', position: 'relative' }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        className={styles.cardForBuildingContainer}
       >
         {isHovered && (
           <>
@@ -156,7 +157,9 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
         )}
         <Card.Img variant="top" src={BuildingImage} />
         <Card.Body>
-          <Card.Title>{building.buildingName}</Card.Title>
+          <Card.Title>
+            {building.buildingName}
+          </Card.Title>
         </Card.Body>
         <ListGroup className="list-group-flush">
           <ListGroup.Item>Address: {building.address}</ListGroup.Item>

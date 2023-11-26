@@ -17,3 +17,12 @@
     font-size: 1em;
   }
 }
+
+.buildingModalContainer {
+  :global([class*='ant-modal-body']) {
+    > form {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
