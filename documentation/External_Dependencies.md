@@ -148,11 +148,33 @@ You can create a React project using the command:
 npx create-react-app my-react-app
 ```
 
-Write the code for Yarn and external dependencies in frontend-----To be continued by Disha
+#### External Dependencies (from `frontend/package.json`)
+```json
+{
+  {
+  "@emotion/react": "^11.11.1", // A library for using Emotion in React.
+  "@emotion/styled": "^11.11.0", // A library for creating styled components with Emotion and React.
+  "@material-ui/core": "^4.12.4", // Core components for Material-UI, a popular React UI framework.
+  "@mui/icons-material": "^5.14.16", // Material design icons for MUI (formerly Material-UI).
+  "@mui/material": "^5.14.15", // MUI core library for React components that follow Material Design.
+  "@mui/styled-engine": "^5.14.15", // The styled engine for MUI, used for creating styled components.
+  "@reduxjs/toolkit": "^1.9.7", // The official, opinionated, batteries-included toolset for efficient Redux development.
+  "antd": "^5.10.2", // A set of high-quality React components for Ant Design.
+  "axios": "^1.6.0", // A Promise based HTTP client for the browser and node.js.
+  "bootstrap": "^5.3.2", // The most popular front-end framework for developing responsive, mobile-first projects on the web.
+  "modal": "^1.2.0", // A simple modal dialog component for React applications.
+  "moment": "^2.29.4", // A JavaScript date library for parsing, validating, manipulating, and formatting dates.
+  "react": "^18.0.0", // A JavaScript library for building user interfaces.
+  "react-bootstrap": "^2.9.0", // Bootstrap components built with React.
+  "react-dom": "^18.0.0", // React package for working with the DOM.
+  "react-fuzzy": "^1.3.0", // A React component library for creating fuzzy search boxes.
+  "react-icons": "^4.11.0", // A collection of popular icons that can be used in React applications.
+  "react-modal": "^3.16.1", // Accessible modal dialog component for React.
+  "react-redux": "^8.1.3", // Official React bindings for Redux.
+  "react-router-dom": "^6.18.0", // The DOM bindings for React Router v6.
+  "redux-thunk": "^2.4.2", // Thunk middleware for Redux.
+  "styled-components": "^6.1.1" // Visual primitives for the component age, used to style your apps without stress.
 
+}
 
-
-## Installation of Dependencies For Remote server
-
-
--------To be continued By Disha
+  ```
