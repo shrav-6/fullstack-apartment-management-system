@@ -7,7 +7,7 @@ function Rooms() {
   return (
     <>
       <Hero hero="roomsHero">
-        <Banner title="Apartment Listing">
+        <Banner title="New Apartment Listing">
           {/* <Link to="/" className="btn-primary">
             return home
           </Link> */}

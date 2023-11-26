@@ -8,8 +8,10 @@ const RoomsFilter = () => {
     handleChange,
     unitAvailable,
     rent,
+    moveInDate,
     listing,
-    maxrent
+    maxrent,
+    sortOption
   } = context;
 
   // Get unique types
@@ -58,6 +60,35 @@ const RoomsFilter = () => {
             className="form-control"
           />
         </div>
+
+        <div className="form-group">
+        <label htmlFor="moveInDate">Move-in-Date</label>
+          <input
+            type="date"
+            id="moveInDate"
+            name="moveInDate"
+            onChange={handleChange}
+            className="form-control"
+            value={moveInDate}
+          />
+          </div>
+
+          <div className="form-group">
+        <label htmlFor="sortOption">Sort By</label>
+        <select
+          name="sortOption"
+          id="sortOption"
+          onChange={handleChange}
+          className="form-control"
+          value={sortOption}
+        >
+          <option value="latest">Latest</option>
+          <option value="highestToLowestRent">Highest Rent to Lowest Rent</option>
+          <option value="lowestToHighestRent">Lowest Rent to Highest Rent</option>
+          {/* Add more options as needed */}
+        </select>
+      </div>
+
         {/* End of apartment price */}
         
       </form>

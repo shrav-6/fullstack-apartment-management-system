@@ -12,10 +12,9 @@ export function AboutUs({
         <hr></hr>
         <br></br>
         <div>
-            <div>
-                Shetler is a team providing consistent solutions for the management purposes across 
-                the globe. We have covered more onbaorded and served more than 15 reputed clients in 
-                the city of Halifax including Westin Hotel near Port Pier.
+            <div className='header'>
+            Shelter is a dedicated team offering reliable solutions for global property management.
+          Our platform serves as a hub where managers, tenants, and guests can discover new apartment listings and seamlessly connect with one another.
             </div>
 
             <div className="image">
