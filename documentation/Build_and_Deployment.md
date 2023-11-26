@@ -89,6 +89,8 @@ ENTRYPOINT ["node", "app.js"]
 - COPY - This command copies all the files and directories from the current directory to the working directory 
 - EXPOSE - This command documents that the container will be listening on port 3001 at runtime
 - ENTRYPOINT - This specifies the default command to run when the container starts.
+### **Step 2**: Setting up CI/CD pipeline
+
 ### **Frontend Application**
 
 ------------To be completed by Disha
