@@ -152,7 +152,7 @@ npx create-react-app my-react-app
 ```
 
 "dependencies":{
-  "@emotion/react": "^11.11.1", - A create
+  "@emotion/react": "^11.11.1", - A library for using Emotion in React.
   "@emotion/styled": "^11.11.0", - A library for creating styled components with Emotion and React.
   "@material-ui/core": "^4.12.4", - Core components for Material-UI, a popular React UI framework.
   "@mui/icons-material": "^5.14.16", - Material design icons for MUI (formerly Material-UI).
