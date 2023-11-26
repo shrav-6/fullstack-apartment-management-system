@@ -83,12 +83,12 @@ EXPOSE 3001
 
 ENTRYPOINT ["node", "app.js"]
 ```
-FROM - This command specifies the base image for the Docker container
-RUN - Updates package lists and installs Git.
-WORKDIR - This sets the working directory within the container to /usr/src/app.
-COPY - This command copies all the files and directories from the current directory to the working directory 
-EXPOSE - This command documents that the container will be listening on port 3001 at runtime
-ENTRYPOINT - This specifies the default command to run when the container starts.
+- FROM - This command specifies the base image for the Docker container
+- RUN - Updates package lists and installs Git.
+- WORKDIR - This sets the working directory within the container to /usr/src/app.
+- COPY - This command copies all the files and directories from the current directory to the working directory 
+- EXPOSE - This command documents that the container will be listening on port 3001 at runtime
+- ENTRYPOINT - This specifies the default command to run when the container starts.
 ### **Frontend Application**
 
 ------------To be completed by Disha
