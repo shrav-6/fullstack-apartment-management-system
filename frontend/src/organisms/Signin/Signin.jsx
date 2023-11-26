@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-console */
+import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import styles from './SignIn.module.scss';
@@ -68,62 +71,121 @@ export default function Signin() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.gradientBox}>
-        <div className={styles.avatar}>
-        </div>
-        <h2>SIGN IN</h2>
-        <form className={styles.form} onSubmit={handleSubmit} noValidate>
-          <label htmlFor="email" className={styles.label}>Email Address</label>
-          <input
-            className={styles.input}
-            type="email"
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            // autoFocus
-            onChange={handleInputChange}
-          />
-          <span>{errors.emailError}</span>
-          <label htmlFor="password" className={styles.label}>Password</label>
-          <input
-            className={styles.input}
-            type="password"
-            id="password"
-            label="Password"
-            name="password"
-            autoComplete="current-password"
-            onChange={handleInputChange}
-          />
-          <span>{errors.passwordError}</span>
-          <div className={styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              id="remember"
-              name="remember"
-              className={styles.checkbox}
-            />
-            <label htmlFor="remember" className={styles.rememberLabel}>Remember me</label>
+    <>
+      <div className={styles.container}>
+        <div className={styles.gradientBox}>
+          <div className={styles.avatar}>
           </div>
-          <button
-            type="submit"
-            className={styles.button}
-          >
-            Sign In
-          </button>
-          <button
-            type="button"
-            className={styles.linkToSignUp}
-            onClick={() => navigate('/signup')}
-          >
-            Don't have an account? Sign Up
-          </button>
-        </form>
-        <div className={styles.copyright}>
-          Copyright © <strong>Shelter</strong> {new Date().getFullYear()}
+          <h2>SIGN IN</h2>
+          <form className={styles.form} onSubmit={handleSubmit} noValidate>
+            <label htmlFor="email" className={styles.label}>Email Address</label>
+            <input
+              className={styles.input}
+              type="email"
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              // autoFocus
+              onChange={handleInputChange}
+            />
+            <span>{errors.emailError}</span>
+            <label htmlFor="password" className={styles.label}>Password</label>
+            <input
+              className={styles.input}
+              type="password"
+              id="password"
+              label="Password"
+              name="password"
+              autoComplete="current-password"
+              onChange={handleInputChange}
+            />
+            <span>{errors.passwordError}</span>
+            <div className={styles.checkboxContainer}>
+              <input
+                type="checkbox"
+                id="remember"
+                name="remember"
+                className={styles.checkbox}
+              />
+              <label htmlFor="remember" className={styles.rememberLabel}>Remember me</label>
+            </div>
+            <button
+              type="submit"
+              className={styles.button}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              className={styles.linkToSignUp}
+              onClick={() => navigate('/signup')}
+            >
+              Don't have an account? Sign Up
+            </button>
+          </form>
+          <div className={styles.copyright}>
+            Copyright © <strong>Shelter</strong> {new Date().getFullYear()}
+          </div>
         </div>
       </div>
-    </div>
+      <div className={styles.container}>
+        <div className={styles.gradientBox}>
+          <div className={styles.avatar}>
+          </div>
+          <h2>SIGN IN</h2>
+          <form className={styles.form} onSubmit={handleSubmit} noValidate>
+            <label htmlFor="email" className={styles.label}>Email Address</label>
+            <input
+              className={styles.input}
+              type="email"
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              // autoFocus
+              onChange={handleInputChange}
+            />
+            <span>{errors.emailError}</span>
+            <label htmlFor="password" className={styles.label}>Password</label>
+            <input
+              className={styles.input}
+              type="password"
+              id="password"
+              label="Password"
+              name="password"
+              autoComplete="current-password"
+              onChange={handleInputChange}
+            />
+            <span>{errors.passwordError}</span>
+            <div className={styles.checkboxContainer}>
+              <input
+                type="checkbox"
+                id="remember"
+                name="remember"
+                className={styles.checkbox}
+              />
+              <label htmlFor="remember" className={styles.rememberLabel}>Remember me</label>
+            </div>
+            <button
+              type="submit"
+              className={styles.button}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              className={styles.linkToSignUp}
+              onClick={() => navigate('/signup')}
+            >
+              Don't have an account? Sign Up
+            </button>
+          </form>
+          <div className={styles.copyright}>
+            Copyright © <strong>Shelter</strong> {new Date().getFullYear()}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
