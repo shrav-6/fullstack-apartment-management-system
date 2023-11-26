@@ -20,8 +20,6 @@ app.use("/auth", usersRouter);
 const buildingsRouter = require("./routes/Buildings");
 app.use("/Buildings", buildingsRouter);
 
-//const imageGalleryRoutes = require("./routes/imageGallery");
-//app.use("/gallery", imageGalleryRoutes); // Use the router directly
 
 const wishlistRouter = require("./routes/WishList");
 app.use("/wishlist", wishlistRouter);

@@ -1,6 +1,6 @@
 // service.js
 
-const data = require("../Data/Applications");
+const data = require("../data/Applications");
 
 /**
  * Create a new application from a guest user

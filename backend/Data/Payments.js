@@ -31,7 +31,6 @@ async function payRent(date, amount, cardinfo, cvv, user_id) {
 async function getPaymentInfo(user_id) {
     try {
         const role = await getRoleByUserId(user_id);
-        console.log(role);
         if(role=="Tenant"){
             const tenant = await tenants.findOne({where: {userId: user_id}});
             const allPayments = await payments.findAll({ where: { tenantId: tenant.id } });
