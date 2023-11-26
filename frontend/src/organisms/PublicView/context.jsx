@@ -1,7 +1,7 @@
 import React, {
   useState, useEffect, createContext, useContext,
 } from 'react';
-import items from './data1';
+import items from './data';
 
 const RoomContext = createContext();
 
@@ -16,6 +16,8 @@ export function RoomProvider({ children }) {
     selectedAvailability: '',
     selectedBuilding: '',
     listingId: '',
+    moveInDate:'',
+    sortOption: 'latest',
 
   });
 
@@ -67,25 +69,48 @@ export function RoomProvider({ children }) {
 
   useEffect(() => {
     filterRooms();
-  }, [state.unitAvailable, state.rent]);
+  }, [state.unitAvailable, state.rent,state.moveInDate,state.sortOption]);
 
   const filterRooms = () => {
-    const { unitAvailable, rent } = state;
+    const { unitAvailable, rent, moveInDate,sortOption } = state;
     // Transform values
     const rents = parseInt(rent);
-
+  
     // Apply filters
-
     let tempListing = [...state.listing];
-
+  
     // Filter by type
     if (unitAvailable !== 'all') {
       tempListing = tempListing.filter(room => room.unitAvailable === unitAvailable);
     }
-
+  
     // Filter by price
     tempListing = tempListing.filter(room => room.rent <= rents);
+  
+    // Filter by move-in date
+    if (moveInDate) {
+      const formattedMoveInDate = new Date(moveInDate);
+      tempListing = tempListing.filter(room => new Date(room.moveInDate) >= formattedMoveInDate);
+      console.log(tempListing);
+    }
+    switch (sortOption) {
+      case 'latest':
+        // Sort by the latest
+        tempListing = tempListing.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      case 'highestToLowestRent':
+        // Sort by highest to lowest rent
+        tempListing = tempListing.sort((a, b) => b.rent - a.rent);
+        break;
+      case 'lowestToHighestRent':
+        // Sort by lowest to highest rent
+        tempListing = tempListing.sort((a, b) => a.rent - b.rent);
+        break;
+      // Add more cases for additional sorting options
 
+      default:
+        break;
+    }
     setState(prevState => ({
       ...prevState,
       sortedListing: tempListing,

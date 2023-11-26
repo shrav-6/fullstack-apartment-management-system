@@ -1,6 +1,6 @@
 // service.js
 
-const data = require("../Data/Payments");
+const data = require("../data/Payments");
 
 async function payRent(date, amount, cardinfo, cvv, user_id) {
     return await data.payRent(date, amount, cardinfo, cvv, user_id);

@@ -37,7 +37,7 @@ jest.mock('../../Service/Buildings', () => ({
 }));
 
 // Mocking the validateToken middleware
-jest.mock('../../Middleware/middleware', () => ({
+jest.mock('../../middleware/Middleware', () => ({
   validateToken: (req, res, next) => {
     // Mocked user token validation
     req.user = { id: 1, role: 'Manager' }; // Mock user object
@@ -182,7 +182,7 @@ describe('Buildings Routes', () => {
 
     it('should handle no buildings available for signup', async () => {
       // Mock the service to return an empty array for no buildings
-      jest.mock('../../Service/Buildings', () => ({
+      jest.mock('../../service/Buildings', () => ({
         getAllBuildingsForSignUp: jest.fn().mockResolvedValue([]),
       }));
     
@@ -264,7 +264,7 @@ describe('Buildings Routes', () => {
 
     it('should handle no buildings available for signup', async () => {
       // Mock the service to return an empty array for no buildings
-      jest.mock('../../Service/Buildings', () => ({
+      jest.mock('../../service/Buildings', () => ({
         getAllBuildingsForSignUp: jest.fn().mockResolvedValue([]),
       }));
 

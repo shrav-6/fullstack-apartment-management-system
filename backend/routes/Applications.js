@@ -5,8 +5,8 @@
 
 const express = require("express");
 const router = express.Router();
-const { validateToken } = require("../Middleware/middleware");
-const service = require("../Service/Applications");
+const { validateToken } = require("../middleware/Middleware");
+const service = require("../service/Applications");
 
 /**
  * Route to create a new application.
@@ -23,7 +23,6 @@ router.post("/create", validateToken, async (req, res) => {
     // Extract application and user_id from the request body and token
     const application = req.body;
     const user_id=req.user.id;
-    const role=req.user.role;
     const listingId =req.body.listingId;
     const status="waitlisted";
     // Call the service layer to create the application
@@ -60,7 +59,7 @@ router.put("/updateStatus/:applicationId", validateToken, async (req, res) => {
 
     // Call the service layer to accept or reject the application
     const result = await service.updateStatusApplication(applicationId, status, user_id);
-    console.log('result in routes', result);
+
     // Respond with the result
     if (result.success) {
       res.json(result);

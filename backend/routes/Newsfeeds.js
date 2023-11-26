@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const { notices,managers,tenants,buildings,users,newsfeeds } = require("../models");
-const {validateToken}=require("../Middleware/middleware");
+const {validateToken}=require("../middleware/Middleware");
  
 
-//for getting a particular newsfeed
+/**
+ * Get a particular newsfeed based on newsfeedId.
+ *
+ * @param {string} req.params.newsfeedId - The ID of the newsfeed to retrieve.
+ * @returns {object} - The retrieved newsfeed.
+ */
+
 router.get("/get/:newsfeedId",validateToken, async (req, res) => {
   const newsfeedId = req.params.newsfeedId;
   const role=req.user.role;
@@ -39,7 +45,12 @@ router.get("/get/:newsfeedId",validateToken, async (req, res) => {
  
 });
 
-//to get all newsfeed for a building ((posted by a particular tenant))
+
+/**
+ * Get all newsfeeds for a building posted by a particular tenant.
+ *
+ * @returns {object} - The list of newsfeeds.
+ */
 router.get("/tenant", validateToken, async (req, res) => {
   try {
     const role = req.user.role;
@@ -75,8 +86,12 @@ router.get("/tenant", validateToken, async (req, res) => {
   }
 });
 
+/**
+ * Get all newsfeeds for a building (tenant).
+ *
+ * @returns {object} - The list of newsfeeds.
+ */
 
-//to get all newsfeed for a building ((tenant))
 router.get("/", validateToken, async (req, res) => {
     try {
       const role = req.user.role;
@@ -114,7 +129,12 @@ router.get("/", validateToken, async (req, res) => {
   });
   
 
-  //for getting newfeed under that manager for a particular apt
+ /**
+ * Get newsfeeds under a manager for a particular apartment.
+ *
+ * @param {string} req.params.buildingId - The ID of the building.
+ * @returns {object} - The list of newsfeeds.
+ */
 
   router.get("/manager/:buildingId", validateToken, async (req, res) => {
     try {
@@ -166,7 +186,12 @@ router.get("/", validateToken, async (req, res) => {
     }
   });
   
- //for posting a newsfeed for tenant
+ /**
+ * Post a new newsfeed for a tenant.
+ *
+ * @param {object} req.body - The newsfeed data to be posted.
+ * @returns {object} - Success or error message.
+ */
 router.post("/",validateToken, async (req, res) => {
   const newsfeed = req.body;
   const user_id=req.user.id;
@@ -191,11 +216,11 @@ router.post("/",validateToken, async (req, res) => {
  
 }
 else{
-  res.status(500).json({"success": false,error: "user don't have the permissions"});
+  res.json({"success": false,error: "user don't have the permissions"});
 }
   }
 else{
-  res.status(500).json({"success": false,error: "user don't have the permissions"});
+  res.json({"success": false,error: "user don't have the permissions"});
 }
  
  
@@ -203,7 +228,12 @@ else{
 });
  
 
-//for deleting a newsfeed
+/**
+ * Delete a newsfeed based on newsfeedId.
+ *
+ * @param {string} req.params.newsfeedId - The ID of the newsfeed to delete.
+ * @returns {object} - Success or error message.
+ */
 router.delete("/:newsfeedId",validateToken,async (req, res) => {
   const newsfeedId = req.params.newsfeedId;
   const user_id=req.user.id;
@@ -230,7 +260,13 @@ else{
  
 });
  
- //for updating a newsfeed
+/**
+ * Update a newsfeed based on newsfeedId.
+ *
+ * @param {string} req.params.newsfeedId - The ID of the newsfeed to update.
+ * @param {object} req.body - The updated newsfeed data.
+ * @returns {object} - Success or error message.
+ */
 router.put("/:newsfeedId",validateToken,async (req, res) => {
    const newsfeedId = req.params.newsfeedId;
    const title=req.body.title;
@@ -251,11 +287,11 @@ router.put("/:newsfeedId",validateToken,async (req, res) => {
     "message": "Updated successfully"});
   }
   else{
-    res.status(500).json({"success": false,error: "user don't have the permissions"});
+    res.json({"success": false,error: "user don't have the permissions"});
   }
    }
    else{
-    res.status(500).json({"success": false,error: "user don't have the permissions"});
+    res.json({"success": false,error: "user don't have the permissions"});
   }
    
 });

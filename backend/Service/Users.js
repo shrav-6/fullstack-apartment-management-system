@@ -1,4 +1,4 @@
-const dataLayer = require("../Data/Users");
+const dataLayer = require("../data/Users");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { managers, buildings, tenants, guests } = require("../models");

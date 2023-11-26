@@ -1,7 +1,7 @@
-const listingsService = require('../../Service/Listings');
-const dataLayer = require("../../Data/Listings");
+const listingsService = require('../../service/Listings');
+const dataLayer = require("../../data/Listings");
 
-jest.mock("../../Data/Listings");
+jest.mock("../../data/Listings");
 
 /**
  * Test suite for the 'createListing' function in the listings service.

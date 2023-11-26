@@ -1,6 +1,6 @@
 // service.js
-const { validateToken } = require("../Middleware/middleware");
-const dataLayer = require("../Data/WishList");
+const { validateToken } = require("../middleware/Middleware");
+const dataLayer = require("../data/WishList");
 
 /**
  * Get wishlisted listings for the authenticated user.
@@ -68,14 +68,14 @@ async function addWishlistItem(req, res) {
         message: "Successfully wishlisted",
       });
     } else {
-      res.status(404).json({
+      res.json({
         success: false,
         error: "Listing not found or invalid status",
       });
     }
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({
+    res.json({
       success: false,
       error: "An error occurred while processing the request",
     });
@@ -90,7 +90,7 @@ async function addWishlistItem(req, res) {
  */
 async function removeWishlistItem(req, res) {
   try {
-    const { listingId, status } = req.body;
+    const { listingId} = req.body;
     const user_id = req.user.id;
     const wishlistItem = await dataLayer.findWishlistItem(user_id, listingId);
 
@@ -102,14 +102,14 @@ async function removeWishlistItem(req, res) {
         message: "Successfully removed from wishlist",
       });
     } else {
-      res.status(404).json({
+      res.json({
         success: false,
         error: "Wishlist item not found or unauthorized to delete",
       });
     }
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({
+    res.json({
       success: false,
       error: "An error occurred while processing the request",
     });

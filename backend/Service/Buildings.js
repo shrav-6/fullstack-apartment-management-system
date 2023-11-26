@@ -1,4 +1,4 @@
-const dataLayer = require("../Data/Buildings");
+const dataLayer = require("../data/Buildings");
 
 /**
  * Get a building by ID based on user role.
@@ -121,7 +121,6 @@ async function getAllBuildingsForSignUp() {
 }
 
 async function getBuildingInfo(user_id) {
-  //console.log();
   const value = await dataLayer.getBuildingInfo(user_id);
   console.log('in service layer', value)
   return value;

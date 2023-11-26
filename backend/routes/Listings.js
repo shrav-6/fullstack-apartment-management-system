@@ -5,8 +5,8 @@
 
 const express = require("express");
 const router = express.Router();
-const { validateToken } = require("../Middleware/middleware");
-const service = require("../Service/Listings");
+const { validateToken } = require("../middleware/Middleware");
+const service = require("../service/Listings");
 
 /**
  * Route to insert a new listing for a manager.
@@ -33,15 +33,13 @@ router.post("/", validateToken, async (req, res) => {
     if (result) {
       res.json({ success: true, message: "Created successfully" });
     } else {
-      res.status(500).json({ success: false, error: "User doesn't have the permission or an error occurred" });
+      res.json({ success: false, error: "User doesn't have the permission or an error occurred" });
     }
   } catch (error) {
     console.error("Error in / route:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.json({ success: false, error: "Internal server error" });
   }
-  //else{
-    //res.json({"success": false,error: "user don't have the permissions"});
- // }
+  
    
   });
  
@@ -167,7 +165,7 @@ router.get("/Building/:buildingId", validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error("Error in /Building/:buildingId route:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.json({ success: false, error: "Internal server error" });
   }
 });
 
@@ -193,7 +191,7 @@ router.get("/all", async (req, res) => {
     }
   } catch (error) {
     console.error("Error in /all route:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.json({ success: false, error: "Internal server error" });
   }
 });
 
@@ -225,7 +223,7 @@ router.get("/:ListingId", validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error("Error in /:ListingId route:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.json({ success: false, error: "Internal server error" });
   }
 });
 
@@ -254,11 +252,11 @@ router.put("/:ListingId", validateToken, async (req, res) => {
     if (result) {
       res.json({ success: true, message: "Updated successfully" });
     } else {
-      res.status(500).json({ success: false, error: "User doesn't have the permission or an error occurred" });
+      res.json({ success: false, error: "User doesn't have the permission or an error occurred" });
     }
   } catch (error) {
     console.error("Error in /:ListingId route:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.json({ success: false, error: "Internal server error" });
   }
 });
 
@@ -290,7 +288,7 @@ router.delete("/:ListingId", validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error("Error in /:ListingId route:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.json({ success: false, error: "Internal server error" });
   }
 });
 

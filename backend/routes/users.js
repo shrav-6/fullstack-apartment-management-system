@@ -5,7 +5,7 @@
 
 const express = require('express');
 const router = express.Router();
-const userService = require('../Service/Users');
+const userService = require('../service/Users');
 
 /**
  * Route for user signup.
@@ -22,7 +22,7 @@ router.post('/signup', async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error in /signup route:', error);
-    res.status(500).json({
+    res.json({
       success: false,
       data: 'An error occurred while processing your request.',
     });
@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error in /login route:', error);
-    res.status(500).json({
+    res.json({
       success: false,
       data: 'An error occurred while processing your request.',
     });

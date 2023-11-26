@@ -9,7 +9,7 @@
  * Mocks are used to simulate the behavior of the database models and ensure isolated testing of the service functions.
  */
 
-const buildingService = require("../../Data/Buildings");
+const buildingService = require("../../data/Buildings");
 const { buildings, managers } = require("../../models");
 
 jest.mock("../../models");

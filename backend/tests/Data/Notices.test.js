@@ -1,4 +1,4 @@
-const noticeService = require('../../Data/Notices');
+const noticeService = require('../../data/Notices');
 const { notices, managers, tenants, buildings} = require("../../models");
 
 jest.mock("../../models");

@@ -103,10 +103,10 @@ export default function Signin() {
             if (response.data.role === 'Tenant') {
               const userId = response.data.id;
               console.log('userid', userId);
-              navigate('/tenant', { state: { userId } });
+              navigate('/', { state: { userId } });
               // navigate('/tenant', state: { userId: response.data.id});
             } else {
-              navigate('/home');
+              navigate('/');
             }
           }
         }

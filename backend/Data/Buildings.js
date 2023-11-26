@@ -206,26 +206,19 @@ async function getAllBuildingsForSignUp() {
 
 async function getBuildingInfo(user_id) {
   try {
-  //console.log('in building info');
-    const role= await getRoleByUserId(user_id);
-    //const user_id=req.user.id;
     console.log('inside building info API', user_id);
-    const tenant = await tenants.findOne({ where: { userId: user_id } });  
-    //console.log('backend tenant', tenant);  
+    const tenant = await tenants.findOne({ where: { userId: user_id } });    
     if (tenant) {
       const building = await buildings.findOne({ where: { id: tenant.buildingId } });
-      //console.log('building', building);
     
       const apartmentNumber = tenant.apartmentNumber;
       const buildingName = building.buildingName;
       
       const buildingPhoneNumber = building.phoneNumber;
       const listingId = tenant.listingId;
-      //console.log('listingId', listingId);
       const listing = await listings.findOne({where: {id: listingId}});
       const manager = await managers.findOne({where: {id: listing.managerId}});
       const managerName = manager.name;
-      //console.log('listing detail:', listing);
       const address = listing.address;
       const rent = listing.rent;
       const unit = listing.unitAvailable;

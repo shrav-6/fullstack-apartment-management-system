@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { validateToken } = require("../Middleware/Middleware");
-const service = require("../Service/Payments");
+const { validateToken } = require("../middleware/Middleware");
+const service = require("../service/Payments");
 
 router.post("/pay",validateToken, async (req, res) => {
   try {

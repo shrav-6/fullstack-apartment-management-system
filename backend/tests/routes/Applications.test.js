@@ -10,7 +10,7 @@ app.use(express.json());
 app.use('/', require('../../routes/Applications')); 
 
 // Mocking the service layer
-jest.mock('../../Service/Applications', () => ({
+jest.mock('../../service/Applications', () => ({
   createApplication: jest.fn().mockResolvedValue({ success: true }),
   acceptRejectApplication: jest.fn().mockResolvedValue({ success: true }),
   getAllApplicationsForListing: jest.fn().mockResolvedValue({ success: true }),
@@ -19,7 +19,7 @@ jest.mock('../../Service/Applications', () => ({
 }));
 
 // Mocking the validateToken middleware
-jest.mock('../../Middleware/middleware', () => ({
+jest.mock('../../middleware/Middleware', () => ({
   validateToken: (req, res, next) => {
     // Mocked user token validation
     req.user = { id: 1 }; // Mock user object

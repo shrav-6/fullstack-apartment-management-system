@@ -6,8 +6,8 @@
 const express = require("express");
 const router = express.Router();
 const { notices,managers,tenants,buildings,users, listings } = require("../models");
-const { validateToken } = require("../Middleware/middleware");
-const service = require("../Service/Buildings");
+const { validateToken } = require("../middleware/Middleware");
+const service = require("../service/Buildings");
 
 /**
  * Route to get a particular building by ID.
@@ -69,7 +69,6 @@ router.get("/",validateToken, async (req, res) => {
  */
 router.get("/", validateToken, async (req, res) => {
   try {
-    console.log("hi");
     // Extract role and user_id from the token
     const role = req.user.role;
     const user_id = req.user.id;
