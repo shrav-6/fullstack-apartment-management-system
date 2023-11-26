@@ -144,7 +144,7 @@ function ViewListings() {
                 <p className="card-text">Rent Per Month: ${listing.rent}</p>
                 <p className="card-text">Move-In Date: {listing.startsFrom}</p>
                 <p className="card-text">Address: {listing.address}</p>
-                <p className="card-text">Pets: {listing.pets}</p>
+                <p className="card-text">Pets: {listing.pets === true ? '1' : listing.pets || '0'}</p>
                 {/* Display Images */}
                 {listingImages[listing.id] && listingImages[listing.id].length > 0 && (
                   <div>

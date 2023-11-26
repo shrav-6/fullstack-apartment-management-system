@@ -208,7 +208,7 @@ function Newsfeed({
           </Button>
         )}
       </div>
-      {newsfeed.length === 0 && <div className={styles.emptynewsfeed}>Oops!!! No notice found 😕</div>}
+      {newsfeed.length === 0 && <div className={styles.emptynewsfeed}>Oops!!! No newsfeed found 😕</div>}
       <div className={styles.cardComponentContainer}>
         {(newsfeed || []).map(news => (
           <Card
