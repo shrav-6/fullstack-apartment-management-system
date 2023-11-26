@@ -14,6 +14,7 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import BuildingImage from '../../../../organisms/Managers/Images/buildings.jpg';
 import styles from './CardForBuilding.module.scss';
 
+// eslint-disable-next-line no-shadow
 function IconButton({ type, onClick, styles }) {
   const Icon = type === 'edit' ? MdModeEditOutline : MdDelete;
 
@@ -109,6 +110,7 @@ function EditBuildingModal({
 function CardforBuilding({ building, onDelete, onUpdate }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const buildingName = building.buildingName;
   const buildingId = building.id;
 
   const handleEditClick = () => {
@@ -163,7 +165,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
         </ListGroup>
         <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <div className={styles.iconContainer}>
-            <Link to="/Notices" state={{ buildingId }} className={styles.myButton}>
+            <Link to="/Notices" state={{ buildingName, buildingId }} className={styles.myButton}>
               <EventNoteIcon style={{ fontSize: 30, color: '#38598b' }} />
             </Link>
             <p className={styles.linkText}>Notices</p>

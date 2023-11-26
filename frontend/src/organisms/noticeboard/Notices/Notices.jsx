@@ -33,8 +33,8 @@ import { STRING_CONSTANTS } from '../constants/notice.constant';
 
 // styles
 import styles from './Notice.module.scss';
+
 const { TextArea } = Input;
-// const { pathname } = useLocation();
 function Notices({
   allNotices: notices = [],
   title,
@@ -42,8 +42,7 @@ function Notices({
   authorName,
   postType = '',
   priority,
-  buildings,
-  buildingName,
+  // buildingName,
   onSetTitle,
   onSetNotices,
   onSetDescription,
@@ -54,26 +53,18 @@ function Notices({
 }) {
   const [editTrigger, setEditTrigger] = useState(0);
   const role = JSON.parse(sessionStorage.getItem('userCred'))?.role;
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
-
-  const handleMouseEnter = () => {
-    setDropdownVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    setDropdownVisible(false);
-  };
 
   const location = useLocation();
 
   const buildingId = location.state ? location.state.buildingId : null;
+  const buildingName = location.state ? location.state.buildingName : null;
 
   const fetchNotices = () => {
     getAllNotices()
       .then((response) => {
         if (!response?.data?.error) {
           onSetNotices({ allNotices: response?.data?.data });
-          noticesCopy = JSON.parse(JSON.stringify(notices));
+          // noticesCopy = JSON.parse(JSON.stringify(notices));
         }
       })
       .catch((err) => {
@@ -139,7 +130,10 @@ function Notices({
     postAllNotices(payload)
       .then((response) => {
         if (!response?.data?.error) {
-          onSetNotices({ allNotices: [...notices, response?.data?.data] });
+          onSetNotices(prevNotices => ({
+            allNotices:
+              [...prevNotices.allNotices, response?.data?.data],
+          }));
           setModalVisible(false);
           onSetTitle('');
           onSetDescription('');
@@ -220,7 +214,7 @@ function Notices({
       <h1 className={styles.navNotice}>Notices</h1>
       {notices.length !== 0
       && (
-        <center onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <center>
           <span>
             <span>
               <FilterAltRoundedIcon className={styles.icon} />
@@ -255,7 +249,7 @@ function Notices({
               defaultValue="none"
               onChange={(change) => {
                 sortNotices(notices, change.target.value);
-                handleMouseEnter();
+                // handleMouseEnter();
               }}
             >
               <option value="none">None</option>
@@ -266,6 +260,7 @@ function Notices({
           </span>
           <span>
             {role === 'Manager' && (
+              // eslint-disable-next-line jsx-a11y/control-has-associated-label
               <span
                 tabIndex="0"
                 role="button"
@@ -339,8 +334,8 @@ function Notices({
             </Select>
           </section>
           <section>
-            <label htmlFor="priority">
-              Building Name: {buildingName || ''}
+            <label htmlFor="building">
+              Building Name: {buildingName}
             </label>
             {/* <select>
               {buildings.map(building => (
