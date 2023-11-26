@@ -57,7 +57,7 @@ The configuration is mentioned in frontend/package.json
   },
   ```
 
-The backend code will run in http://localhost:5173/ (this url will be running and will be mapped with the another port in docker)
+The frontend code will run in http://localhost:5173/ (this url will be running and will be mapped with the another port in docker)
 
 ### **Running Testcases **
 
