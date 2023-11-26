@@ -28,7 +28,7 @@ function ViewTenant() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/Buildings/getBuildingInfo', {
+      .get('http://172.17.0.237:8074/Buildings/getBuildingInfo', {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
@@ -58,7 +58,7 @@ function ViewTenant() {
   useEffect(() => {
     // Fetch property listings from the API when the component mounts
     axios
-      .get('http://localhost:3001/Payments/getPaymentInfo', {
+      .get('http://172.17.0.237:8074/Payments/getPaymentInfo', {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
@@ -105,7 +105,7 @@ function ViewTenant() {
 
       // Implement logic to update the listing on the backend
       axios
-        .post('http://localhost:3001/Payments/pay', {
+        .post('http://172.17.0.237:8074/Payments/pay', {
           date: formattedDate, amount: rent, cardinfo: cardNumber, cvv,
         }, {
           headers: {

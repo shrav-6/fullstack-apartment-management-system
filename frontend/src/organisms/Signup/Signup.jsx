@@ -37,7 +37,7 @@ function Signup() {
   const [selectedBuildingName, setSelectedBuildingName] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3001/Buildings/signup/byName')
+    axios.get('http://172.17.0.237:8074/Buildings/signup/byName')
       .then((response) => {
         if (response.data.success) {
           setBuildingNames(response.data.result);
@@ -84,7 +84,7 @@ function Signup() {
         const data = {
           userName, email, password, name: name1, role, phoneNumber, address,
         };
-        axios.post('http://localhost:3001/auth/signup', data).then((response) => {
+        axios.post('http://172.17.0.237:8074/auth/signup', data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);
           } else {
@@ -99,7 +99,7 @@ function Signup() {
           userName, email, password, name: name1, role, phoneNumber, address, apartmentNumber, buildingName,
         };
         console.log('role', role);
-        axios.post('http://localhost:3001/auth/signup', data).then((response) => {
+        axios.post('http://172.17.0.237:8074/auth/signup', data).then((response) => {
           if (response.data.error) {
             alert(response.data.error);
           } else {

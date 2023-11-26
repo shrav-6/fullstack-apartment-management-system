@@ -27,7 +27,7 @@ const RoomWishlist = memo(({ item, index, isWishList, fetchWishlist }) => {
       if (!isWished) {
         console.log(id);
         // Example: Make a POST request to a wishlist API endpoint to add
-        const response = await axios.post("http://localhost:3001/wishlist/add", { listingId: id, status: true }, {
+        const response = await axios.post("http://172.17.0.237:8074/wishlist/add", { listingId: id, status: true }, {
           headers: {
             accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
           },
@@ -36,7 +36,7 @@ const RoomWishlist = memo(({ item, index, isWishList, fetchWishlist }) => {
       } else {
         // Example: Make a POST request to a wishlist API endpoint to remove
         console.log("in else block");
-        const response = await axios.post("http://localhost:3001/wishlist/remove", { listingId: id, status: false }, {
+        const response = await axios.post("http://172.17.0.237:8074/wishlist/remove", { listingId: id, status: false }, {
           headers: {
             accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
           },

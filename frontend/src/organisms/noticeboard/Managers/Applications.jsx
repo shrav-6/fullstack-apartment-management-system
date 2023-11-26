@@ -20,7 +20,7 @@ function ViewApplications() {
   // const listingId = applications[0].listingId;
   // const [approvedApplicationId] = useState(null);
   useEffect(() => {
-    axios.get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
+    axios.get(`http://172.17.0.237:8074/Applications/allApplicationsForListing/${listingId}`, {
       headers: {
         accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
       },
@@ -39,7 +39,7 @@ function ViewApplications() {
     alert('Once approved cannot be revoked!');
     // once the approve button is clicked, call the backend to set status to approve
     axios
-      .put(`http://localhost:3001/Applications/updateStatus/${applicationId}`, { status: 'approved' }, {
+      .put(`http://172.17.0.237:8074/Applications/updateStatus/${applicationId}`, { status: 'approved' }, {
         headers: {
           accessToken: sessionStorage.getItem('accessToken'),
         },
@@ -54,7 +54,7 @@ function ViewApplications() {
 
   const handleReject = (applicationId) => {
     axios
-      .put(`http://localhost:3001/Applications/updateStatus/${applicationId}`, { status: 'rejected' }, {
+      .put(`http://172.17.0.237:8074/Applications/updateStatus/${applicationId}`, { status: 'rejected' }, {
         headers: {
           accessToken: sessionStorage.getItem('accessToken'),
         },
@@ -70,7 +70,7 @@ function ViewApplications() {
 
   const handleInProgress = (applicationId) => {
     axios
-      .put(`http://localhost:3001/Applications/updateStatus/${applicationId}`, { status: 'waitlisted' }, {
+      .put(`http://172.17.0.237:8074/Applications/updateStatus/${applicationId}`, { status: 'waitlisted' }, {
         headers: {
           accessToken: sessionStorage.getItem('accessToken'),
         },

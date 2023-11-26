@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3001/';
+const baseUrl = 'http://172.17.0.237:8074/';
 
 export const noticesService = {
   getAllNotices: `${baseUrl}Notices`,

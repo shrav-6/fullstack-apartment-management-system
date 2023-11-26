@@ -30,7 +30,7 @@ function CardForListing( { listing }, { buildingName }) {
 
     const handleViewApplications = (listingId) => {
         axios
-        .get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
+        .get(`http://172.17.0.237:8074/Applications/allApplicationsForListing/${listingId}`, {
             headers: {
                 accessToken: sessionStorage.getItem('accessToken'),
             },

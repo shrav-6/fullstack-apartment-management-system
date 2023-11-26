@@ -37,7 +37,7 @@ function ViewListings() {
   useEffect(() => {
     // Fetch property listings from the API when the component mounts
     axios
-      .get(`http://localhost:3001/Listings/Building/${buildingId}`, {
+      .get(`http://172.17.0.237:8074/Listings/Building/${buildingId}`, {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
@@ -66,7 +66,7 @@ function ViewListings() {
  
   const handleDelete = (listingId) => {
     axios
-      .delete(`http://localhost:3001/Listings/${listingId}`, {
+      .delete(`http://172.17.0.237:8074/Listings/${listingId}`, {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },
@@ -84,7 +84,7 @@ function ViewListings() {
  
   const handleViewApplications = (listingId) => {
     axios
-      .get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
+      .get(`http://172.17.0.237:8074/Applications/allApplicationsForListing/${listingId}`, {
         headers: {
           accessToken: sessionStorage.getItem('accessToken'),
         },

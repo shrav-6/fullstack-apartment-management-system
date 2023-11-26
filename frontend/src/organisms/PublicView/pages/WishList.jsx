@@ -12,7 +12,7 @@ function Wishlist() {
       const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
 
       // Make a request to get the user's wishlist using the access token
-      const wishlistResponse = await axios.get('http://localhost:3001/wishlist/get', {
+      const wishlistResponse = await axios.get('http://172.17.0.237:8074/wishlist/get', {
         headers: {
           accessToken,
         },

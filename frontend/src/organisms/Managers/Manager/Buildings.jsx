@@ -27,7 +27,7 @@ function Buildings({
  
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/Buildings', {
+      const response = await axios.get('http://172.17.0.237:8074/Buildings', {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
         },

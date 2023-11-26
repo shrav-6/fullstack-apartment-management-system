@@ -60,7 +60,7 @@ export default function ApplicationForm() {
       const data = { ...formData, listingId };
       console.log(data);
       const response = await axios.post(
-        'http://localhost:3001/Applications/create',
+        'http://172.17.0.237:8074/Applications/create',
         data,
         {
           headers: {

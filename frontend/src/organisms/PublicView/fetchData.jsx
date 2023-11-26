@@ -5,7 +5,7 @@ import axios from 'axios';
 const fetchData = async () => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const response = await axios.get('http://localhost:3001/Listings/all', {
+    const response = await axios.get('http://172.17.0.237:8074/Listings/all', {
       headers: {
         accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
       },

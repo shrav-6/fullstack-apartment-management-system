@@ -43,7 +43,7 @@ function EditBuildingModal({
     try {
       const buildingId = building.id;
       await axios.put(
-        `http://localhost:3001/Buildings/${buildingId}`,
+        `http://172.17.0.237:8074/Buildings/${buildingId}`,
         {
           buildingName,
           address,
@@ -135,7 +135,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
               type="delete"
               onClick={async () => {
                 try {
-                  await axios.delete(`http://localhost:3001/Buildings/${buildingId}`, {
+                  await axios.delete(`http://172.17.0.237:8074/Buildings/${buildingId}`, {
                     headers: {
                       accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
                     },

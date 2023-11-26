@@ -54,7 +54,7 @@ function ListingsForm() {
     //sessionStorage.setItem('accessToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJlbDg2NzkwM0BkYWwuY2EiLCJyb2xlIjoiTWFuYWdlciIsImlhdCI6MTY5ODc2NTI1NX0.gf_p-hvMbybFooqzRPFJB2gguiS2bqOpWDGAVBrnXsg');
     console.log('form data', formData);
     // eslint-disable-next-line function-call-argument-newline, function-paren-newline
-    axios.post('http://localhost:3001/Listings', formData,
+    axios.post('http://172.17.0.237:8074/Listings', formData,
       {
         headers: {
           accessToken: JSON.parse(sessionStorage.getItem('userCred'))?.token,
@@ -88,7 +88,7 @@ function ListingsForm() {
           //formDataImages.clear;
           //console.log('listingId', listingId);
  
-          /*axios.post(`http://localhost:3001/uploadImages/${listingId}`, images, {
+          /*axios.post(`http://172.17.0.237:8074/uploadImages/${listingId}`, images, {
             headers: {
               accessToken: sessionStorage.getItem('accessToken'),
               'Content-Type': 'multipart/form-data',
