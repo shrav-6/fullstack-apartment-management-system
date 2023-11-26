@@ -149,7 +149,7 @@ npx create-react-app my-react-app
 ```
 
 #### External Dependencies (from `frontend/package.json`)
-```json
+```
 
 "dependencies":{
   "@emotion/react": "^11.11.1", - A create
