@@ -65,8 +65,6 @@ These are the test scripts for backend/package.json
   
 ## Building and Running Application in Remote server
 
-### **Backend Application**
-
 Once Docker is installed on the virtual machine, these steps outline how to deploy a node js application using Docker and establish a CI/CD pipeline
 
 ### **Step 1**: Creating a Dockerfile
@@ -90,7 +88,36 @@ ENTRYPOINT ["node", "app.js"]
 - EXPOSE - This command documents that the container will be listening on port 3001 at runtime
 - ENTRYPOINT - This specifies the default command to run when the container starts.
 ### **Step 2**: Setting up CI/CD pipeline
-
-### **Frontend Application**
-
-------------To be completed by Disha
+Pipeline Stages
+The .gitlab-ci.yml file defines the following stages:
+### **1. Build Stage**
+- Consists of two jobs: frontend-build and backend-build.
+- Both jobs use Node.js version 16.20.1 as the Docker image.
+- frontend-build job:
+    - Navigates into the frontend directory.
+    - Installs dependencies using yarn.
+    - Adds vite using yarn add.
+    - Runs a production build using yarn run Build
+- backend-build job:
+    - Navigates into the backend directory.
+    - Installs dependencies using npm.
+    - Starts the application using npm run start.
+### **2. Test Stage**
+- Consists of a single job: backend-test.
+- Executes tests in the backend directory.
+- Builds the backend using npm run build.
+- Runs tests using npm run test.
+### **3. Publish Stage**
+- Uses docker:latest as the Docker image, and docker:dind as a service (Docker in Docker).
+- The job logs into Docker Hub using the provided Docker Hub username and password.
+- Builds Docker images for both frontend and backend applications, tagging them with the short Git commit SHA.
+- Pushes the Docker images to the Docker Hub repository.
+### **4. Deploy Stage**
+- Uses alpine:latest as the Docker image.
+- Logs into Docker Hub on the server side using the provided Docker Hub username and password.
+- Pulls the Docker images for both frontend and backend from Docker Hub.
+- Runs new Docker containers for both frontend and backend applications, exposing them on ports 8073 and 8074 respectively.
+- Port 8073 on server maps to port 5173 inside frontend container.
+## **Project Access**
+- Backend: http://172.17.0.237:8074
+- Frontend: http://172.17.0.237:8073
