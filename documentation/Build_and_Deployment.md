@@ -38,9 +38,26 @@ The backend code will run in http://localhost:3001/ (this url will be running an
 
 ### **Frontend Application**
 
+For the frontend application, navigate to the project frontend directory and run the following command to build  and run the the application:  
 
-------------To be completed by Disha how to build and run frontend in LocalHost
+```node
+vite build
+vite dev
+```
 
+The configuration is mentioned in frontend/package.json
+
+```json
+ "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "build-and-start": "yarn run build && yarn run dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  ```
+
+The backend code will run in http://localhost:5173/ (this url will be running and will be mapped with the another port in docker)
 
 ### **Running Testcases **
 
@@ -108,11 +125,12 @@ The .gitlab-ci.yml file defines the following stages:
 - Builds the backend using npm run build.
 - Runs tests using npm run test.
 ### **3. Publish Stage**
-- Uses docker:latest as the Docker image, and docker:dind as a service (Docker in Docker).
+- Uses docker:latest as the Docker image, and docker:dind as a service
 - The job logs into Docker Hub using the provided Docker Hub username and password.
 - Builds Docker images for both frontend and backend applications, tagging them with the short Git commit SHA.
 - Pushes the Docker images to the Docker Hub repository.
 ### **4. Deploy Stage**
+- Deploys the application to the production server (IP 172.17.0.237).
 - Uses alpine:latest as the Docker image.
 - Logs into Docker Hub on the server side using the provided Docker Hub username and password.
 - Pulls the Docker images for both frontend and backend from Docker Hub.
