@@ -13,10 +13,11 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import BuildingImage from '../../../../organisms/Managers/Images/buildings.jpg';
 import styles from './CardForBuilding.module.scss';
- 
+
+// eslint-disable-next-line no-shadow
 function IconButton({ type, onClick, styles }) {
   const Icon = type === 'edit' ? MdModeEditOutline : MdDelete;
- 
+
   return (
     <Icon
       style={{
@@ -31,14 +32,13 @@ function IconButton({ type, onClick, styles }) {
     />
   );
 }
- 
 function EditBuildingModal({
   show, onHide, onUpdate, building,
 }) {
   const [buildingName, setBuildingName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
- 
+
   const handleUpdateClick = async () => {
     try {
       const buildingId = building.id;
@@ -64,7 +64,7 @@ function EditBuildingModal({
       (error);
     }
   };
- 
+
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
@@ -105,21 +105,22 @@ function EditBuildingModal({
     </Modal>
   );
 }
- 
+
 function CardforBuilding({ building, onDelete, onUpdate }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const buildingName = building.buildingName;
   const buildingId = building.id;
- 
+
   const handleEditClick = () => {
     setShowEditModal(true);
     onUpdate();
   };
- 
+
   const handleModalClose = () => {
     setShowEditModal(false);
   };
- 
+
   return (
     <>
       <Card
@@ -163,7 +164,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
         </ListGroup>
         <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <div className={styles.iconContainer}>
-            <Link to="/Notices" state={{ buildingId }} className={styles.myButton}>
+            <Link to="/Notices" state={{ buildingName, buildingId }} className={styles.myButton}>
               <EventNoteIcon style={{ fontSize: 30, color: '#38598b' }} />
             </Link>
             <p className={styles.linkText}>Notices</p>
@@ -182,7 +183,7 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
           </div>
         </Card.Body>
       </Card>
- 
+
       {/* Render the EditBuildingModal */}
       <EditBuildingModal
         show={showEditModal}
@@ -194,5 +195,5 @@ function CardforBuilding({ building, onDelete, onUpdate }) {
     </>
   );
 }
- 
+
 export default CardforBuilding;
