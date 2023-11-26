@@ -7,17 +7,17 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "CSCI5308_18_TEST_USER",
+    "password": "gie6AhQuoj",
+    "database": "CSCI5308_18_TEST",
+    "host": "db-5308.cs.dal.ca",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "CSCI5308_18_PRODUCTION_USER",
+    "password": "gie6AhQuoj",
+    "database": "CSCI5308_18_PRODUCTION",
+    "host": "db-5308.cs.dal.ca",
     "dialect": "mysql"
   }
 }
