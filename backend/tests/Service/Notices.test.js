@@ -1,9 +1,9 @@
 
 
-const noticeService = require('../../Service/Notices');
-const data = require("../../Data/Notices");
+const noticeService = require('../../service/Notices');
+const data = require("../../data/Notices");
 
-jest.mock("../../Data/Notices");
+jest.mock("../../data/Notices");
 /**
  * Test suite for 'getNoticeById' function in the notice service.
  * It tests retrieving a specific notice by its ID.

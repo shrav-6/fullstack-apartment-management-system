@@ -1,5 +1,5 @@
 
-const dataLayer = require('../../Data/WishList'); 
+const dataLayer = require('../../data/WishList'); 
 const { wishlists, listings, buildings } = require("../../models");
 /**
  * Test suite for wishlist functionalities in the data layer.

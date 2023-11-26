@@ -8,7 +8,7 @@ app.use(express.json());
 app.use('/', require('../../routes/Applications')); // Assuming your routes are in a file named Applications.js
 
 // Mocking the data layer
-jest.mock('../../Data/Applications', () => ({
+jest.mock('../../data/Applications', () => ({
   createApplication: jest.fn().mockResolvedValue({ success: true, message: 'Application created successfully' }),
   updateStatusApplication: jest.fn().mockResolvedValue({ success: true, message: 'Application status updated successfully' }),
   getAllApplicationsForListing: jest.fn().mockResolvedValue({ success: true, data: [] }),
@@ -17,7 +17,7 @@ jest.mock('../../Data/Applications', () => ({
 }));
 
 // Mocking the validateToken middleware
-jest.mock('../../Middleware/middleware', () => ({
+jest.mock('../../middleware/Middleware', () => ({
   validateToken: (req, res, next) => {
     // Mocked user token validation
     req.user = { id: 1, role: 'Manager' }; // Mock user object

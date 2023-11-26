@@ -1,4 +1,4 @@
-const dataLayer = require("../Data/Listings");
+const dataLayer = require("../data/Listings");
 
 /**
  * Create a new listing for a manager.

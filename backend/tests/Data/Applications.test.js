@@ -1,5 +1,5 @@
 
-const { createApplication, updateStatusApplication, getAllApplicationsForListing, getApplicationById, getAllApplications, getRoleByUserId } = require('../../Data/Applications');
+const { createApplication, updateStatusApplication, getAllApplicationsForListing, getApplicationById, getAllApplications, getRoleByUserId } = require('../../data/Applications');
 const { listings, managers, applications, users } = require('../../models'); 
 
 

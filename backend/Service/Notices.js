@@ -1,4 +1,4 @@
-const data = require("../Data/Notices");
+const data = require("../data/Notices");
 
 /**
  * Get a notice by ID based on user role.

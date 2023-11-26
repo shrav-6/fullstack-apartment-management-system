@@ -1,5 +1,5 @@
 // Importing the necessary dependencies and modules
-const listingsData = require('../../Data/Listings');
+const listingsData = require('../../data/Listings');
 const { managers, buildings, listings } = require("../../models");
 
 // Mock the models

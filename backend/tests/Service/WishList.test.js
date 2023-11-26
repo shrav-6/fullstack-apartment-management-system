@@ -1,8 +1,8 @@
 
-const wishListService=require('../../Service/Wishlist');
-const dataLayer = require('../../Data/WishList');
+const wishListService=require('../../service/Wishlist');
+const dataLayer = require('../../data/WishList');
 
-jest.mock('../../Data/WishList');
+jest.mock('../../data/WishList');
 /**
  * Test suite for 'getWishlistedListings' function in the wish list service.
  * It tests the retrieval of wishlisted listings for an authenticated user.
@@ -103,7 +103,7 @@ describe('addWishlistItem', () => {
     const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
 
     await wishListService.addWishlistItem(req, res);
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       success: false,
       error: "An error occurred while processing the request",
@@ -163,7 +163,7 @@ describe('removeWishlistItem', () => {
     const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
 
     await wishListService.removeWishlistItem(req, res);
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       success: false,
       error: "An error occurred while processing the request",

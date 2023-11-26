@@ -1,8 +1,8 @@
-const userService = require('../../Service/Users');
-const dataLayer = require("../../Data/Users");
+const userService = require('../../service/Users');
+const dataLayer = require("../../data/Users");
 const { managers, buildings, tenants, guests } = require("../../models");
 
-jest.mock("../../Data/Users");
+jest.mock("../../data/Users");
 jest.mock("../../models");
 
 /**
@@ -97,7 +97,7 @@ const { sign } = require('jsonwebtoken');
 
 jest.mock('bcrypt');
 jest.mock('jsonwebtoken');
-jest.mock("../../Data/Users");
+jest.mock("../../data/Users");
 /**
  * Test suite for 'loginUser' function in the user service.
  * It tests the login process for users.

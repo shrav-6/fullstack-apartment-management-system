@@ -5,8 +5,8 @@
 
 const express = require('express');
 const router = express.Router();
-const { validateToken } = require('../Middleware/middleware');
-const service = require('../Service/Notices');
+const { validateToken } = require('../middleware/Middleware');
+const service = require('../service/Notices');
 
 /**
  * Route to get a particular notice by ID.
@@ -38,7 +38,7 @@ router.get('/:noticeId', validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error('Error in get notice by ID:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    res.json({ success: false, error: 'Internal Server Error' });
   }
 });
 
@@ -68,7 +68,7 @@ router.get('/', validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error('Error in get all notices:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    res.json({ success: false, error: 'Internal Server Error' });
   }
 });
 
@@ -99,7 +99,7 @@ router.get('/manager/:buildingId', validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error('Error in get all notices:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    res.json({ success: false, error: 'Internal Server Error' });
   }
 });
 
@@ -134,7 +134,7 @@ router.post('/', validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error('Error in create notice:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    res.json({ success: false, error: 'Internal Server Error' });
   }
 });
 
@@ -165,7 +165,7 @@ router.delete('/:noticeId', validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error('Error in delete notice:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    resjson({ success: false, error: 'Internal Server Error' });
   }
 });
 
@@ -208,7 +208,7 @@ router.put('/:noticeId', validateToken, async (req, res) => {
     }
   } catch (error) {
     console.error('Error in update notice:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    res.json({ success: false, error: 'Internal Server Error' });
   }
 });
 

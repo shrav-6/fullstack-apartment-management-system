@@ -1,9 +1,9 @@
 
 
-const buildingsService = require('../../Service/Buildings');
-const dataLayer = require("../../Data/Buildings");
+const buildingsService = require('../../service/Buildings');
+const dataLayer = require("../../data/Buildings");
 
-jest.mock("../../Data/Buildings");
+jest.mock("../../data/Buildings");
 /**
  * Test suite for 'getBuildingById' function in the buildings service.
  * It tests the retrieval of a building by its ID.
