@@ -14,6 +14,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+
  
 function ListingsForm() {
   const navigate = useNavigate();
@@ -36,8 +40,8 @@ function ListingsForm() {
       [name]: value,
     });
   };
-  
-  const [images, setImages] = useState([]); 
+ 
+  const [images, setImages] = useState([]);
   const handleImageChange = (e) => {    
     const fileArray = Array.from(e.target.files);
     setImages(prevImages => [...prevImages, ...fileArray]);
@@ -78,12 +82,12 @@ function ListingsForm() {
           });
           console.log('formDataImages', formDataImages);*/
           setImages([]);
-
+ 
           // navigate to Dashboard
-          navigate('/Dashboard');
+          navigate('/listings');
           //formDataImages.clear;
           //console.log('listingId', listingId);
-  
+ 
           /*axios.post(`http://localhost:3001/uploadImages/${listingId}`, images, {
             headers: {
               accessToken: sessionStorage.getItem('accessToken'),
@@ -103,74 +107,147 @@ function ListingsForm() {
   };
  
   return (
-    <div class="card-group" width="10px">
+    <div>
       <h1 class="card-header heading" paddingBottom="50px">Add a new listing</h1>
-      <form class="card-body" className="form-group heading" name="post listing" onSubmit={handleSubmit}>
+      <form style={{maxWidth:'100%'}} onSubmit={handleSubmit}>
         <br></br>
         <br></br>
         <br></br>
-        <div>
-          <label htmlFor="unitAvailable">Number of Bedrooms:  </label>
-          <input class="form-control" type="number" id="unitAvailable" name="unitAvailable" value={formData.unitAvailable} onChange={handleChange} required />
-        </div>
-        <br></br>
-        <div>
-          <label htmlFor="apartmentNumber">Apartment Number:  </label>
-          <input class="form-control" type="number" id="apartmentNumber" name="apartmentNumber" value={formData.apartmentNumber} onChange={handleChange} required />
-        </div>
-        <br></br>
-        <div>
-          <label htmlFor="rent">Rent:  </label>
-          <input class="form-control" id="rent" type="number" name="rent" value={formData.rent} onChange={handleChange} required />
-        </div>
-        <br></br>
-        <div>
-          <label htmlFor="address">Address:  </label>
-          <textarea class="form-control" type="text" id="address" name="address" value={formData.address} onChange={handleChange} placeholder="Enter your address"
-            rows="5" cols="40" required
+        <Typography variant="h6">
+        Add Listing
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6} style={{ marginTop: '15px'}}>
+          <TextField
+            required
+            fullWidth
+            variant="outlined"
+            type="number"
+            id="unitAvailable"
+            name="unitAvailable"
+            label="unitAvailable"
+            value={formData.unitAvailable}
+            onChange={handleChange}
           />
-        </div>
-        <br></br>
-        <div>
-          <label htmlFor="pets">Pets:  </label>
-          <input class="form-control" type="number" id="pets" name="pets" value={formData.pets} onChange={handleChange} required />
-        </div>
-        <br></br>
-        <div>
-          <label htmlFor="startsFrom">Starts From:  </label>
-          <input class="form-control" type="date" id="startsFrom" name="startsFrom" value={formData.startsFrom} onChange={handleChange} required />
-        </div>
-        <br></br>
-        <div>
-          <label htmlFor="description">Description:  </label>
-          <textarea class="form-control" type="text" id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Enter description"
-            rows="5" cols="40" required
+        </Grid>
+        <Grid item xs={12} sm={6}  style={{ marginTop: '15px'}}> 
+          <TextField
+            required
+            label="apartmentNumber"
+            fullWidth
+            autoComplete="family-name"
+            variant="outlined"
+            type="number"
+            id="apartmentNumber"
+            name="apartmentNumber"
+            value={formData.apartmentNumber}
+            onChange={handleChange}
           />
-        </div>
-        <div>
-          <label htmlFor="extras">Extras:  </label>
-          <textarea class="form-control" type="text" id="extras" name="extras" value={formData.extras} onChange={handleChange} placeholder="Enter additional information"
-            rows="5" cols="40" required
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            label="rent"
+            fullWidth
+            variant="outlined"
+            type="number"
+            id="rent"
+            name="rent"
+            value={formData.rent}
+            onChange={handleChange}
           />
-        </div>
-        <div>
-          <label htmlFor="buildingName">BuildingName:  </label>
-          <input class="form-control" type="text" id="buildingName" name="buildingName" value={formData.buildingName} onChange={handleChange} placeholder="Enter the building Name"
-            rows="5" cols="40" required
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="address"
+            fullWidth
+            variant="outlined"
+            type="text"
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="Enter your address"
+            rows="5"
+            cols="40"
+            required
           />
-        </div>
-        <br></br>
-        <div>
-          <label htmlFor="images">Images: </label>
-          <input
-            type="file"
-            id="images"
-            name="images"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            label="pets"
+            fullWidth
+            variant="outlined"
+            type="number"
+            id="pets"
+            name="pets"
+            value={formData.pets}
+            onChange={handleChange}
           />
-        </div>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="startsFrom"
+            fullWidth
+            variant="outlined"
+            type="date"
+            id="startsFrom"
+            name="startsFrom"
+            value={formData.startsFrom}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            label="description"
+            fullWidth
+            variant="outlined"
+            type="text"
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter description"
+            rows="5"
+            cols="40"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="extras"
+            fullWidth
+            variant="outlined"
+            type="text"
+            id="extras"
+            name="extras"
+            value={formData.extras}
+            onChange={handleChange}
+            placeholder="Enter additional information"
+            rows="5"
+            cols="40"
+            required
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="buildingName"
+            fullWidth
+            variant="outlined"
+            type="text"
+            onChange={handleChange}
+            rows="5"
+            cols="40"
+            required
+            id="buildingName"
+            name="buildingName"
+            value={formData.buildingName}
+            placeholder="Enter the building Name"
+          />
+        </Grid>
+      </Grid>
         <br></br>
         <div align="center"> <button type="submit" className="btn btn-success"> Submit </button></div>    
       </form>    

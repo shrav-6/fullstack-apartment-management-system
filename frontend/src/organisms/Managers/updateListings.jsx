@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+ 
 function UpdateListings() {
   const location = useLocation();
   const selectedListing = location.state?.selectedListing;
   const buildingName = location.state?.buildingName;
+  console.log('buildingName', buildingName);
   console.log('inside update listings: array', selectedListing);
   const [formData, setFormData] = useState({
     unitAvailable: '',
@@ -18,9 +24,9 @@ function UpdateListings() {
     extras: '',
     buildingName: '',
   });
-
+ 
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     // Set form data with selected listing values when component mounts
     if (selectedListing) {
@@ -37,7 +43,7 @@ function UpdateListings() {
       });
     }
   }, [selectedListing]);
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -45,7 +51,7 @@ function UpdateListings() {
       [name]: value,
     });
   };
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Implement logic to update the listing on the backend
@@ -58,53 +64,68 @@ function UpdateListings() {
       .then((response) => {
         console.log('Listing updated successfully:', response);
         // Redirect to the view listings page after updating
-        navigate('/Dashboard');
+        navigate('/listings');
       })
       .catch((error) => {
         console.error('Error updating listing:', error);
       });
   };
-
+ 
   return (
     <div>
-      <h1 className="heading">Edit Listing</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="unitAvailable">Number of Bedrooms:</label>
-          <input
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+       <Typography variant="h6">
+        Edit Listing
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6} style={{ marginTop: '15px'}}>
+          <TextField
+            required
+            fullWidth
+            variant="outlined"
             type="number"
             id="unitAvailable"
             name="unitAvailable"
+            label="unitAvailable"
             value={formData.unitAvailable}
             onChange={handleChange}
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="apartmentNumber">Apartment Number:</label>
-          <input
+        </Grid>
+        <Grid item xs={12} sm={6}  style={{ marginTop: '15px'}}> 
+          <TextField
+            required
+            label="apartmentNumber"
+            fullWidth
+            autoComplete="family-name"
+            variant="outlined"
             type="number"
             id="apartmentNumber"
             name="apartmentNumber"
             value={formData.apartmentNumber}
             onChange={handleChange}
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="rent">Rent:</label>
-          <input
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            label="rent"
+            fullWidth
+            variant="outlined"
             type="number"
             id="rent"
             name="rent"
             value={formData.rent}
             onChange={handleChange}
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="address">Address:</label>
-          <textarea
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="address"
+            fullWidth
+            variant="outlined"
             type="text"
             id="address"
             name="address"
@@ -115,21 +136,25 @@ function UpdateListings() {
             cols="40"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="pets">Pets:</label>
-          <input
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            label="pets"
+            fullWidth
+            variant="outlined"
             type="number"
             id="pets"
             name="pets"
             value={formData.pets}
             onChange={handleChange}
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="startsFrom">Starts From:</label>
-          <input
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="startsFrom"
+            fullWidth
+            variant="outlined"
             type="date"
             id="startsFrom"
             name="startsFrom"
@@ -137,10 +162,13 @@ function UpdateListings() {
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            label="description"
+            fullWidth
+            variant="outlined"
             type="text"
             id="description"
             name="description"
@@ -149,12 +177,13 @@ function UpdateListings() {
             placeholder="Enter description"
             rows="5"
             cols="40"
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="extras">Extras:</label>
-          <textarea
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="extras"
+            fullWidth
+            variant="outlined"
             type="text"
             id="extras"
             name="extras"
@@ -165,26 +194,27 @@ function UpdateListings() {
             cols="40"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="buildingName">BuildingName:</label>
-          <input
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="buildingName"
+            fullWidth
+            variant="outlined"
             type="text"
+            onChange={handleChange}
+            rows="5"
+            cols="40"
+            required
             id="buildingName"
             name="buildingName"
             value={buildingName}
             placeholder="Enter the building Name"
-            rows="5"
-            cols="40"
-            required
           />
-        </div>
-        <div>
-          <button type="submit">Update Listing</button>
-        </div>
-      </form>
+        </Grid>
+      </Grid>
+      <div align="center"> <button type="submit" className="btn btn-success" onClick={handleSubmit}> Update </button></div>  
     </div>
   );
 }
-
+ 
 export default UpdateListings;

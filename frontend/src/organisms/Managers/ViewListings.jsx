@@ -8,20 +8,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import AddIcon from '@mui/icons-material/Add';
+
 import './pageStyle.scss';
 import FuzzySearch from 'react-fuzzy';
 import AddListing from './addListings';
-
+ 
 function ViewListings() {
   const location = useLocation();
-
+ 
   const buildingId = location.state?.buildingId;
   const buildingName = location.state?.buildingName;
-
+ 
   useEffect(() => {
-    console.log('buildingName:', buildingId);
+    console.log('buildingName:', buildingName);
   }, [buildingId]);
-
+ 
   const [listings, setListings] = useState([]);
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   console.log('accessToken', accessToken);
@@ -42,46 +49,21 @@ function ViewListings() {
         console.error('Error fetching listings:', error);
       });
   }, [accessToken]);
-
+ 
   const [listingImages, setListingImages] = useState({});
-
-  useEffect(() => {
-    // Fetch listing images when the component mounts
-    if (listings.data) {
-      const fetchImages = async () => {
-        const imagesPromises = listings.data.map(async (listing) => {
-          const response = await axios.get(`http://localhost:3001/Listings/getimages/${listing.id}`);
-          return {
-            listingId: listing.id,
-            images: response.data,
-          };
-        });
-
-        const imagesData = await Promise.all(imagesPromises);
-        const imagesMap = imagesData.reduce((map, item) => {
-          map[item.listingId] = item.images;
-          return map;
-        }, {});
-
-        setListingImages(imagesMap);
-      };
-
-      fetchImages();
-    }
-  }, [listings]);
-
+ 
   const handleUpdate = (listingId) => {
     // Find the selected listing based on listingId
     const selectedListing = listings.data.find(listing => listing.id === listingId);
-
+ 
     // Set the selectedListing in the state
     setSelectedListing(selectedListing);
     console.log('selectedlisting', selectedListing);
-
+ 
     // Navigate to the AddListing component
     navigate('/updateListing', { state: { selectedListing, buildingName } });
   };
-
+ 
   const handleDelete = (listingId) => {
     axios
       .delete(`http://localhost:3001/Listings/${listingId}`, {
@@ -99,7 +81,7 @@ function ViewListings() {
         console.error('Error deleting listing:', error);
       });
   };
-
+ 
   const handleViewApplications = (listingId) => {
     axios
       .get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
@@ -121,58 +103,55 @@ function ViewListings() {
         console.error('Error viewing applications for this listing:', error);
       });
   };
-
+ 
+  const handleAddApplication = () => {
+    navigate('/addListing');
+  }
   // eslint-disable-next-line no-console
   console.log('response', listings);
   return (
-    <div>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
+    <div style={{marginTop: '10%'}}>
       <h1>{buildingName} Listings</h1>
-      <div className="row">
-        {listings?.data?.map(listing => (
-          <div className="col-md-4 mb-4" key={listing.id}>
-            <div className="card-group">
-              <div className="card-body">
-                <p className="card-text">Bedrooms: {listing.unitAvailable}</p>
-                <p className="card-text">Apartment Number: {listing.apartmentNumber}</p>
-                <p className="card-text">Description: {listing.description}</p>
-                <p className="card-text">Rent Per Month: ${listing.rent}</p>
-                <p className="card-text">Move-In Date: {listing.startsFrom}</p>
-                <p className="card-text">Address: {listing.address}</p>
-                <p className="card-text">Pets: {listing.pets === true ? '1' : listing.pets || '0'}</p>
-                {/* Display Images */}
-                {listingImages[listing.id] && listingImages[listing.id].length > 0 && (
-                  <div>
-                    <p>Images:</p>
-                    <div>
-                      {listingImages[listing.id].map(image => (
-                        <img
-                          key={image.id}
-                          src={`http://localhost:3001/Listings/getimages/${image.filename}`}
-                          alt="Listing Image"
-                          style={{ width: '100px', height: '100px', marginRight: '5px' }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <button type="button" onClick={() => handleUpdate(listing.id)}>Edit Listing</button>
-                <br></br><br></br>
-                <button type="button" onClick={() => handleDelete(listing.id)}>Delete Listing</button>
-                <br></br><br></br>
-                <button type="button" onClick={() => handleViewApplications(listing.id)}>View Applications for this Listing</button>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div style={{display: 'flex', flexDirection: 'row', marginTop: '50px'}}>
+      {listings?.data?.map(listing => (
+  <div className="col-md-4 mb-4" key={listing.id}>
+    <div className="card-group">
+    <Card sx={{ maxWidth: 345 }}>
+    <CardContent>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Typography gutterBottom variant="h5" component="div">
+        <span  style={{fontWeight: '600'}} >Apartment No:</span>{listing.apartmentNumber}
+      </Typography>
+      <Button onClick={handleAddApplication}>
+       <AddIcon/>
+      </Button>
       </div>
+      <Typography variant="body2" color="text.secondary" style={{marginTop: '15px'}}>
+      <span style={{fontWeight: '600'}} >Bedrooms:</span>{listing.unitAvailable}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" style={{marginTop: '15px'}}>
+      <span  style={{fontWeight: '600'}} >Description:</span>{listing.description}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" style={{marginTop: '15px'}} fontWeight={'600'}>
+        Rent Per Month: ${listing.rent}
+      </Typography>
+      {/* Add other details as needed */}
+    </CardContent>
+    <CardActions>
+      <Button size="small" onClick={() => handleUpdate(listing.id)}>Edit Listing</Button>
+      <Button size="small" onClick={() => handleDelete(listing.id)}>Delete Listing</Button>
+      <Button size="small" onClick={() => handleViewApplications(listing.id)}>
+        View Applications
+      </Button>
+    </CardActions>
+  </Card>
+    </div>
+  </div>
+))}
+</div>
     </div>
   );
 }
-
+ 
 export default ViewListings;
+ 

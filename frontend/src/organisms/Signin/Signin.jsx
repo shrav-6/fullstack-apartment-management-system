@@ -63,7 +63,7 @@ export default function Signin() {
               state: { unitAvailable, buildingName, listingId },
             });
           } else {
-            navigate('/home');
+            navigate('/');
           }
         }
       });

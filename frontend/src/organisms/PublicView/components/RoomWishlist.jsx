@@ -73,9 +73,9 @@ const RoomWishlist = memo(({ item, index, isWishList, fetchWishlist }) => {
               style={{ color: isWished || isWishList ? "red" : "white" }}
             />
           </div>
-          {/* <Link to={`/listing/${id}`} className="btn-primary room-link">
+          <Link to={`/listing/${id}`} className="btn-primary room-link">
             features
-          </Link> */}
+          </Link>
         </div>
         <p className="room-info">{buildingName}</p>
       </div>

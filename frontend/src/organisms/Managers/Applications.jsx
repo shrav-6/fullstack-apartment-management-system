@@ -1,24 +1,19 @@
-/* eslint-disable no-const-assign */
-/* eslint-disable no-alert */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable spaced-comment */
-/* eslint-disable no-console */
-/* eslint-disable no-undef */
-/* eslint-disable max-len */
-// src/pages/PropertyListPage.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-// ... (other imports)
-import handleViewApplications from './ViewListings';
+import CardForApplication from '../../molecules/Card/CardCompound/CardForApplication';
+// styles
+import { Grid } from '@material-ui/core';
+import 'bootstrap/dist/css/bootstrap.min.css';
+// icons
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 
 function ViewApplications() {
   const location = useLocation();
   const listingId = location.state?.listingId;
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const listingId = applications[0].listingId;
-  // const [approvedApplicationId] = useState(null);
   const accessToken = JSON.parse(sessionStorage.getItem('userCred'))?.token;
   useEffect(() => {
     axios.get(`http://localhost:3001/Applications/allApplicationsForListing/${listingId}`, {
@@ -95,86 +90,68 @@ function ViewApplications() {
       {!loading && applications && applications.length > 0 && (
         <>
           <br></br><br></br><br></br>
-          <h1>Applications for listing ID: {listingId}</h1>
+          <h2><center><b>APPLICATIONS FOR LISTING ID: {listingId}</b></center></h2>
+          
+          <Grid container style={{marginTop: "7%"}}>
+            <Grid item xs={4} sm={4} md={4}>
+              {/* In Progress Applications */}
+              {inProgressApplications.length > 0 && (
+                <>
+                  <h3><center><b>WAITLISTED</b></center></h3>
+                  {inProgressApplications.map(application => (
+                    <div style={{marginBottom: "5%"}}>
+                      <CardForApplication
+                        key={application.id}
+                        application={application}
+                      />
+                      <ClearIcon
+                        style={{color: "#e01b24", marginLeft: "20%"}}
+                        onClick={() => handleReject(application.id)}
+                      />
+                      <CheckIcon
+                        style={{color: "#2ec27e", marginLeft: "40%"}}
+                        onClick={() => handleApprove(application.id)}
+                      />
+                    </div>
+                  ))}
+                </>
+              )}
+            </Grid>
+            
+            <Grid item xs={4} sm={4} md={4}>
+              {/* Approved Applications */}
+              {approvedApplications.length > 0 && (
+                <>
+                  <h3><center><b>APPROVED</b></center></h3>
+                  {approvedApplications.map(application => (
+                    <div style={{marginBottom: "5%"}}>
+                      <CardForApplication
+                        key={application.id}
+                        application={application}
+                      />
+                    </div>
+                  ))}
+                </>
+              )}
+            </Grid>
 
-          {/* Approved Applications */}
-          {approvedApplications.length > 0 && (
-            <>
-              <h2>Approved Applications</h2>
-              <div className="row">
-                {approvedApplications.map(application => (
-                  <div key={application.id} className="each application">
-                    {/* Render application details as before */}
-
-                    <p>Application ID: {application.id}</p>
-                    <p>Move-in date: {application.moveInDate}</p>
-                    <p>Need Parking: {application.needParking}</p>
-                    <p>First name: {application.firstName}</p>
-                    <p>Last name: {application.lastName}</p>
-                    <p>Email: {application.email}</p>
-                    <p>Phone number: {application.phoneNumber}</p>
-                    <p>Address: {application.address}</p>
-                    <p>Additional Information: {application.additionalInfo}</p>
-                    <hr></hr>
-                  </div>
-
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* In Progress Applications */}
-          {inProgressApplications.length > 0 && (
-            <>
-              <h2>Waitlisted Applications</h2>
-              <div className="row">
-                {inProgressApplications.map(application => (
-                  <div key={application.id} className="each application">
-                    {/* Render application details as before */}
-
-                    <p>Application ID: {application.id}</p>
-                    <p>Move-in date: {application.moveInDate}</p>
-                    <p>Need Parking: {application.needParking}</p>
-                    <p>First name: {application.firstName}</p>
-                    <p>Last name: {application.lastName}</p>
-                    <p>Email: {application.email}</p>
-                    <p>Phone number: {application.phoneNumber}</p>
-                    <p>Address: {application.address}</p>
-                    <p>Additional Information: {application.additionalInfo}</p>
-                    <button type="button" onClick={() => handleApprove(application.id)}>Approve</button> <t></t><t></t><t></t>
-                    <button type="button" onClick={() => handleReject(application.id)}>Reject</button>
-                    <hr></hr>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Rejected Applications */}
-          {rejectedApplications.length > 0 && (
-            <>
-              <h2>Rejected Applications</h2>
-              <div className="row">
-                {rejectedApplications.map(application => (
-                  <div key={application.id} className="each application">
-                    {/* Render application details as before */}
-
-                    <p>Application ID: {application.id}</p>
-                    <p>Move-in date: {application.moveInDate}</p>
-                    <p>Need Parking: {application.needParking}</p>
-                    <p>First name: {application.firstName}</p>
-                    <p>Last name: {application.lastName}</p>
-                    <p>Email: {application.email}</p>
-                    <p>Phone number: {application.phoneNumber}</p>
-                    <p>Address: {application.address}</p>
-                    <p>Additional Information: {application.additionalInfo}</p>
-                    <button type="button" onClick={() => handleInProgress(application.id)}>Waitlist</button>
-                    <hr></hr>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+            <Grid item xs={4} sm={4} md={4}>
+              {/* Rejected Applications */}
+              {rejectedApplications.length > 0 && (
+                <>
+                  <h3><center><b>REJECTED</b></center></h3>
+                  {rejectedApplications.map(application => (
+                    <div style={{marginBottom: "5%"}}>
+                      <CardForApplication
+                        key={application.id}
+                        application={application}
+                      />
+                    </div>
+                  ))}
+                </>
+              )}
+            </Grid>
+          </Grid>
         </>
       )}
     </div>

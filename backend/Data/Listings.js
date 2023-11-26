@@ -23,6 +23,7 @@ async function createListing(listing, user_id, role, buildingName) {
         await listings.create({
           unitAvailable: listing.unitAvailable,
           rent: listing.rent,
+          apartmentNumber:listing.apartmentNumber,
           address: listing.address,
           pets: listing.pets,
           startsFrom: listing.startsFrom,
