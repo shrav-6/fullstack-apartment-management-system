@@ -1,0 +1,28 @@
+
+.editBuildingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #38598b;
+  }
+
+  input {
+    padding: 10px;
+    border: 1px solid #38598b;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+}
+
+.buildingModalContainer {
+  :global([class*='ant-modal-body']) {
+    > form {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+
+:global {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent; /* Make scrollbar invisible by default */
+  }
+
+  /* Webkit-specific styles */
+  *::-webkit-scrollbar {
+    width: 10px;
+    background: transparent; /* Make scrollbar invisible by default */
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: transparent; /* Make scrollbar invisible by default */
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Visible on hover */
+  *:hover {
+    scrollbar-color: #888 #f1f1f1; /* Firefox */
+
+    /* Webkit-specific styles */
+    ::-webkit-scrollbar {
+      background: red;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgb(228, 228, 228);
+    }
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgb(86, 85, 85);
+  }
+}
+
+.newsContainer {
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  .navNotice {
+    text-align: center;
+    padding: 1rem;
+    margin-top:4rem;
+    font-weight: 500;
+  }
+  .addBtn {
+    display: flex;
+    margin-right: 12rem;
+    justify-content: end;
+  }
+  .emptynewsfeed {
+    display:flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    
+  }
+  .cardComponentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    :global([class*='containerCard']) {
+      width: 70%;
+      max-width: 70%;
+      overflow: auto;
+
+      :global([class*='cardTitle']) {
+        color: #fff; /* Width of the box */
+        height: 50px; /* Height of the box */
+        background-color: #38598b;
+        border: none;
+
+        :global([class*='textTitle']) {
+          // white-space: nowrap;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          padding-left: 2rem;
+          max-width: unset;
+        }
+      }
+
+      :global([class*='cardDescription']) {
+        -webkit-line-clamp: unset;
+        -webkit-box-orient: unset;
+        text-overflow: unset;
+        text-align: justify;
+      }
+    }
+  }
+}
+
+.modalContainer {
+  .postCreationContainer {
+    section > label {
+      color: black;
+    }
+  }
+  :global([class*='ant-modal-close']) {
+    color: white;
+  }
+}
+

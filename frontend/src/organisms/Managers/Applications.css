@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif; /* Optional: Set a default font-family */
+    /*background-image: url('./applications-bg.jpg');*/
+    justify-content: center;
+    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: left;
+  }
+
+.content {
+    margin-left: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center 
+}
+
+/* Container for the cards */
+.application-card-container {
+    justify-content: center; /* Center the items horizontally */
+    align-items: center;
+}
+/* Apply styles to each card */
+.application-card {
+    margin-bottom: 20px;
+    padding: 50px;
+    transition: box-shadow 0.3s;
+    box-sizing: border-box; /* Include padding in the width */
+    border: 1px solid #333131; /* Add a default border */
+    text-align: left;
+  }
+
+/* Add shadow effect on hover */
+.application-card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-width: 2px; /* Increase border width on hover */
+    background-color: rgb(241, 243, 251);
+  }
+
+  .headings {
+    text-align: center;
+    font-size: 2.25em;
+  }

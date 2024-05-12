@@ -1,0 +1,30 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+.modal-title{
+  color: black;
+  font-weight: 900;
+}
+.modal-description{
+  font-size: 1rem;
+  color:black;
+  padding:1rem;
+  margin:1rem 0 2rem 0;
+  font-weight:400;
+
+}
+.ant-btn {
+  background: #2b1d4b;
+  color:#fff;
+  font-weight: 600;
+}
+.ant-btn:hover{
+  background: #333;
+}

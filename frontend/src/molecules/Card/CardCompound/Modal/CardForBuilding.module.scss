@@ -1,0 +1,45 @@
+.iconContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.linkText {
+  text-align: center;
+  font-size: 12px;
+  color: #38598b;
+  margin: 0;
+}
+.editBuildingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #38598b;
+  }
+
+  input {
+    padding: 10px;
+    border: 1px solid #38598b;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+}
+
+.cardForBuildingContainer {
+  padding: unset !important;
+  :global([class*='card-title']) {
+    font-weight: bold;
+  }
+  :global([class*='list-group-flush list-group']) {
+    font-size: 1.1rem;
+  }
+  :global([class*='ant-modal-content']){
+    background: linear-gradient(to bottom, #b6c4d7, #8892c5);
+    font-weight: 600;
+    color: rgb(50, 42, 42);
+  }
+}
+

@@ -1,0 +1,39 @@
+a {
+    color: rgba(100, 0, 100, 1);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: rgba(50, 200, 50, 1);
+}
+
+li {
+    margin-top: 15px;
+}
+
+.heading {
+    margin-top: 50px;
+}
+
+.services-image {
+    margin-top: 10%;
+}
+
+.container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10x;
+}
+
+.services-section {
+    margin-top: 5%;
+}
+
+.order_list {
+    margin-left: 5%;
+}
