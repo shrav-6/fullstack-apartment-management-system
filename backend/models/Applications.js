@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-//const { sequelize } = require(".");
-
-module.exports = (sequelize, DataTypes) => {
-    const applications = sequelize.define("applications", {
-        message: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        gender: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        }
-    });
-    return applications;
-};
-=======
 module.exports = (sequelize, DataTypes) => {
     const applications = sequelize.define("applications", {
         status: {
@@ -62,4 +45,3 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 
->>>>>>> mer/main

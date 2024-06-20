@@ -17,8 +17,6 @@ app.use("/Listings", ListingsRouter);
 const usersRouter = require("./routes/users");
 app.use("/auth", usersRouter);
 
-<<<<<<< HEAD
-=======
 const buildingsRouter = require("./routes/Buildings");
 app.use("/Buildings", buildingsRouter);
 
@@ -35,13 +33,8 @@ app.use('/Applications', applicationRouter);
 const paymentRouter = require("./routes/Payments");
 app.use('/Payments', paymentRouter);
 
->>>>>>> mer/main
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
     console.log("Server running on port 3001");
   });
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> mer/main

@@ -52,11 +52,7 @@
     "jsx-a11y/anchor-is-valid": 0,
     "jsx-a11y/label-has-for": 0,
     "jsx-a11y/click-events-have-key-events": 0,
-<<<<<<< HEAD
-    "linebreak-style": ["error", "windows"],
-=======
     "linebreak-style": 0,
->>>>>>> mer/main
     "max-len": ["error", { "code": 180 }],
     "newline-per-chained-call": 0,
     "no-underscore-dangle": 0,

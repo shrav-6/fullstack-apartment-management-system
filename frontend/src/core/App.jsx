@@ -1,13 +1,5 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-<<<<<<< HEAD
-import Navbar from '../molecules/Navbar';
-import Notices from '../organisms/noticeboard/Notices/Notices';
-import Home from '../pages/Home';
-import Signup from '../organisms/noticeboard/Signup/Signup';
-import Signin from '../organisms/noticeboard/Signin/Signin';
-//import Logout from '../organisms/noticeboard/logout/logout';
-=======
 import Navbar from '../molecules/Navbar/Navbar';
 import Home from '../pages/Home';
 import AboutUs from '../pages/AboutUs/AboutUs';
@@ -25,25 +17,12 @@ import UpdateListings from '../organisms/Managers/updateListings';
 import NewsFeeds from '../organisms/NewsFeeds/Newsfeeedview/NewsFeeds';
 import ViewApplications from '../organisms/Managers/Applications';
 import ViewTenant from '../organisms/tenant view/Tenant';
->>>>>>> mer/main
 
 function App() {
   return (
     <>
       <Navbar />
       <div className="container">
-<<<<<<< HEAD
-      
-        <Routes>
-          <Route path="/" exact element={<Signin />} />
-          <Route path="/home" exact element={<Home />} />
-          <Route path="/notices" exact element={<Notices />} />
-          <Route path="/signup" exact   element={<Signup />} />
-          <Route path="/signin" exact element={<Signin />} />
-          {/* <Route path="/logout" exact element={<Logout />} /> */}
-        </Routes>
-      
-=======
         <Routes>
           <Route path="/*" exact element={<Apps />} />
           <Route path="/home" exact element={<Home />} />
@@ -62,16 +41,9 @@ function App() {
           <Route path="/applications" element={<ViewApplications />} />
           <Route path="/tenant" element={<ViewTenant />} />
         </Routes>
->>>>>>> mer/main
       </div>
     </>
   );
 }
 
-<<<<<<< HEAD
-// ...
-
-
-=======
->>>>>>> mer/main
 export default App;

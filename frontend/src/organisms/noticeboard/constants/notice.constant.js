@@ -1,7 +1,5 @@
 export const ACTION_TYPES = {
   SET_NOTICE: 'NOTICE_SET_NOTICE',
-<<<<<<< HEAD
-=======
   SET_TITLE: 'NOTICE_SET_TITLE',
   SET_DESCRIPTION: 'NOTICE_SET_DESCRIPTION',
   SET_AUTHOR_NAME: 'NOTICE_SET_AUTHOR_NAME',
@@ -13,5 +11,4 @@ export const ACTION_TYPES = {
 
 export const STRING_CONSTANTS = {
   POST_TYPE_EDIT: 'edit',
->>>>>>> mer/main
 };

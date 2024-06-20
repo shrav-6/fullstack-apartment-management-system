@@ -4,27 +4,21 @@ import { ACTION_TYPES } from '../constants/notice.constant';
 
 const initialState = {
   allNotices: [],
-<<<<<<< HEAD
-=======
   title: '',
   description: '',
   authorName: '',
   postType: '',
   priority: '',
->>>>>>> mer/main
 };
 
 const noticeReducer = (state = initialState, { type, payload }) => {
   const {
     allNotices,
-<<<<<<< HEAD
-=======
     title,
     description,
     authorName,
     postType = '',
     priority,
->>>>>>> mer/main
   } = payload || EMPTY_OBJECT;
   switch (type) {
     case ACTION_TYPES.SET_NOTICE:
@@ -32,8 +26,6 @@ const noticeReducer = (state = initialState, { type, payload }) => {
         ...state,
         allNotices,
       };
-<<<<<<< HEAD
-=======
     case ACTION_TYPES.SET_TITLE:
       return {
         ...state,
@@ -72,7 +64,6 @@ const noticeReducer = (state = initialState, { type, payload }) => {
         ...state,
         ...initialState,
       };
->>>>>>> mer/main
     default:
       return state;
   }

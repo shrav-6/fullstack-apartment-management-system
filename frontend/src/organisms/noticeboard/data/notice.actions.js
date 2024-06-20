@@ -4,8 +4,6 @@ export const setNotices = payload => ({
   type: ACTION_TYPES.SET_NOTICE,
   payload,
 });
-<<<<<<< HEAD
-=======
 
 export const setTitle = title => ({
   type: ACTION_TYPES.SET_TITLE,
@@ -41,4 +39,3 @@ export const resetAllData = () => ({
   type: ACTION_TYPES.RESET_ALL_DATA,
   payload: {},
 });
->>>>>>> mer/main

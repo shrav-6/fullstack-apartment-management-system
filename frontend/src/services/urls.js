@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-const baseUrl = 'https://notice-api.onrender.com/';
-
-export const urls = {
-  noticeApis: {
-    getAllNotices: `${baseUrl}notices`,
-    getAllNoticeById: `${baseUrl}notices/id`,
-  },
-=======
 const baseUrl = 'http://172.17.0.237:8074/';
 
 export const noticesService = {
@@ -31,5 +22,4 @@ export const buildingService = {
   getAllBuilding: `${baseUrl}Buildings`,
   postAllBuilding: `${baseUrl}Buildings`,
   // getAllNewsfeedForManager: `${baseUrl}NewsFeed/manager/:buildingId`,
->>>>>>> mer/main
 };
